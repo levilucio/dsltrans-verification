@@ -19,6 +19,7 @@ const DIST_DIR = path.resolve(__dirname, "../dist");
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
+app.use(express.static(DIST_DIR));
 
 app.get("/api/health", (_, res) => {
   res.json({ ok: true });
@@ -108,13 +109,12 @@ app.post("/api/dsltrans/validate_fragment", async (req, res) => {
   }
 });
 
-const port = Number(process.env.PORT || 3100);
-app.listen(port, () => {
-  console.log(`DSLTrans bridge server running on http://localhost:${port}`);
-});
-
-
 app.get("/*rest", (req, res, next) => {
   if (req.path.startsWith("/api/")) return next();
   res.sendFile(path.join(DIST_DIR, "index.html"));
+});
+
+const port = Number(process.env.PORT || 3100);
+app.listen(port, () => {
+  console.log(`DSLTrans bridge server running on http://localhost:${port}`);
 });
