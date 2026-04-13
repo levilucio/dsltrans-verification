@@ -1,0 +1,369 @@
+
+metamodel ER {
+    class ERModel { }
+    class Entity { }
+    class Relationship { }
+
+    containment assoc nodes : ERModel[1] -- Entity[0..*]
+    containment assoc edges : ERModel[1] -- Relationship[0..*]
+    assoc src : Relationship[0..*] -- Entity[1]
+    assoc dst : Relationship[0..*] -- Entity[1]
+}
+
+metamodel Relational {
+    class RelModel { }
+    class Table { }
+    class ForeignKey { }
+
+    containment assoc nodes : RelModel[1] -- Table[0..*]
+    containment assoc edges : RelModel[1] -- ForeignKey[0..*]
+    assoc src : ForeignKey[0..*] -- Table[1]
+    assoc dst : ForeignKey[0..*] -- Table[1]
+}
+
+transformation ER2RelationalZoo : ER -> Relational {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : ERModel
+            }
+            apply {
+                tm : RelModel
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : ERModel
+                any sn : Entity
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : RelModel
+                tn : Table
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : ERModel
+                any se : Relationship
+                any sn1 : Entity
+                any sn2 : Entity
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : RelModel
+                tn1 : Table
+                tn2 : Table
+                te : ForeignKey
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : ERModel
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : ERModel
+        any se : Relationship
+        any sn1 : Entity
+        any sn2 : Entity
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        any se : Relationship
+        any sn2 : Entity
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        any se : Relationship
+        any sn2 : Entity
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : ERModel
+        any sn1 : Entity
+        any sn2 : Entity
+        any se : Relationship
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : ERModel
+        any se : Relationship
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        any se : Relationship
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : ERModel
+        any sn1 : Entity
+        any sn2 : Entity
+        any se : Relationship
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : ForeignKey
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any se : Relationship
+        any sn1 : Entity
+        any sn2 : Entity
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Table
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any se : Relationship
+        any sn1 : Entity
+        any sn2 : Entity
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : ERModel
+    }
+    postcondition {
+        tn : Table
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : ERModel
+    }
+    postcondition {
+        te : ForeignKey
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        any se : Relationship
+        any sn2 : Entity
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : ForeignKey
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any sn : Entity
+        any se : Relationship
+        any sn2 : Entity
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any se : Relationship
+        any sn1 : Entity
+        any sn2 : Entity
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Table
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ERModel
+        any se : Relationship
+        any sn1 : Entity
+        any sn2 : Entity
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : RelModel
+        tm <--trace-- se
+    }
+}

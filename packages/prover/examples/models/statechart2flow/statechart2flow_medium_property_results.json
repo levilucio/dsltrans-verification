@@ -1,0 +1,142 @@
+[
+  {
+    "id": "ModelMaps",
+    "name": "ModelMaps",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NodeContextStillMapsModel",
+    "name": "NodeContextStillMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EdgeContextStillMapsModel",
+    "name": "EdgeContextStillMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OutgoingNodeContextMapsModel",
+    "name": "OutgoingNodeContextMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "IncomingNodeContextMapsModel",
+    "name": "IncomingNodeContextMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SourceAndTargetNodeContextMapsModel",
+    "name": "SourceAndTargetNodeContextMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AnyNodeInModelMapsModel",
+    "name": "AnyNodeInModelMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AnyEdgeInModelMapsModel",
+    "name": "AnyEdgeInModelMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NodeAndEdgeTogetherMapModel",
+    "name": "NodeAndEdgeTogetherMapModel",
+    "status": "holds",
+    "checked_pre_matches": 20,
+    "violating_pre_match": null
+  },
+  {
+    "id": "RichContextStillMapsModel",
+    "name": "RichContextStillMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NodeMapsToTwoTargetSteps_ShouldFail",
+    "name": "NodeMapsToTwoTargetSteps_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NodeMapsToTargetModel_ShouldFail",
+    "name": "NodeMapsToTargetModel_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EdgeMapsToTargetNode_ShouldFail",
+    "name": "EdgeMapsToTargetNode_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EdgeMapsToTargetModel_ShouldFail",
+    "name": "EdgeMapsToTargetModel_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ModelMapsToTwoTargetModels_ShouldFail",
+    "name": "ModelMapsToTwoTargetModels_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "TriggerMapsToTwoTargetEdges_ShouldFail",
+    "name": "TriggerMapsToTwoTargetEdges_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OutgoingNodeMapsToTargetModel_ShouldFail",
+    "name": "OutgoingNodeMapsToTargetModel_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "IncomingNodeMapsToTargetModel_ShouldFail",
+    "name": "IncomingNodeMapsToTargetModel_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ConnectedEdgeMapsToTargetNode_ShouldFail",
+    "name": "ConnectedEdgeMapsToTargetNode_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ConnectedEdgeMapsToTargetModel_ShouldFail",
+    "name": "ConnectedEdgeMapsToTargetModel_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  }
+]

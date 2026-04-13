@@ -1,0 +1,1153 @@
+// =============================================================================
+// UML2Java Concrete Execution Spec
+// =============================================================================
+// Purpose:
+// - Use this spec for concrete execution on packaged UML models with realistic
+//   string/int attribute domains.
+// - Keep proof-oriented finite domains derived automatically from this file.
+//
+// Design:
+// - Create one principal Java declaration per packaged UML classifier.
+// - Reuse previously created owners via backward links so runtime outputs stay
+//   connected and useful for debugging.
+// - Collapse overlapping fragment rules that created duplicate disconnected
+//   targets into a smaller runtime-coherent concrete core.
+// - Association-end field synthesis and inherited override annotation are left
+//   out of this first concrete core because they require extra ownership
+//   context that quickly pushes the case beyond the proof fragment.
+
+metamodel UMLConcrete {
+    enum ClassKind { Entity, Service, ValueObject }
+
+    class Model { name: String }
+    class Package { name: String }
+
+    abstract class Classifier { name: String }
+    class Class extends Classifier {
+        isAbstract: Bool
+        isFinal: Bool
+        priority: Int
+        layerTag: String
+        kind: ClassKind
+    }
+    class Interface extends Classifier { }
+    class Enumeration extends Classifier { }
+    class DataType extends Classifier { }
+    class PrimitiveType extends DataType { }
+
+    abstract class Feature {
+        name: String
+        visibility: String
+        isStatic: Bool
+    }
+
+    class Property extends Feature {
+        isDerived: Bool
+        isReadOnly: Bool
+        isOrdered: Bool
+        isUnique: Bool
+        lower: Int
+        upper: Int
+        defaultValue: String
+    }
+
+    class Operation extends Feature {
+        isAbstract: Bool
+        isQuery: Bool
+    }
+
+    class Parameter {
+        name: String
+        direction: String
+    }
+
+    class EnumerationLiteral { name: String }
+    class Association { name: String isDerived: Bool }
+    class AssociationClass extends Class { }
+    class Dependency { name: String }
+    class Usage extends Dependency { }
+    class Realization extends Dependency { }
+    class Generalization { isSubstitutable: Bool }
+    class InterfaceRealization { }
+    class Comment { body: String }
+
+    containment assoc rootPackages: Model[1] -- Package[0..*]
+    containment assoc packagedElement: Package[1] -- Classifier[0..*]
+    containment assoc nestedPackage: Package[1] -- Package[0..*]
+    containment assoc ownedAttribute: Class[1] -- Property[0..*]
+    containment assoc ownedOperation: Class[1] -- Operation[0..*]
+    containment assoc interfaceOperation: Interface[1] -- Operation[0..*]
+    containment assoc ownedParameter: Operation[1] -- Parameter[0..*]
+    containment assoc ownedLiteral: Enumeration[1] -- EnumerationLiteral[0..*]
+    containment assoc ownedComment: Classifier[1] -- Comment[0..*]
+
+    assoc type: Property[0..*] -- Classifier[1]
+    assoc paramType: Parameter[0..*] -- Classifier[1]
+    assoc returnType: Operation[0..*] -- Classifier[0..1]
+    assoc general: Generalization[0..*] -- Class[1]
+    assoc specific: Generalization[0..*] -- Class[1]
+    assoc contract: InterfaceRealization[0..*] -- Interface[1]
+    assoc implementingClass: InterfaceRealization[0..*] -- Class[1]
+    assoc memberEnd: Association[1] -- Property[2]
+    assoc supplier: Dependency[0..*] -- Classifier[1]
+    assoc client: Dependency[0..*] -- Classifier[1]
+}
+
+metamodel JavaASTConcrete {
+    enum ClassKind { Entity, Service, ValueObject }
+
+    class CompilationUnit { fileName: String }
+    class PackageDeclaration { name: String }
+    class ImportDeclaration { name: String isStatic: Bool isOnDemand: Bool }
+
+    abstract class TypeDeclaration { name: String visibility: String }
+    class ClassDeclaration extends TypeDeclaration {
+        isAbstract: Bool
+        isFinal: Bool
+        priority: Int
+        layerTag: String
+        kind: ClassKind
+    }
+    class InterfaceDeclaration extends TypeDeclaration { }
+    class EnumDeclaration extends TypeDeclaration { }
+    class AnnotationDeclaration extends TypeDeclaration { }
+
+    abstract class BodyDeclaration { }
+    class FieldDeclaration extends BodyDeclaration {
+        name: String
+        visibility: String
+        isStatic: Bool
+        isFinal: Bool
+        isVolatile: Bool
+        isTransient: Bool
+    }
+    class MethodDeclaration extends BodyDeclaration {
+        name: String
+        visibility: String
+        isStatic: Bool
+        isFinal: Bool
+        isAbstract: Bool
+        isSynchronized: Bool
+    }
+    class ConstructorDeclaration extends BodyDeclaration { visibility: String }
+    class EnumConstant { name: String }
+    class SingleVariableDeclaration { name: String isFinal: Bool isVarargs: Bool }
+    class TypeReference { name: String isArray: Bool arrayDimensions: Int }
+    class Annotation { name: String }
+    class MarkerAnnotation extends Annotation { }
+    class NormalAnnotation extends Annotation { }
+    class Javadoc { comment: String }
+    class LineComment { text: String }
+    class BlockComment { text: String }
+    class SetterSignature { }
+    class AddHelperSignature { }
+    class RemoveHelperSignature { }
+
+    containment assoc package: CompilationUnit[1] -- PackageDeclaration[0..1]
+    containment assoc imports: CompilationUnit[1] -- ImportDeclaration[0..*]
+    containment assoc types: CompilationUnit[1] -- TypeDeclaration[0..*]
+    containment assoc bodyDeclarations: TypeDeclaration[1] -- BodyDeclaration[0..*]
+    containment assoc parameters: MethodDeclaration[1] -- SingleVariableDeclaration[0..*]
+    containment assoc constructorParams: ConstructorDeclaration[1] -- SingleVariableDeclaration[0..*]
+    containment assoc enumConstants: EnumDeclaration[1] -- EnumConstant[0..*]
+    containment assoc annotations: BodyDeclaration[1] -- Annotation[0..*]
+    containment assoc javadoc: BodyDeclaration[1] -- Javadoc[0..1]
+
+    assoc fieldType: FieldDeclaration[0..*] -- TypeReference[1]
+    assoc returnType: MethodDeclaration[0..*] -- TypeReference[0..1]
+    assoc parameterType: SingleVariableDeclaration[0..*] -- TypeReference[1]
+    assoc superclass: ClassDeclaration[0..*] -- TypeReference[0..1]
+    assoc superInterfaces: ClassDeclaration[0..*] -- TypeReference[0..*]
+    assoc extendedInterfaces: InterfaceDeclaration[0..*] -- TypeReference[0..*]
+    assoc setterSignature: MethodDeclaration[0..*] -- SetterSignature[0..1]
+    assoc addHelperSignature: MethodDeclaration[0..*] -- AddHelperSignature[0..1]
+    assoc removeHelperSignature: MethodDeclaration[0..*] -- RemoveHelperSignature[0..1]
+}
+
+transformation UML2Java_concrete : UMLConcrete -> JavaASTConcrete {
+
+    layer CreatePackages {
+        rule Package2PackageDecl {
+            match {
+                any pkg : Package
+            }
+            apply {
+                pkgDecl : PackageDeclaration { name = pkg.name }
+            }
+        }
+    }
+
+    layer CreateCompilationUnitsAndTopTypes {
+        rule Class2CompilationUnit {
+            match {
+                any pkg : Package
+                any cls : Class
+                direct pe : packagedElement -- pkg.cls
+            }
+            apply {
+                pkgDecl : PackageDeclaration
+                cu : CompilationUnit { fileName = cls.name }
+                classDecl : ClassDeclaration {
+                    name = cls.name,
+                    visibility = "public",
+                    isAbstract = cls.isAbstract,
+                    isFinal = cls.isFinal,
+                    priority = cls.priority,
+                    layerTag = cls.layerTag,
+                    kind = cls.kind
+                }
+                outP : package -- cu.pkgDecl
+                outT : types -- cu.classDecl
+            }
+            backward {
+                pkgDecl <--trace-- pkg
+            }
+        }
+
+        rule Interface2CompilationUnit {
+            match {
+                any pkg : Package
+                any iface : Interface
+                direct pe : packagedElement -- pkg.iface
+            }
+            apply {
+                pkgDecl : PackageDeclaration
+                cu : CompilationUnit { fileName = iface.name }
+                ifaceDecl : InterfaceDeclaration { name = iface.name, visibility = "public" }
+                outP : package -- cu.pkgDecl
+                outT : types -- cu.ifaceDecl
+            }
+            backward {
+                pkgDecl <--trace-- pkg
+            }
+        }
+
+        rule Enum2CompilationUnit {
+            match {
+                any pkg : Package
+                any enm : Enumeration
+                direct pe : packagedElement -- pkg.enm
+            }
+            apply {
+                pkgDecl : PackageDeclaration
+                cu : CompilationUnit { fileName = enm.name }
+                enumDecl : EnumDeclaration { name = enm.name, visibility = "public" }
+                outP : package -- cu.pkgDecl
+                outT : types -- cu.enumDecl
+            }
+            backward {
+                pkgDecl <--trace-- pkg
+            }
+        }
+    }
+
+    layer CreateOwnedMembers {
+        rule Property2Field {
+            match {
+                any cls : Class
+                any prop : Property
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                classDecl : ClassDeclaration
+                field : FieldDeclaration {
+                    name = prop.name,
+                    visibility = prop.visibility,
+                    isStatic = prop.isStatic,
+                    isFinal = prop.isReadOnly,
+                    isVolatile = false,
+                    isTransient = false
+                }
+                typeRef : TypeReference {
+                    name = usedType.name,
+                    isArray = false,
+                    arrayDimensions = 0
+                }
+                outB : bodyDeclarations -- classDecl.field
+                outT : fieldType -- field.typeRef
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+
+        rule MultiValuedProperty2Field {
+            match {
+                any cls : Class
+                any prop : Property where prop.upper > 1
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                classDecl : ClassDeclaration
+                field : FieldDeclaration {
+                    name = prop.name,
+                    visibility = prop.visibility,
+                    isStatic = prop.isStatic,
+                    isFinal = prop.isReadOnly,
+                    isVolatile = false,
+                    isTransient = false
+                }
+                typeRef : TypeReference {
+                    name = usedType.name,
+                    isArray = true,
+                    arrayDimensions = 1
+                }
+                outB : bodyDeclarations -- classDecl.field
+                outT : fieldType -- field.typeRef
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+
+        rule EnumLiteral2EnumConstant {
+            match {
+                any enm : Enumeration
+                any lit : EnumerationLiteral
+                direct owned : ownedLiteral -- enm.lit
+            }
+            apply {
+                enumDecl : EnumDeclaration
+                enumConst : EnumConstant { name = lit.name }
+                outC : enumConstants -- enumDecl.enumConst
+            }
+            backward {
+                enumDecl <--trace-- enm
+            }
+        }
+
+        rule ClassOperation2Method {
+            match {
+                any cls : Class
+                any op : Operation
+                direct owned : ownedOperation -- cls.op
+            }
+            apply {
+                classDecl : ClassDeclaration
+                method : MethodDeclaration {
+                    name = op.name,
+                    visibility = op.visibility,
+                    isStatic = op.isStatic,
+                    isFinal = false,
+                    isAbstract = op.isAbstract,
+                    isSynchronized = false
+                }
+                outB : bodyDeclarations -- classDecl.method
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+
+        rule InterfaceOperation2Method {
+            match {
+                any iface : Interface
+                any op : Operation
+                direct owned : interfaceOperation -- iface.op
+            }
+            apply {
+                ifaceDecl : InterfaceDeclaration
+                method : MethodDeclaration {
+                    name = op.name,
+                    visibility = op.visibility,
+                    isStatic = op.isStatic,
+                    isFinal = false,
+                    isAbstract = true,
+                    isSynchronized = false
+                }
+                outB : bodyDeclarations -- ifaceDecl.method
+            }
+            backward {
+                ifaceDecl <--trace-- iface
+            }
+        }
+
+        rule Class2Constructor {
+            match {
+                any cls : Class
+            }
+            apply {
+                classDecl : ClassDeclaration
+                constructor : ConstructorDeclaration { visibility = "public" }
+                outB : bodyDeclarations -- classDecl.constructor
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+    }
+
+    layer CompleteSignaturesAndAccessors {
+        rule OperationParameter2MethodParameter {
+            match {
+                any op : Operation
+                any param : Parameter
+                any paramTypeCls : Classifier
+                direct owned : ownedParameter -- op.param
+                direct pType : paramType -- param.paramTypeCls
+            }
+            apply {
+                method : MethodDeclaration
+                varDecl : SingleVariableDeclaration { name = param.name, isFinal = false, isVarargs = false }
+                typeRef : TypeReference { name = paramTypeCls.name, isArray = false, arrayDimensions = 0 }
+                outP : parameters -- method.varDecl
+                outT : parameterType -- varDecl.typeRef
+            }
+            backward {
+                method <--trace-- op
+            }
+        }
+
+        rule OperationReturnType2MethodReturn {
+            match {
+                any op : Operation
+                any retType : Classifier
+                direct ret : returnType -- op.retType
+            }
+            apply {
+                method : MethodDeclaration
+                typeRef : TypeReference { name = retType.name, isArray = false, arrayDimensions = 0 }
+                outR : returnType -- method.typeRef
+            }
+            backward {
+                method <--trace-- op
+            }
+        }
+
+        rule Property2ConstructorParam {
+            match {
+                any cls : Class
+                any prop : Property
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                constructor : ConstructorDeclaration
+                param : SingleVariableDeclaration { name = prop.name, isFinal = false, isVarargs = false }
+                typeRef : TypeReference { name = usedType.name, isArray = false, arrayDimensions = 0 }
+                outP : constructorParams -- constructor.param
+                outT : parameterType -- param.typeRef
+            }
+            backward {
+                constructor <--trace-- cls
+            }
+        }
+
+        rule Property2Getter {
+            match {
+                any cls : Class
+                any prop : Property
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                classDecl : ClassDeclaration
+                getter : MethodDeclaration {
+                    name = prop.name,
+                    visibility = prop.visibility,
+                    isStatic = prop.isStatic,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                typeRef : TypeReference { name = usedType.name, isArray = false, arrayDimensions = 0 }
+                outB : bodyDeclarations -- classDecl.getter
+                outR : returnType -- getter.typeRef
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+
+        rule WritableProperty2Setter {
+            match {
+                any cls : Class
+                any prop : Property where prop.isReadOnly == false
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                classDecl : ClassDeclaration
+                setter : MethodDeclaration {
+                    name = prop.name,
+                    visibility = prop.visibility,
+                    isStatic = prop.isStatic,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                param : SingleVariableDeclaration { name = prop.name, isFinal = false, isVarargs = false }
+                typeRef : TypeReference { name = usedType.name, isArray = false, arrayDimensions = 0 }
+                setterSig : SetterSignature
+                outB : bodyDeclarations -- classDecl.setter
+                outP : parameters -- setter.param
+                outT : parameterType -- param.typeRef
+                outSig : setterSignature -- setter.setterSig
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+
+        rule MultiValuedProperty2AddRemove {
+            match {
+                any cls : Class
+                any prop : Property where prop.upper > 1
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                classDecl : ClassDeclaration
+                addMethod : MethodDeclaration {
+                    name = "add",
+                    visibility = prop.visibility,
+                    isStatic = false,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                addParam : SingleVariableDeclaration { name = prop.name, isFinal = false, isVarargs = false }
+                addType : TypeReference { name = usedType.name, isArray = false, arrayDimensions = 0 }
+                addSig : AddHelperSignature
+                removeMethod : MethodDeclaration {
+                    name = "remove",
+                    visibility = prop.visibility,
+                    isStatic = false,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                removeParam : SingleVariableDeclaration { name = prop.name, isFinal = false, isVarargs = false }
+                removeType : TypeReference { name = usedType.name, isArray = false, arrayDimensions = 0 }
+                removeSig : RemoveHelperSignature
+                outB1 : bodyDeclarations -- classDecl.addMethod
+                outP1 : parameters -- addMethod.addParam
+                outT1 : parameterType -- addParam.addType
+                outS1 : addHelperSignature -- addMethod.addSig
+                outB2 : bodyDeclarations -- classDecl.removeMethod
+                outP2 : parameters -- removeMethod.removeParam
+                outT2 : parameterType -- removeParam.removeType
+                outS2 : removeHelperSignature -- removeMethod.removeSig
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+    }
+
+    layer CreateInterTypeRelations {
+        rule Generalization2Extends {
+            match {
+                any gen : Generalization
+                any parent : Class
+                any child : Class
+                direct genParent : general -- gen.parent
+                direct genChild : specific -- gen.child
+            }
+            apply {
+                childDecl : ClassDeclaration
+                parentRef : TypeReference { name = parent.name, isArray = false, arrayDimensions = 0 }
+                outS : superclass -- childDecl.parentRef
+            }
+            backward {
+                childDecl <--trace-- child
+            }
+        }
+
+        rule InterfaceRealization2Implements {
+            match {
+                any real : InterfaceRealization
+                any iface : Interface
+                any cls : Class
+                direct realContract : contract -- real.iface
+                direct realImpl : implementingClass -- real.cls
+            }
+            apply {
+                classDecl : ClassDeclaration
+                ifaceRef : TypeReference { name = iface.name, isArray = false, arrayDimensions = 0 }
+                outI : superInterfaces -- classDecl.ifaceRef
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+
+        rule Dependency2Import {
+            match {
+                any dep : Dependency
+                any clientCls : Classifier
+                any supplierCls : Classifier
+                direct depClient : client -- dep.clientCls
+                direct depSupplier : supplier -- dep.supplierCls
+            }
+            apply {
+                cu : CompilationUnit
+                importDecl : ImportDeclaration { name = supplierCls.name, isStatic = false, isOnDemand = false }
+                outI : imports -- cu.importDecl
+            }
+            backward {
+                cu <--trace-- clientCls
+            }
+        }
+
+        rule PropertyType2Import {
+            match {
+                any cls : Class
+                any prop : Property
+                any usedType : Classifier
+                direct owned : ownedAttribute -- cls.prop
+                direct propType : type -- prop.usedType
+            }
+            apply {
+                cu : CompilationUnit
+                importDecl : ImportDeclaration { name = usedType.name, isStatic = false, isOnDemand = false }
+                outI : imports -- cu.importDecl
+            }
+            backward {
+                cu <--trace-- cls
+            }
+        }
+    }
+
+    layer AddCommentsAndUtilityMembers {
+        rule ClassComment2Javadoc {
+            match {
+                any cls : Class
+                any comment : Comment
+                direct owned : ownedComment -- cls.comment
+            }
+            apply {
+                constructor : ConstructorDeclaration
+                javadoc : Javadoc { comment = comment.body }
+                outJ : javadoc -- constructor.javadoc
+            }
+            backward {
+                constructor <--trace-- cls
+            }
+        }
+
+        rule Class2ObjectMethods {
+            match {
+                any cls : Class
+            }
+            apply {
+                classDecl : ClassDeclaration
+                toStringMethod : MethodDeclaration {
+                    name = "toString",
+                    visibility = "public",
+                    isStatic = false,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                equalsMethod : MethodDeclaration {
+                    name = "equals",
+                    visibility = "public",
+                    isStatic = false,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                equalsParam : SingleVariableDeclaration { name = "obj", isFinal = false, isVarargs = false }
+                hashCodeMethod : MethodDeclaration {
+                    name = "hashCode",
+                    visibility = "public",
+                    isStatic = false,
+                    isFinal = false,
+                    isAbstract = false,
+                    isSynchronized = false
+                }
+                outB1 : bodyDeclarations -- classDecl.toStringMethod
+                outB2 : bodyDeclarations -- classDecl.equalsMethod
+                outP2 : parameters -- equalsMethod.equalsParam
+                outB3 : bodyDeclarations -- classDecl.hashCodeMethod
+            }
+            backward {
+                classDecl <--trace-- cls
+            }
+        }
+    }
+}
+
+// =============================================================================
+// Properties for the concrete source-of-truth spec
+// =============================================================================
+
+property PackageHasPackageDeclaration "Every UML package maps to a Java package declaration." {
+    precondition {
+        any pkg : Package
+    }
+    postcondition {
+        pkgDecl : PackageDeclaration
+        pkgDecl <--trace-- pkg
+    }
+}
+
+property PackagedClassHasCompilationUnitAndDeclaration "A packaged UML class creates a compilation unit and class declaration." {
+    precondition {
+        any pkg : Package
+        any cls : Class
+        direct pe : packagedElement -- pkg.cls
+    }
+    postcondition {
+        pkgDecl : PackageDeclaration
+        cu : CompilationUnit
+        classDecl : ClassDeclaration
+        pkgDecl <--trace-- pkg
+        cu <--trace-- cls
+        classDecl <--trace-- cls
+        outP : package -- cu.pkgDecl
+        outT : types -- cu.classDecl
+    }
+}
+
+property PackagedInterfaceHasCompilationUnitAndDeclaration "A packaged UML interface creates a compilation unit and interface declaration." {
+    precondition {
+        any pkg : Package
+        any iface : Interface
+        direct pe : packagedElement -- pkg.iface
+    }
+    postcondition {
+        pkgDecl : PackageDeclaration
+        cu : CompilationUnit
+        ifaceDecl : InterfaceDeclaration
+        pkgDecl <--trace-- pkg
+        cu <--trace-- iface
+        ifaceDecl <--trace-- iface
+        outP : package -- cu.pkgDecl
+        outT : types -- cu.ifaceDecl
+    }
+}
+
+property PackagedEnumerationHasCompilationUnitAndDeclaration "A packaged UML enumeration creates a compilation unit and enum declaration." {
+    precondition {
+        any pkg : Package
+        any enm : Enumeration
+        direct pe : packagedElement -- pkg.enm
+    }
+    postcondition {
+        pkgDecl : PackageDeclaration
+        cu : CompilationUnit
+        enumDecl : EnumDeclaration
+        pkgDecl <--trace-- pkg
+        cu <--trace-- enm
+        enumDecl <--trace-- enm
+        outP : package -- cu.pkgDecl
+        outT : types -- cu.enumDecl
+    }
+}
+
+property OwnedPropertyHasOwnedField "Each class-owned UML property yields an owned Java field." {
+    precondition {
+        any cls : Class
+        any prop : Property
+        direct owned : ownedAttribute -- cls.prop
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        field : FieldDeclaration
+        classDecl <--trace-- cls
+        field <--trace-- prop
+        outB : bodyDeclarations -- classDecl.field
+    }
+}
+
+property PropertyTypeHasFieldTypeReference "A field generated from a property references the traced property type." {
+    precondition {
+        any cls : Class
+        any prop : Property
+        any usedType : Classifier
+        direct owned : ownedAttribute -- cls.prop
+        direct propType : type -- prop.usedType
+    }
+    postcondition {
+        field : FieldDeclaration
+        typeRef : TypeReference
+        field <--trace-- prop
+        typeRef <--trace-- usedType
+        outT : fieldType -- field.typeRef
+    }
+}
+
+property MultiValuedPropertyHasArrayFieldType "A multi-valued property gets a field type reference suitable for array-style mapping." {
+    precondition {
+        any cls : Class
+        any prop : Property where prop.upper > 1
+        direct owned : ownedAttribute -- cls.prop
+    }
+    postcondition {
+        field : FieldDeclaration
+        typeRef : TypeReference
+        field <--trace-- prop
+        outT : fieldType -- field.typeRef
+    }
+}
+
+property StaticPropertyHasField "Static UML properties are still materialized as traced fields." {
+    precondition {
+        any cls : Class
+        any prop : Property where prop.isStatic == true
+        direct owned : ownedAttribute -- cls.prop
+    }
+    postcondition {
+        field : FieldDeclaration
+        field <--trace-- prop
+    }
+}
+
+property ReadOnlyPropertyHasField "Read-only UML properties are still materialized as traced fields." {
+    precondition {
+        any cls : Class
+        any prop : Property where prop.isReadOnly == true
+        direct owned : ownedAttribute -- cls.prop
+    }
+    postcondition {
+        field : FieldDeclaration
+        field <--trace-- prop
+    }
+}
+
+property ClassOperationHasOwnedMethod "Each class-owned UML operation maps to an owned Java method." {
+    precondition {
+        any cls : Class
+        any op : Operation
+        direct owned : ownedOperation -- cls.op
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        method : MethodDeclaration
+        classDecl <--trace-- cls
+        method <--trace-- op
+        outB : bodyDeclarations -- classDecl.method
+    }
+}
+
+property InterfaceOperationHasOwnedMethod "Each interface-owned UML operation maps to an owned Java interface method." {
+    precondition {
+        any iface : Interface
+        any op : Operation
+        direct owned : interfaceOperation -- iface.op
+    }
+    postcondition {
+        ifaceDecl : InterfaceDeclaration
+        method : MethodDeclaration
+        ifaceDecl <--trace-- iface
+        method <--trace-- op
+        outB : bodyDeclarations -- ifaceDecl.method
+    }
+}
+
+property OperationParameterHasOwnedParameter "Each UML operation parameter maps to a method parameter with its type reference." {
+    precondition {
+        any op : Operation
+        any param : Parameter
+        any paramTypeCls : Classifier
+        direct owned : ownedParameter -- op.param
+        direct pType : paramType -- param.paramTypeCls
+    }
+    postcondition {
+        method : MethodDeclaration
+        varDecl : SingleVariableDeclaration
+        typeRef : TypeReference
+        method <--trace-- op
+        varDecl <--trace-- param
+        typeRef <--trace-- paramTypeCls
+        outP : parameters -- method.varDecl
+        outT : parameterType -- varDecl.typeRef
+    }
+}
+
+property OperationReturnTypeHasReference "A UML operation return type maps to the method return type reference." {
+    precondition {
+        any op : Operation
+        any retType : Classifier
+        direct ret : returnType -- op.retType
+    }
+    postcondition {
+        method : MethodDeclaration
+        typeRef : TypeReference
+        method <--trace-- op
+        typeRef <--trace-- retType
+        outR : returnType -- method.typeRef
+    }
+}
+
+property EnumerationLiteralHasOwnedEnumConstant "Each UML enumeration literal maps to an owned Java enum constant." {
+    precondition {
+        any enm : Enumeration
+        any lit : EnumerationLiteral
+        direct owned : ownedLiteral -- enm.lit
+    }
+    postcondition {
+        enumDecl : EnumDeclaration
+        enumConst : EnumConstant
+        enumDecl <--trace-- enm
+        enumConst <--trace-- lit
+        outC : enumConstants -- enumDecl.enumConst
+    }
+}
+
+property ClassHasConstructor "Every UML class gets a traced Java constructor declaration." {
+    precondition {
+        any cls : Class
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        constructor : ConstructorDeclaration
+        classDecl <--trace-- cls
+        constructor <--trace-- cls
+        outB : bodyDeclarations -- classDecl.constructor
+    }
+}
+
+property PropertyHasConstructorParameter "Each class property contributes a constructor parameter on the traced constructor." {
+    precondition {
+        any cls : Class
+        any prop : Property
+        direct owned : ownedAttribute -- cls.prop
+    }
+    postcondition {
+        constructor : ConstructorDeclaration
+        param : SingleVariableDeclaration
+        constructor <--trace-- cls
+        param <--trace-- prop
+        outP : constructorParams -- constructor.param
+    }
+}
+
+property PropertyHasGetter "Each class property yields a traced getter method." {
+    precondition {
+        any cls : Class
+        any prop : Property
+        any usedType : Classifier
+        direct owned : ownedAttribute -- cls.prop
+        direct propType : type -- prop.usedType
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        getter : MethodDeclaration
+        returnTypeRef : TypeReference
+        classDecl <--trace-- cls
+        getter <--trace-- prop
+        returnTypeRef <--trace-- usedType
+        outB : bodyDeclarations -- classDecl.getter
+        outR : returnType -- getter.returnTypeRef
+    }
+}
+
+property WritablePropertyHasSetter "Writable properties yield traced setter methods and setter parameters." {
+    precondition {
+        any cls : Class
+        any prop : Property where prop.isReadOnly == false
+        any usedType : Classifier
+        direct owned : ownedAttribute -- cls.prop
+        direct propType : type -- prop.usedType
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        setter : MethodDeclaration
+        param : SingleVariableDeclaration
+        paramTypeRef : TypeReference
+        setterSig : SetterSignature
+        classDecl <--trace-- cls
+        setter <--trace-- prop
+        param <--trace-- prop
+        paramTypeRef <--trace-- usedType
+        outB : bodyDeclarations -- classDecl.setter
+        outP : parameters -- setter.param
+        outT : parameterType -- param.paramTypeRef
+        outS : setterSignature -- setter.setterSig
+    }
+}
+
+property MultiValuedPropertyHasAddHelper "Multi-valued properties yield an add helper with a typed parameter." {
+    precondition {
+        any cls : Class
+        any prop : Property where prop.upper > 1
+        any usedType : Classifier
+        direct owned : ownedAttribute -- cls.prop
+        direct propType : type -- prop.usedType
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        addMethod : MethodDeclaration
+        addParam : SingleVariableDeclaration
+        addTypeRef : TypeReference
+        addSig : AddHelperSignature
+        classDecl <--trace-- cls
+        addMethod <--trace-- prop
+        addParam <--trace-- prop
+        addTypeRef <--trace-- usedType
+        outB : bodyDeclarations -- classDecl.addMethod
+        outP : parameters -- addMethod.addParam
+        outT : parameterType -- addParam.addTypeRef
+        outS : addHelperSignature -- addMethod.addSig
+    }
+}
+
+property MultiValuedPropertyHasRemoveHelper "Multi-valued properties yield a remove helper with a typed parameter." {
+    precondition {
+        any cls : Class
+        any prop : Property where prop.upper > 1
+        any usedType : Classifier
+        direct owned : ownedAttribute -- cls.prop
+        direct propType : type -- prop.usedType
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        removeMethod : MethodDeclaration
+        removeParam : SingleVariableDeclaration
+        removeTypeRef : TypeReference
+        removeSig : RemoveHelperSignature
+        classDecl <--trace-- cls
+        removeMethod <--trace-- prop
+        removeParam <--trace-- prop
+        removeTypeRef <--trace-- usedType
+        outB : bodyDeclarations -- classDecl.removeMethod
+        outP : parameters -- removeMethod.removeParam
+        outT : parameterType -- removeParam.removeTypeRef
+        outS : removeHelperSignature -- removeMethod.removeSig
+    }
+}
+
+property GeneralizationHasExtendsReference "A UML class generalization is realized as a Java extends type reference." {
+    precondition {
+        any gen : Generalization
+        any parent : Class
+        any child : Class
+        direct genParent : general -- gen.parent
+        direct genChild : specific -- gen.child
+    }
+    postcondition {
+        childDecl : ClassDeclaration
+        parentRef : TypeReference
+        childDecl <--trace-- child
+        parentRef <--trace-- parent
+        outS : superclass -- childDecl.parentRef
+    }
+}
+
+property InterfaceRealizationHasImplementsReference "A UML interface realization is realized as a Java implements type reference." {
+    precondition {
+        any real : InterfaceRealization
+        any iface : Interface
+        any cls : Class
+        direct realContract : contract -- real.iface
+        direct realImpl : implementingClass -- real.cls
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        ifaceRef : TypeReference
+        classDecl <--trace-- cls
+        ifaceRef <--trace-- iface
+        outI : superInterfaces -- classDecl.ifaceRef
+    }
+}
+
+property ClassCommentHasJavadoc "A class-owned UML comment is attached as constructor javadoc text." {
+    precondition {
+        any cls : Class
+        any comment : Comment
+        direct owned : ownedComment -- cls.comment
+    }
+    postcondition {
+        constructor : ConstructorDeclaration
+        javadoc : Javadoc
+        constructor <--trace-- cls
+        javadoc <--trace-- comment
+        outJ : javadoc -- constructor.javadoc
+    }
+}
+
+property DependencyYieldsImport "A UML dependency from client to supplier yields an import in the client's compilation unit." {
+    precondition {
+        any dep : Dependency
+        any clientCls : Classifier
+        any supplierCls : Classifier
+        direct depClient : client -- dep.clientCls
+        direct depSupplier : supplier -- dep.supplierCls
+    }
+    postcondition {
+        cu : CompilationUnit
+        importDecl : ImportDeclaration
+        cu <--trace-- clientCls
+        importDecl <--trace-- supplierCls
+        outI : imports -- cu.importDecl
+    }
+}
+
+property PropertyTypeUsedHasImport "A used property type yields an import in the owning class compilation unit." {
+    precondition {
+        any cls : Class
+        any prop : Property
+        any usedType : Classifier
+        direct owned : ownedAttribute -- cls.prop
+        direct propType : type -- prop.usedType
+    }
+    postcondition {
+        cu : CompilationUnit
+        importDecl : ImportDeclaration
+        cu <--trace-- cls
+        importDecl <--trace-- usedType
+        outI : imports -- cu.importDecl
+    }
+}
+
+property ClassHasObjectMethods "Every UML class gets toString, equals, and hashCode method declarations." {
+    precondition {
+        any cls : Class
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        toStringMethod : MethodDeclaration
+        equalsMethod : MethodDeclaration
+        hashCodeMethod : MethodDeclaration
+        classDecl <--trace-- cls
+        toStringMethod <--trace-- cls
+        equalsMethod <--trace-- cls
+        hashCodeMethod <--trace-- cls
+        outB1 : bodyDeclarations -- classDecl.toStringMethod
+        outB2 : bodyDeclarations -- classDecl.equalsMethod
+        outB3 : bodyDeclarations -- classDecl.hashCodeMethod
+    }
+}
+
+property InterfaceMappedToClassDeclaration_ShouldFail "Negative check: an interface must not be traced as a class declaration." {
+    precondition {
+        any iface : Interface
+    }
+    postcondition {
+        classDecl : ClassDeclaration
+        classDecl <--trace-- iface
+    }
+}
+
+property ClassMappedToInterfaceDeclaration_ShouldFail "Negative check: a class must not be traced as an interface declaration." {
+    precondition {
+        any cls : Class
+    }
+    postcondition {
+        ifaceDecl : InterfaceDeclaration
+        ifaceDecl <--trace-- cls
+    }
+}
+
+property PropertyMappedToJavadoc_ShouldFail "Negative check: a property must not be traced directly to javadoc." {
+    precondition {
+        any cls : Class
+        any prop : Property
+        direct owned : ownedAttribute -- cls.prop
+    }
+    postcondition {
+        javadoc : Javadoc
+        javadoc <--trace-- prop
+    }
+}

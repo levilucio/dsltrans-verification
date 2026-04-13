@@ -1,0 +1,22 @@
+OCL AST model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_small_input.xmi
+Objects: 9 | Links: 12
+Models: 1 | Modules: 1 | Operations: 1 | Exprs: 4
+- root: model1 -> module1
+
+Modules:
+- Module(module1) name='MainModule'
+  fields:
+    - Field(field_age) isStatic='false', name='age'
+  operations:
+    - Operation(op_isAdult) isStatic='false', name='isAdult'
+      params:
+        - Parameter(param_arg) varName='arg'
+      expr_count: 4
+      body:
+        - BuiltInCall(gt_call) opName='>'
+          bi_left:
+            - NavigationCall(nav_age) isStatic='false', isSuper='false', propName='age'
+              nav_src:
+                - SelfExp(self1)
+          bi_right:
+            - IntegerExp(int_18) valInt='18'

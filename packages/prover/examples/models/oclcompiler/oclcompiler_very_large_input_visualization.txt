@@ -1,0 +1,89 @@
+OCL AST model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_very_large_input.xmi
+Objects: 51 | Links: 85
+Models: 1 | Modules: 1 | Operations: 6 | Exprs: 32
+- root: model1 -> module1
+
+Modules:
+- Module(module1) name='MainModule'
+  fields:
+    - Field(field_age) isStatic='false', name='age'
+    - Field(field_status) isStatic='false', name='status'
+    - Field(field_name) isStatic='false', name='name'
+    - Field(field_value) isStatic='true', name='value'
+  operations:
+    - Operation(op_helper) isStatic='true', name='helper'
+      expr_count: 1
+      body:
+        - StringExp(str_active) val='active'
+    - Operation(op_isAdult) isStatic='false', name='isAdult'
+      params:
+        - Parameter(param_arg) varName='arg'
+      expr_count: 4
+      body:
+        - BuiltInCall(gt_call) opName='>'
+          bi_left:
+            - NavigationCall(nav_age) isStatic='false', isSuper='false', propName='age'
+              nav_src:
+                - SelfExp(self_adult)
+          bi_right:
+            - IntegerExp(int_18) valInt='18'
+    - Operation(op_resolveStatus) isStatic='false', name='resolveStatus'
+      letvars:
+        - LetVariable(let_tmp) varName='tmp'
+      expr_count: 8
+      body:
+        - LetExp(let_status)
+          let_var: LetVariable(let_tmp) varName='tmp'
+          let_init:
+            - NavigationCall(nav_status) isStatic='false', isSuper='false', propName='status'
+              nav_src:
+                - SelfExp(self_status)
+          let_in:
+            - IfExp(if_status)
+              if_cond:
+                - BuiltInCall(call_undef) opName='oclIsUndefined'
+                  bi_left:
+                    - NavigationCall(nav_status) [cycle]
+              if_then:
+                - StringExp(str_guest) val='guest'
+              if_else:
+                - OperationCall(call_helper_static) isStatic='true', isSuper='false', opName='helper'
+                  op_src:
+                    - ThisModuleExp(this_module)
+    - Operation(op_collectNames) isStatic='false', name='collectNames'
+      iterators:
+        - Iterator(iter_item) varName='item'
+      expr_count: 6
+      body:
+        - IteratorExp(iter_exp) iterName='item'
+          iter_var: Iterator(iter_item) varName='item'
+          iter_source:
+            - SequenceExp(seq_names)
+              seq_elem: CollectionElement(elem1)
+                - StringExp(str_adult2) val='adult'
+              seq_elem: CollectionElement(elem2)
+                - StringExp(str_minor) val='minor'
+          iter_body:
+            - VariableExp(var_item) varName='item'
+    - Operation(op_superDemo) isStatic='false', name='superDemo'
+      expr_count: 2
+      body:
+        - NavigationCall(nav_super_name) isStatic='false', isSuper='true', propName='name'
+          nav_src:
+            - SelfExp(self_super)
+    - Operation(op_callDemo) isStatic='false', name='callDemo'
+      expr_count: 11
+      body:
+        - BuiltInCall(call_or) opName='or'
+          bi_left:
+            - BuiltInCall(call_not) opName='not'
+              bi_left:
+                - BooleanExp(bool_true) valBool='true'
+          bi_right:
+            - BuiltInCall(call_eq) opName='='
+              bi_left:
+                - NavigationCall(nav_static_value) isStatic='true', isSuper='false', propName='value'
+                  nav_src:
+                    - ThisModuleExp(this_module_call)
+              bi_right:
+                - OclUndefinedExp(undef_exp)

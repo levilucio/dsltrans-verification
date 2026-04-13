@@ -1,0 +1,30 @@
+EMFTVM model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_large_out.xmi
+Objects: 18 | Links: 17 | Traces: 41
+Models: 1 | ExecEnvs: 1 | Operations: 2 | Instrs: 11
+- root: Model2Model_outM_1 -> Module2ExecEnv_env_2
+
+ExecEnvs:
+- ExecEnv(Module2ExecEnv_env_2) name='MainModule'
+  fields:
+    - Field(Field2Field_e_f_3) isStatic='false', name='name'
+    - Field(Field2Field_e_f_4) isStatic='false', name='status'
+  operations:
+    - Operation(Operation2Operation_e_op_5) isStatic='false', name='checkStatus'
+      instr_count: 6
+      instructions:
+        - Get(NavigationCall2Get_i_8) propName='status'
+        - IfInstr(IfExp2IfInstr_i_18)
+        - Isnull(BuiltInUndefined2Isnull_i_9)
+        - Load(SelfExp2Load_i_11) varName='self'
+        - Push(StringExp2Push_i_13) val='active'
+        - Push(StringExp2Push_i_14) val='guest'
+    - Operation(Operation2Operation_e_op_6) isStatic='false', name='collectNames'
+      locals:
+        - LocalVariable(Iterator2LocalVariable_e_l_7) name='item'
+      instr_count: 5
+      instructions:
+        - Iterate(IteratorExp2Iterate_i_12) iterName='item'
+        - Load(VariableExp2Load_i_10) varName='item'
+        - Push(StringExp2Push_i_15) val='adult'
+        - Push(StringExp2Push_i_16) val='minor'
+        - PushSeq(SequenceExp2PushSeq_i_17)

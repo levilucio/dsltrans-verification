@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="UseCase:UseCaseModel" />
+  <objects xmi:id="n0" xsi:type="UseCase:UseCaseNode" name="N0" />
+  <objects xmi:id="n1" xsi:type="UseCase:UseCaseNode" name="N1" />
+  <objects xmi:id="n2" xsi:type="UseCase:UseCaseNode" name="N2" />
+  <objects xmi:id="n3" xsi:type="UseCase:UseCaseNode" name="N3" />
+  <objects xmi:id="n4" xsi:type="UseCase:UseCaseNode" name="N4" />
+  <objects xmi:id="e0" xsi:type="UseCase:Include" />
+  <objects xmi:id="e1" xsi:type="UseCase:Include" />
+  <objects xmi:id="e2" xsi:type="UseCase:Include" />
+  <objects xmi:id="e3" xsi:type="UseCase:Include" />
+
+  <links xsi:type="UseCase:nodes" source="sm" target="n0" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n1" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n2" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n3" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n4" />
+  <links xsi:type="UseCase:edges" source="sm" target="e0" />
+  <links xsi:type="UseCase:edges" source="sm" target="e1" />
+  <links xsi:type="UseCase:edges" source="sm" target="e2" />
+  <links xsi:type="UseCase:edges" source="sm" target="e3" />
+  <links xsi:type="UseCase:src" source="e0" target="n0" />
+  <links xsi:type="UseCase:dst" source="e0" target="n1" />
+  <links xsi:type="UseCase:src" source="e1" target="n1" />
+  <links xsi:type="UseCase:dst" source="e1" target="n2" />
+  <links xsi:type="UseCase:src" source="e2" target="n2" />
+  <links xsi:type="UseCase:dst" source="e2" target="n3" />
+  <links xsi:type="UseCase:src" source="e3" target="n2" />
+  <links xsi:type="UseCase:dst" source="e3" target="n4" />
+</model>

@@ -1,0 +1,23 @@
+UML model: dsltrans-prover/examples/models/uml2java/uml2java_small_input.xmi
+Objects: 7 | Links: 9 | Traces: 0
+Packages: 1 | Classifiers: 2
+
+Models:
+- Model(m1) name='RetailModel'
+  rootPackage: Package(pkg_domain) name='domain'
+
+Packages:
+- Package(pkg_domain) name='domain'
+  packagedElement: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='2'
+  packagedElement: PrimitiveType(prim_integer) name='Integer'
+
+Classifiers:
+- Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='2'
+  property: Property(prop_id) defaultValue='0', isDerived='false', isOrdered='false', isReadOnly='true', isStatic='false', isUnique='true', lower='1', name='id', upper='1', visibility='private'
+    type: PrimitiveType(prim_integer) name='Integer'
+  operation: Operation(op_find) isAbstract='false', isQuery='true', isStatic='false', name='findById', visibility='public'
+    parameter: Parameter(param_id) direction='in', name='id'
+      paramType: PrimitiveType(prim_integer) name='Integer'
+    returnType: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='2'
+- PrimitiveType(prim_integer) name='Integer'
+

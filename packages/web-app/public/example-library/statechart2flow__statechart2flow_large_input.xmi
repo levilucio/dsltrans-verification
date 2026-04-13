@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="Statechart:StatechartModel" />
+  <objects xmi:id="s0" xsi:type="Statechart:State" />
+  <objects xmi:id="s1" xsi:type="Statechart:State" />
+  <objects xmi:id="s2" xsi:type="Statechart:State" />
+  <objects xmi:id="s3" xsi:type="Statechart:State" />
+  <objects xmi:id="s4" xsi:type="Statechart:State" />
+  <objects xmi:id="s5" xsi:type="Statechart:State" />
+  <objects xmi:id="s6" xsi:type="Statechart:State" />
+  <objects xmi:id="s7" xsi:type="Statechart:State" />
+  <objects xmi:id="s8" xsi:type="Statechart:State" />
+  <objects xmi:id="s9" xsi:type="Statechart:State" />
+  <objects xmi:id="s10" xsi:type="Statechart:State" />
+  <objects xmi:id="s11" xsi:type="Statechart:State" />
+  <objects xmi:id="s12" xsi:type="Statechart:State" />
+  <objects xmi:id="s13" xsi:type="Statechart:State" />
+  <objects xmi:id="t0" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t1" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t2" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t3" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t4" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t5" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t6" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t7" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t8" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t9" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t10" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t11" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t12" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t13" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t14" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t15" xsi:type="Statechart:Trigger" />
+  <objects xmi:id="t16" xsi:type="Statechart:Trigger" />
+
+  <links xsi:type="Statechart:nodes" source="sm" target="s0" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s1" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s2" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s3" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s4" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s5" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s6" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s7" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s8" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s9" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s10" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s11" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s12" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s13" />
+  <links xsi:type="Statechart:edges" source="sm" target="t0" />
+  <links xsi:type="Statechart:src" source="t0" target="s0" />
+  <links xsi:type="Statechart:dst" source="t0" target="s1" />
+  <links xsi:type="Statechart:edges" source="sm" target="t1" />
+  <links xsi:type="Statechart:src" source="t1" target="s1" />
+  <links xsi:type="Statechart:dst" source="t1" target="s2" />
+  <links xsi:type="Statechart:edges" source="sm" target="t2" />
+  <links xsi:type="Statechart:src" source="t2" target="s2" />
+  <links xsi:type="Statechart:dst" source="t2" target="s3" />
+  <links xsi:type="Statechart:edges" source="sm" target="t3" />
+  <links xsi:type="Statechart:src" source="t3" target="s3" />
+  <links xsi:type="Statechart:dst" source="t3" target="s4" />
+  <links xsi:type="Statechart:edges" source="sm" target="t4" />
+  <links xsi:type="Statechart:src" source="t4" target="s4" />
+  <links xsi:type="Statechart:dst" source="t4" target="s5" />
+  <links xsi:type="Statechart:edges" source="sm" target="t5" />
+  <links xsi:type="Statechart:src" source="t5" target="s5" />
+  <links xsi:type="Statechart:dst" source="t5" target="s6" />
+  <links xsi:type="Statechart:edges" source="sm" target="t6" />
+  <links xsi:type="Statechart:src" source="t6" target="s6" />
+  <links xsi:type="Statechart:dst" source="t6" target="s7" />
+  <links xsi:type="Statechart:edges" source="sm" target="t7" />
+  <links xsi:type="Statechart:src" source="t7" target="s7" />
+  <links xsi:type="Statechart:dst" source="t7" target="s8" />
+  <links xsi:type="Statechart:edges" source="sm" target="t8" />
+  <links xsi:type="Statechart:src" source="t8" target="s8" />
+  <links xsi:type="Statechart:dst" source="t8" target="s9" />
+  <links xsi:type="Statechart:edges" source="sm" target="t9" />
+  <links xsi:type="Statechart:src" source="t9" target="s9" />
+  <links xsi:type="Statechart:dst" source="t9" target="s10" />
+  <links xsi:type="Statechart:edges" source="sm" target="t10" />
+  <links xsi:type="Statechart:src" source="t10" target="s10" />
+  <links xsi:type="Statechart:dst" source="t10" target="s11" />
+  <links xsi:type="Statechart:edges" source="sm" target="t11" />
+  <links xsi:type="Statechart:src" source="t11" target="s11" />
+  <links xsi:type="Statechart:dst" source="t11" target="s12" />
+  <links xsi:type="Statechart:edges" source="sm" target="t12" />
+  <links xsi:type="Statechart:src" source="t12" target="s12" />
+  <links xsi:type="Statechart:dst" source="t12" target="s13" />
+  <links xsi:type="Statechart:edges" source="sm" target="t13" />
+  <links xsi:type="Statechart:src" source="t13" target="s0" />
+  <links xsi:type="Statechart:dst" source="t13" target="s2" />
+  <links xsi:type="Statechart:edges" source="sm" target="t14" />
+  <links xsi:type="Statechart:src" source="t14" target="s3" />
+  <links xsi:type="Statechart:dst" source="t14" target="s5" />
+  <links xsi:type="Statechart:edges" source="sm" target="t15" />
+  <links xsi:type="Statechart:src" source="t15" target="s6" />
+  <links xsi:type="Statechart:dst" source="t15" target="s8" />
+  <links xsi:type="Statechart:edges" source="sm" target="t16" />
+  <links xsi:type="Statechart:src" source="t16" target="s9" />
+  <links xsi:type="Statechart:dst" source="t16" target="s11" />
+</model>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="m1" xsi:type="UMLConcrete:Model" name="RetailModel"/>
+  <objects xmi:id="pkg_root" xsi:type="UMLConcrete:Package" name="root"/>
+  <objects xmi:id="pkg_domain" xsi:type="UMLConcrete:Package" name="domain"/>
+  <objects xmi:id="pkg_service" xsi:type="UMLConcrete:Package" name="service"/>
+  <objects xmi:id="pkg_infra" xsi:type="UMLConcrete:Package" name="infra"/>
+
+  <objects xmi:id="cls_entity" xsi:type="UMLConcrete:Class" name="EntityBase" isAbstract="true" isFinal="false" priority="1" layerTag="Core" kind="ValueObject"/>
+  <objects xmi:id="cls_customer" xsi:type="UMLConcrete:Class" name="Customer" isAbstract="false" isFinal="false" priority="4" layerTag="Domain" kind="Entity"/>
+  <objects xmi:id="cls_order" xsi:type="UMLConcrete:Class" name="Order" isAbstract="false" isFinal="false" priority="5" layerTag="Domain" kind="Entity"/>
+  <objects xmi:id="cls_order_item" xsi:type="UMLConcrete:Class" name="OrderItem" isAbstract="false" isFinal="false" priority="3" layerTag="Domain" kind="ValueObject"/>
+  <objects xmi:id="cls_address" xsi:type="UMLConcrete:Class" name="Address" isAbstract="false" isFinal="false" priority="2" layerTag="Domain" kind="ValueObject"/>
+  <objects xmi:id="cls_service" xsi:type="UMLConcrete:Class" name="CustomerService" isAbstract="false" isFinal="false" priority="6" layerTag="Application" kind="Service"/>
+  <objects xmi:id="iface_repo" xsi:type="UMLConcrete:Interface" name="CustomerRepository"/>
+  <objects xmi:id="enum_status" xsi:type="UMLConcrete:Enumeration" name="OrderStatus"/>
+
+  <objects xmi:id="prop_customer_id" xsi:type="UMLConcrete:Property" name="id" visibility="private" isStatic="false" isReadOnly="true" isDerived="false" isOrdered="false" isUnique="true" lower="1" upper="1" defaultValue="0"/>
+  <objects xmi:id="prop_customer_name" xsi:type="UMLConcrete:Property" name="name" visibility="private" isStatic="false" isReadOnly="false" isDerived="false" isOrdered="false" isUnique="true" lower="1" upper="1" defaultValue=""/>
+  <objects xmi:id="prop_customer_addresses" xsi:type="UMLConcrete:Property" name="addresses" visibility="private" isStatic="false" isReadOnly="false" isDerived="false" isOrdered="true" isUnique="false" lower="0" upper="4" defaultValue=""/>
+  <objects xmi:id="prop_order_status" xsi:type="UMLConcrete:Property" name="status" visibility="private" isStatic="false" isReadOnly="false" isDerived="false" isOrdered="false" isUnique="true" lower="1" upper="1" defaultValue="NEW"/>
+  <objects xmi:id="prop_order_items" xsi:type="UMLConcrete:Property" name="items" visibility="private" isStatic="false" isReadOnly="false" isDerived="false" isOrdered="true" isUnique="false" lower="0" upper="8" defaultValue=""/>
+  <objects xmi:id="prop_service_total" xsi:type="UMLConcrete:Property" name="total" visibility="private" isStatic="true" isReadOnly="true" isDerived="false" isOrdered="false" isUnique="true" lower="1" upper="1" defaultValue="0"/>
+
+  <objects xmi:id="op_repo_find" xsi:type="UMLConcrete:Operation" name="findById" visibility="public" isStatic="false" isAbstract="true" isQuery="true"/>
+  <objects xmi:id="op_repo_save" xsi:type="UMLConcrete:Operation" name="save" visibility="public" isStatic="false" isAbstract="true" isQuery="false"/>
+  <objects xmi:id="op_service_find" xsi:type="UMLConcrete:Operation" name="findById" visibility="public" isStatic="false" isAbstract="false" isQuery="true"/>
+  <objects xmi:id="op_service_calc" xsi:type="UMLConcrete:Operation" name="calculateTotal" visibility="public" isStatic="false" isAbstract="false" isQuery="true"/>
+
+  <objects xmi:id="param_repo_find_id" xsi:type="UMLConcrete:Parameter" name="id" direction="in"/>
+  <objects xmi:id="param_repo_save_customer" xsi:type="UMLConcrete:Parameter" name="customer" direction="in"/>
+  <objects xmi:id="param_service_find_id" xsi:type="UMLConcrete:Parameter" name="id" direction="in"/>
+  <objects xmi:id="param_service_calc_order" xsi:type="UMLConcrete:Parameter" name="order" direction="in"/>
+
+  <objects xmi:id="comment_customer" xsi:type="UMLConcrete:Comment" body="Aggregate root for customer data."/>
+  <objects xmi:id="comment_repo" xsi:type="UMLConcrete:Comment" body="Repository contract."/>
+  <objects xmi:id="comment_service" xsi:type="UMLConcrete:Comment" body="Service entry point."/>
+
+  <objects xmi:id="lit_new" xsi:type="UMLConcrete:EnumerationLiteral" name="NEW"/>
+  <objects xmi:id="lit_processing" xsi:type="UMLConcrete:EnumerationLiteral" name="PROCESSING"/>
+  <objects xmi:id="lit_complete" xsi:type="UMLConcrete:EnumerationLiteral" name="COMPLETE"/>
+  <objects xmi:id="lit_failed" xsi:type="UMLConcrete:EnumerationLiteral" name="FAILED"/>
+
+  <objects xmi:id="prim_string" xsi:type="UMLConcrete:PrimitiveType" name="String"/>
+  <objects xmi:id="prim_integer" xsi:type="UMLConcrete:PrimitiveType" name="Integer"/>
+  <objects xmi:id="prim_boolean" xsi:type="UMLConcrete:PrimitiveType" name="Boolean"/>
+
+  <objects xmi:id="gen_customer" xsi:type="UMLConcrete:Generalization" isSubstitutable="true"/>
+  <objects xmi:id="gen_order" xsi:type="UMLConcrete:Generalization" isSubstitutable="true"/>
+  <objects xmi:id="real_service" xsi:type="UMLConcrete:InterfaceRealization"/>
+  <objects xmi:id="dep_service_repo" xsi:type="UMLConcrete:Dependency" name="dependsOn"/>
+  <objects xmi:id="dep_service_order" xsi:type="UMLConcrete:Usage" name="uses"/>
+
+  <links xsi:type="UMLConcrete:rootPackages" source="m1" target="pkg_root"/>
+  <links xsi:type="UMLConcrete:nestedPackage" source="pkg_root" target="pkg_domain"/>
+  <links xsi:type="UMLConcrete:nestedPackage" source="pkg_root" target="pkg_service"/>
+  <links xsi:type="UMLConcrete:nestedPackage" source="pkg_root" target="pkg_infra"/>
+
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_entity"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_order"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_order_item"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_address"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="enum_status"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="prim_string"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="prim_boolean"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_infra" target="iface_repo"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_service" target="cls_service"/>
+
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_customer" target="prop_customer_id"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_customer" target="prop_customer_name"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_customer" target="prop_customer_addresses"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_order" target="prop_order_status"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_order" target="prop_order_items"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_service" target="prop_service_total"/>
+  <links xsi:type="UMLConcrete:type" source="prop_customer_id" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:type" source="prop_customer_name" target="prim_string"/>
+  <links xsi:type="UMLConcrete:type" source="prop_customer_addresses" target="cls_address"/>
+  <links xsi:type="UMLConcrete:type" source="prop_order_status" target="enum_status"/>
+  <links xsi:type="UMLConcrete:type" source="prop_order_items" target="cls_order_item"/>
+  <links xsi:type="UMLConcrete:type" source="prop_service_total" target="prim_integer"/>
+
+  <links xsi:type="UMLConcrete:interfaceOperation" source="iface_repo" target="op_repo_find"/>
+  <links xsi:type="UMLConcrete:interfaceOperation" source="iface_repo" target="op_repo_save"/>
+  <links xsi:type="UMLConcrete:ownedOperation" source="cls_service" target="op_service_find"/>
+  <links xsi:type="UMLConcrete:ownedOperation" source="cls_service" target="op_service_calc"/>
+  <links xsi:type="UMLConcrete:ownedParameter" source="op_repo_find" target="param_repo_find_id"/>
+  <links xsi:type="UMLConcrete:ownedParameter" source="op_repo_save" target="param_repo_save_customer"/>
+  <links xsi:type="UMLConcrete:ownedParameter" source="op_service_find" target="param_service_find_id"/>
+  <links xsi:type="UMLConcrete:ownedParameter" source="op_service_calc" target="param_service_calc_order"/>
+  <links xsi:type="UMLConcrete:paramType" source="param_repo_find_id" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:paramType" source="param_repo_save_customer" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:paramType" source="param_service_find_id" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:paramType" source="param_service_calc_order" target="cls_order"/>
+  <links xsi:type="UMLConcrete:returnType" source="op_repo_find" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:returnType" source="op_repo_save" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:returnType" source="op_service_find" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:returnType" source="op_service_calc" target="prim_integer"/>
+
+  <links xsi:type="UMLConcrete:ownedComment" source="cls_customer" target="comment_customer"/>
+  <links xsi:type="UMLConcrete:ownedComment" source="iface_repo" target="comment_repo"/>
+  <links xsi:type="UMLConcrete:ownedComment" source="cls_service" target="comment_service"/>
+
+  <links xsi:type="UMLConcrete:ownedLiteral" source="enum_status" target="lit_new"/>
+  <links xsi:type="UMLConcrete:ownedLiteral" source="enum_status" target="lit_processing"/>
+  <links xsi:type="UMLConcrete:ownedLiteral" source="enum_status" target="lit_complete"/>
+  <links xsi:type="UMLConcrete:ownedLiteral" source="enum_status" target="lit_failed"/>
+
+  <links xsi:type="UMLConcrete:general" source="gen_customer" target="cls_entity"/>
+  <links xsi:type="UMLConcrete:specific" source="gen_customer" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:general" source="gen_order" target="cls_entity"/>
+  <links xsi:type="UMLConcrete:specific" source="gen_order" target="cls_order"/>
+  <links xsi:type="UMLConcrete:contract" source="real_service" target="iface_repo"/>
+  <links xsi:type="UMLConcrete:implementingClass" source="real_service" target="cls_service"/>
+  <links xsi:type="UMLConcrete:client" source="dep_service_repo" target="cls_service"/>
+  <links xsi:type="UMLConcrete:supplier" source="dep_service_repo" target="iface_repo"/>
+  <links xsi:type="UMLConcrete:client" source="dep_service_order" target="cls_service"/>
+  <links xsi:type="UMLConcrete:supplier" source="dep_service_order" target="cls_order"/>
+</model>

@@ -1,0 +1,182 @@
+// =============================================================================
+// KM32OWL Fragment (ATL-Zoo inspired)
+// Rules: 6
+// =============================================================================
+
+metamodel KM3 {
+    class Model { }
+    class Package { }
+    class KClass { isAbstract: Bool }
+    class Attribute { name: String }
+    class Reference { name: String }
+    class Enumeration { }
+    class Literal { name: String }
+    containment assoc root: Model[1] -- Package[1]
+    containment assoc classes: Package[1] -- KClass[0..*]
+    containment assoc enums: Package[1] -- Enumeration[0..*]
+    containment assoc attrs: KClass[1] -- Attribute[0..*]
+    containment assoc refs: KClass[1] -- Reference[0..*]
+    containment assoc lits: Enumeration[1] -- Literal[0..*]
+}
+
+metamodel OWL {
+    class Ontology { }
+    class Class { isAbstract: Bool }
+    class DatatypeProperty { name: String }
+    class ObjectProperty { name: String }
+    class DataRange { }
+    class Individual { name: String }
+    class OWLUnused { }
+    containment assoc classes: Ontology[1] -- Class[0..*]
+    containment assoc dataProps: Ontology[1] -- DatatypeProperty[0..*]
+    containment assoc objProps: Ontology[1] -- ObjectProperty[0..*]
+    containment assoc ranges: Ontology[1] -- DataRange[0..*]
+    containment assoc inds: Ontology[1] -- Individual[0..*]
+}
+
+transformation KM32OWL_concrete : KM3 -> OWL {
+
+    layer L1 {
+        rule ModelPackage2Ontology {
+            match {
+                any m : Model
+                any p : Package
+                direct r : root -- m.p
+            }
+            apply {
+                o : Ontology
+            }
+        }
+    }
+
+    layer L2 {
+        rule Class2OWLClass {
+            match { any c : KClass }
+            apply { oc : Class { isAbstract = c.isAbstract } }
+        }
+        rule Enum2DataRange {
+            match { any e : Enumeration }
+            apply { dr : DataRange }
+        }
+    }
+
+    layer L3 {
+        rule Attribute2DatatypeProperty {
+            match {
+                any c : KClass
+                any a : Attribute
+                direct own : attrs -- c.a
+            }
+            apply {
+                oc : Class { isAbstract = c.isAbstract }
+                dp : DatatypeProperty { name = a.name }
+            }
+        }
+        rule Reference2ObjectProperty {
+            match {
+                any c : KClass
+                any r : Reference
+                direct own : refs -- c.r
+            }
+            apply {
+                oc : Class { isAbstract = c.isAbstract }
+                op : ObjectProperty { name = r.name }
+            }
+        }
+        rule Literal2Individual {
+            match {
+                any e : Enumeration
+                any l : Literal
+                direct own : lits -- e.l
+            }
+            apply {
+                dr : DataRange
+                i : Individual { name = l.name }
+            }
+        }
+    }
+}
+
+// 15 expected HOLDS
+property ModelHasOntology {
+    precondition { any m : Model }
+    postcondition { o : Ontology o <--trace-- m }
+}
+property PackageHasOntology {
+    precondition { any p : Package }
+    postcondition { o : Ontology o <--trace-- p }
+}
+property KClassHasOWLClass {
+    precondition { any c : KClass }
+    postcondition { oc : Class oc <--trace-- c }
+}
+property EnumerationHasDataRange {
+    precondition { any e : Enumeration }
+    postcondition { dr : DataRange dr <--trace-- e }
+}
+property AttributeHasDatatypeProperty {
+    precondition { any c : KClass any a : Attribute direct own : attrs -- c.a }
+    postcondition { dp : DatatypeProperty dp <--trace-- a }
+}
+property ReferenceHasObjectProperty {
+    precondition { any c : KClass any r : Reference direct own : refs -- c.r }
+    postcondition { op : ObjectProperty op <--trace-- r }
+}
+property LiteralHasIndividual {
+    precondition { any e : Enumeration any l : Literal direct own : lits -- e.l }
+    postcondition { i : Individual i <--trace-- l }
+}
+property AbstractClassMapped {
+    precondition { any c : KClass where c.isAbstract == true }
+    postcondition { oc : Class oc <--trace-- c }
+}
+property ConcreteClassMapped {
+    precondition { any c : KClass where c.isAbstract == false }
+    postcondition { oc : Class oc <--trace-- c }
+}
+property ClassWithAttrProducesClassTrace {
+    precondition { any c : KClass any a : Attribute direct own : attrs -- c.a }
+    postcondition { oc : Class oc <--trace-- c }
+}
+property ClassWithRefProducesClassTrace {
+    precondition { any c : KClass any r : Reference direct own : refs -- c.r }
+    postcondition { oc : Class oc <--trace-- c }
+}
+property AttrProducesDatatypeProperty {
+    precondition { any c : KClass any a : Attribute direct own : attrs -- c.a }
+    postcondition { dp : DatatypeProperty dp <--trace-- a }
+}
+property RefProducesObjectProperty {
+    precondition { any c : KClass any r : Reference direct own : refs -- c.r }
+    postcondition { op : ObjectProperty op <--trace-- r }
+}
+property EnumLiteralProducesRange {
+    precondition { any e : Enumeration any l : Literal direct own : lits -- e.l }
+    postcondition { dr : DataRange dr <--trace-- e }
+}
+property EnumLiteralProducesIndividual {
+    precondition { any e : Enumeration any l : Literal direct own : lits -- e.l }
+    postcondition { i : Individual i <--trace-- l }
+}
+
+// 5 expected VIOLATED
+property KClassHasDataRange_ShouldFail {
+    precondition { any c : KClass }
+    postcondition { dr : DataRange dr <--trace-- c }
+}
+property EnumerationHasOWLClass_ShouldFail {
+    precondition { any e : Enumeration }
+    postcondition { oc : Class oc <--trace-- e }
+}
+property AttributeHasObjectProperty_ShouldFail {
+    precondition { any c : KClass any a : Attribute direct own : attrs -- c.a }
+    postcondition { op : ObjectProperty op <--trace-- a }
+}
+property ReferenceHasDatatypeProperty_ShouldFail {
+    precondition { any c : KClass any r : Reference direct own : refs -- c.r }
+    postcondition { dp : DatatypeProperty dp <--trace-- r }
+}
+property LiteralHasUnused_ShouldFail {
+    precondition { any e : Enumeration any l : Literal direct own : lits -- e.l }
+    postcondition { u : OWLUnused u <--trace-- l }
+}

@@ -1,0 +1,10 @@
+node_modules/
+packages/web-app/node_modules/
+packages/web-app/dist/
+__pycache__/
+*.pyc
+.venv/
+.env
+.DS_Store
+Thumbs.db
+npm-debug.log*

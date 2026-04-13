@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+hide empty members
+skinparam classAttributeIconSize 0
+title class2relational_large_input.xmi
+
+package "Pkg1" as pkg0 {
+  class "T1\n[dt_int]" as dt_int <<DataType>>
+  class "T2\n[dt_str]" as dt_str <<DataType>>
+  abstract class "C\n[c0]" as c0
+  class "D\n[c1]" as c1
+  class "T1\n[c2]" as c2
+  class "T2\n[c3]" as c3
+  class "C\n[c4]" as c4
+  class "D\n[c5]" as c5
+  class "T1\n[c6]" as c6
+  class "T2\n[c7]" as c7
+  abstract class "C\n[c8]" as c8
+  class "D\n[c9]" as c9
+  class "T1\n[c10]" as c10
+  class "T2\n[c11]" as c11
+  class "C\n[c12]" as c12
+  class "D\n[c13]" as c13
+  class "T1\n[c14]" as c14
+  class "T2\n[c15]" as c15
+}
+c1 --|> c0
+c9 --|> c8
+c1 "1" --> "*" c2 : as0
+c3 "*" --> "1" c4 : as1
+c5 "1" --> "1" c6 : as2
+c7 "*" --> "*" c8 : as3
+c9 "*" --> "*" c10 : as4
+c11 "1" --> "*" c12 : as5
+@enduml

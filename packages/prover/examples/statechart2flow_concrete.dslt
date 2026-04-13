@@ -1,0 +1,387 @@
+// =============================================================================
+// Statechart2Flow Concrete Execution Spec
+// =============================================================================
+// Purpose:
+// - Concrete execution and graded examples under examples/models/statechart2flow/.
+// - Filename follows the *_concrete.dslt naming used by other case studies.
+
+metamodel Statechart {
+    class StatechartModel { }
+    class State { }
+    class Trigger { }
+
+    containment assoc nodes : StatechartModel[1] -- State[0..*]
+    containment assoc edges : StatechartModel[1] -- Trigger[0..*]
+    assoc src : Trigger[0..*] -- State[1]
+    assoc dst : Trigger[0..*] -- State[1]
+}
+
+metamodel Flow {
+    class FlowModel { }
+    class Step { }
+    class TransitionEdge { }
+
+    containment assoc nodes : FlowModel[1] -- Step[0..*]
+    containment assoc edges : FlowModel[1] -- TransitionEdge[0..*]
+    assoc src : TransitionEdge[0..*] -- Step[1]
+    assoc dst : TransitionEdge[0..*] -- Step[1]
+}
+
+transformation Statechart2Flow_concrete : Statechart -> Flow {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : StatechartModel
+            }
+            apply {
+                tm : FlowModel
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : StatechartModel
+                any sn : State
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : FlowModel
+                tn : Step
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : StatechartModel
+                any se : Trigger
+                any sn1 : State
+                any sn2 : State
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : FlowModel
+                tn1 : Step
+                tn2 : Step
+                te : TransitionEdge
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps "Every StatechartModel is traced to one FlowModel." {
+    precondition {
+        any sm : StatechartModel
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel "If a model has a state, the model still maps to a FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel "If a model has a trigger with src/dst states, the model maps to a FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        any sn1 : State
+        any sn2 : State
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel "A state that is source of a trigger still belongs to a mapped model." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        any se : Trigger
+        any sn2 : State
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel "A state that is target of a trigger still belongs to a mapped model." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        any se : Trigger
+        any sn2 : State
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel "When both trigger endpoints are in the model, the model maps to a FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any sn1 : State
+        any sn2 : State
+        any se : Trigger
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel "Any state contained in a StatechartModel implies mapped FlowModel exists." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel "Any trigger contained in a StatechartModel implies mapped FlowModel exists." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel "If both a state and a trigger exist in a model, the model is mapped." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        any se : Trigger
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel "A full trigger context (model, two states, trigger) preserves model mapping." {
+    precondition {
+        any sm : StatechartModel
+        any sn1 : State
+        any sn2 : State
+        any se : Trigger
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTwoTargetSteps_ShouldFail "A source State must not trace to two distinct target Steps." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tn1 : Step
+        tn2 : Step
+        tn1 <--trace-- sn
+        tn2 <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail "A source State must not trace directly to a target FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail "A source Trigger must not trace directly to a target Step." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        any sn1 : State
+        any sn2 : State
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Step
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail "A source Trigger must not trace directly to a target FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        any sn1 : State
+        any sn2 : State
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTwoTargetModels_ShouldFail "A source StatechartModel must not trace to two distinct FlowModels." {
+    precondition {
+        any sm : StatechartModel
+    }
+    postcondition {
+        tm1 : FlowModel
+        tm2 : FlowModel
+        tm1 <--trace-- sm
+        tm2 <--trace-- sm
+    }
+}
+
+property TriggerMapsToTwoTargetEdges_ShouldFail "A source Trigger must not trace to two distinct TransitionEdges." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        any sn1 : State
+        any sn2 : State
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te1 : TransitionEdge
+        te2 : TransitionEdge
+        te1 <--trace-- se
+        te2 <--trace-- se
+    }
+}
+
+property OutgoingNodeMapsToTargetModel_ShouldFail "A source state (as trigger source) must not trace to a target FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        any se : Trigger
+        any sn2 : State
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail "A source state (as trigger target) must not trace to a target FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any sn : State
+        any se : Trigger
+        any sn2 : State
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail "A connected source Trigger must not trace directly to a target Step." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        any sn1 : State
+        any sn2 : State
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Step
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail "A connected source Trigger must not trace directly to a target FlowModel." {
+    precondition {
+        any sm : StatechartModel
+        any se : Trigger
+        any sn1 : State
+        any sn2 : State
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : FlowModel
+        tm <--trace-- se
+    }
+}

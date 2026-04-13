@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="m_uni" xsi:type="ClassDiagram:Model" />
+  <objects xmi:id="pkg_uni" xsi:type="ClassDiagram:Package" name="UniversityEnrollment" />
+  <objects xmi:id="dt_int" xsi:type="ClassDiagram:DataType" name="Integer" />
+  <objects xmi:id="dt_str" xsi:type="ClassDiagram:DataType" name="String" />
+  <objects xmi:id="cls_person" xsi:type="ClassDiagram:Class" name="Person" isAbstract="true" />
+  <objects xmi:id="cls_student" xsi:type="ClassDiagram:Class" name="Student" isAbstract="false" />
+  <objects xmi:id="cls_instructor" xsi:type="ClassDiagram:Class" name="Instructor" isAbstract="false" />
+  <objects xmi:id="cls_course" xsi:type="ClassDiagram:Class" name="Course" isAbstract="false" />
+  <objects xmi:id="cls_enrollment" xsi:type="ClassDiagram:Class" name="Enrollment" isAbstract="false" />
+  <objects xmi:id="cls_department" xsi:type="ClassDiagram:Class" name="Department" isAbstract="false" />
+  <objects xmi:id="a_person_name" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false" />
+  <objects xmi:id="a_student_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false" />
+  <objects xmi:id="a_student_major" xsi:type="ClassDiagram:Attribute" name="ref" isMultivalued="false" />
+  <objects xmi:id="a_student_courses" xsi:type="ClassDiagram:Attribute" name="a" isMultivalued="true" />
+  <objects xmi:id="a_instructor_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false" />
+  <objects xmi:id="a_instructor_dept" xsi:type="ClassDiagram:Attribute" name="ref" isMultivalued="false" />
+  <objects xmi:id="a_course_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false" />
+  <objects xmi:id="a_course_title" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false" />
+  <objects xmi:id="a_course_instructor" xsi:type="ClassDiagram:Attribute" name="ref" isMultivalued="false" />
+  <objects xmi:id="a_enrollment_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false" />
+  <objects xmi:id="a_enrollment_student" xsi:type="ClassDiagram:Attribute" name="ref" isMultivalued="false" />
+  <objects xmi:id="a_enrollment_grade" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false" />
+  <objects xmi:id="a_department_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false" />
+  <objects xmi:id="a_department_name" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false" />
+  <objects xmi:id="g_person_student" xsi:type="ClassDiagram:Generalization" />
+  <objects xmi:id="g_person_instructor" xsi:type="ClassDiagram:Generalization" />
+  <objects xmi:id="as_student_course" xsi:type="ClassDiagram:Association" name="EnrolledIn" />
+  <objects xmi:id="as_student_course_e1" xsi:type="ClassDiagram:AssociationEnd" name="studentEnd" isNavigable="true" lowerBound="0" upperBound="16" />
+  <objects xmi:id="as_student_course_e2" xsi:type="ClassDiagram:AssociationEnd" name="courseEnd" isNavigable="true" lowerBound="0" upperBound="16" />
+  <objects xmi:id="ab_student_course" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="16" tgtLower="0" tgtUpper="16" />
+  <objects xmi:id="as_dept_course" xsi:type="ClassDiagram:Association" name="Offers" />
+  <objects xmi:id="as_dept_course_e1" xsi:type="ClassDiagram:AssociationEnd" name="deptEnd" isNavigable="true" lowerBound="0" upperBound="1" />
+  <objects xmi:id="as_dept_course_e2" xsi:type="ClassDiagram:AssociationEnd" name="courseEnd" isNavigable="true" lowerBound="0" upperBound="16" />
+  <objects xmi:id="ab_dept_course" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="1" tgtLower="0" tgtUpper="16" />
+  <objects xmi:id="as_course_instructor" xsi:type="ClassDiagram:Association" name="TaughtBy" />
+  <objects xmi:id="as_course_instructor_e1" xsi:type="ClassDiagram:AssociationEnd" name="courseEnd" isNavigable="true" lowerBound="0" upperBound="16" />
+  <objects xmi:id="as_course_instructor_e2" xsi:type="ClassDiagram:AssociationEnd" name="instructorEnd" isNavigable="true" lowerBound="0" upperBound="1" />
+  <objects xmi:id="ab_course_instructor" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="16" tgtLower="0" tgtUpper="1" />
+  <objects xmi:id="as_student_advisor" xsi:type="ClassDiagram:Association" name="AdvisedBy" />
+  <objects xmi:id="as_student_advisor_e1" xsi:type="ClassDiagram:AssociationEnd" name="studentEnd" isNavigable="true" lowerBound="0" upperBound="1" />
+  <objects xmi:id="as_student_advisor_e2" xsi:type="ClassDiagram:AssociationEnd" name="advisorEnd" isNavigable="true" lowerBound="0" upperBound="1" />
+  <objects xmi:id="ab_student_advisor" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="1" tgtLower="0" tgtUpper="1" />
+
+  <links xsi:type="ClassDiagram:root" source="m_uni" target="pkg_uni" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="dt_int" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="dt_str" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="cls_person" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="cls_student" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="cls_instructor" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="cls_course" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="cls_enrollment" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg_uni" target="cls_department" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_person" target="a_person_name" />
+  <links xsi:type="ClassDiagram:type" source="a_person_name" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_student" target="a_student_id" />
+  <links xsi:type="ClassDiagram:type" source="a_student_id" target="dt_int" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_student" target="a_student_major" />
+  <links xsi:type="ClassDiagram:type" source="a_student_major" target="cls_department" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_student" target="a_student_courses" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_instructor" target="a_instructor_id" />
+  <links xsi:type="ClassDiagram:type" source="a_instructor_id" target="dt_int" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_instructor" target="a_instructor_dept" />
+  <links xsi:type="ClassDiagram:type" source="a_instructor_dept" target="cls_department" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_course" target="a_course_id" />
+  <links xsi:type="ClassDiagram:type" source="a_course_id" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_course" target="a_course_title" />
+  <links xsi:type="ClassDiagram:type" source="a_course_title" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_course" target="a_course_instructor" />
+  <links xsi:type="ClassDiagram:type" source="a_course_instructor" target="cls_instructor" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_enrollment" target="a_enrollment_id" />
+  <links xsi:type="ClassDiagram:type" source="a_enrollment_id" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_enrollment" target="a_enrollment_student" />
+  <links xsi:type="ClassDiagram:type" source="a_enrollment_student" target="cls_student" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_enrollment" target="a_enrollment_grade" />
+  <links xsi:type="ClassDiagram:type" source="a_enrollment_grade" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_department" target="a_department_id" />
+  <links xsi:type="ClassDiagram:type" source="a_department_id" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_department" target="a_department_name" />
+  <links xsi:type="ClassDiagram:type" source="a_department_name" target="dt_str" />
+  <links xsi:type="ClassDiagram:rootGeneralizations" source="m_uni" target="g_person_student" />
+  <links xsi:type="ClassDiagram:general" source="g_person_student" target="cls_person" />
+  <links xsi:type="ClassDiagram:specific" source="g_person_student" target="cls_student" />
+  <links xsi:type="ClassDiagram:rootGeneralizations" source="m_uni" target="g_person_instructor" />
+  <links xsi:type="ClassDiagram:general" source="g_person_instructor" target="cls_person" />
+  <links xsi:type="ClassDiagram:specific" source="g_person_instructor" target="cls_instructor" />
+  <links xsi:type="ClassDiagram:rootAssociations" source="m_uni" target="as_student_course" />
+  <links xsi:type="ClassDiagram:rootAssociations" source="m_uni" target="as_dept_course" />
+  <links xsi:type="ClassDiagram:rootAssociations" source="m_uni" target="as_course_instructor" />
+  <links xsi:type="ClassDiagram:rootAssociations" source="m_uni" target="as_student_advisor" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_student_course" target="as_student_course_e1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_student_course" target="as_student_course_e2" />
+  <links xsi:type="ClassDiagram:endType" source="as_student_course_e1" target="cls_student" />
+  <links xsi:type="ClassDiagram:endType" source="as_student_course_e2" target="cls_course" />
+  <links xsi:type="ClassDiagram:association" source="ab_student_course" target="as_student_course" />
+  <links xsi:type="ClassDiagram:sourceClass" source="ab_student_course" target="cls_student" />
+  <links xsi:type="ClassDiagram:targetClass" source="ab_student_course" target="cls_course" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_dept_course" target="as_dept_course_e1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_dept_course" target="as_dept_course_e2" />
+  <links xsi:type="ClassDiagram:endType" source="as_dept_course_e1" target="cls_department" />
+  <links xsi:type="ClassDiagram:endType" source="as_dept_course_e2" target="cls_course" />
+  <links xsi:type="ClassDiagram:association" source="ab_dept_course" target="as_dept_course" />
+  <links xsi:type="ClassDiagram:sourceClass" source="ab_dept_course" target="cls_department" />
+  <links xsi:type="ClassDiagram:targetClass" source="ab_dept_course" target="cls_course" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_course_instructor" target="as_course_instructor_e1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_course_instructor" target="as_course_instructor_e2" />
+  <links xsi:type="ClassDiagram:endType" source="as_course_instructor_e1" target="cls_course" />
+  <links xsi:type="ClassDiagram:endType" source="as_course_instructor_e2" target="cls_instructor" />
+  <links xsi:type="ClassDiagram:association" source="ab_course_instructor" target="as_course_instructor" />
+  <links xsi:type="ClassDiagram:sourceClass" source="ab_course_instructor" target="cls_course" />
+  <links xsi:type="ClassDiagram:targetClass" source="ab_course_instructor" target="cls_instructor" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_student_advisor" target="as_student_advisor_e1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as_student_advisor" target="as_student_advisor_e2" />
+  <links xsi:type="ClassDiagram:endType" source="as_student_advisor_e1" target="cls_student" />
+  <links xsi:type="ClassDiagram:endType" source="as_student_advisor_e2" target="cls_instructor" />
+  <links xsi:type="ClassDiagram:association" source="ab_student_advisor" target="as_student_advisor" />
+  <links xsi:type="ClassDiagram:sourceClass" source="ab_student_advisor" target="cls_student" />
+  <links xsi:type="ClassDiagram:targetClass" source="ab_student_advisor" target="cls_instructor" />
+</model>

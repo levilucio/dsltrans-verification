@@ -1,0 +1,78 @@
+@startuml
+title statechart2flow_very_large_input.xmi
+state "s0" as s_s0
+state "s1" as s_s1
+state "s2" as s_s2
+state "s3" as s_s3
+state "s4" as s_s4
+state "s5" as s_s5
+state "s6" as s_s6
+state "s7" as s_s7
+state "s8" as s_s8
+state "s9" as s_s9
+state "s10" as s_s10
+state "s11" as s_s11
+state "s12" as s_s12
+state "s13" as s_s13
+state "s14" as s_s14
+state "s15" as s_s15
+state "s16" as s_s16
+state "s17" as s_s17
+state "s18" as s_s18
+state "s19" as s_s19
+state "s20" as s_s20
+state "s21" as s_s21
+state "s22" as s_s22
+state "s23" as s_s23
+state "s24" as s_s24
+state "s25" as s_s25
+state "s26" as s_s26
+state "s27" as s_s27
+state "s28" as s_s28
+state "s29" as s_s29
+state "s30" as s_s30
+state "s31" as s_s31
+[*] --> s_s0
+s_s0 --> s_s1 : t0
+s_s1 --> s_s2 : t1
+s_s2 --> s_s3 : t2
+s_s3 --> s_s4 : t3
+s_s4 --> s_s5 : t4
+s_s5 --> s_s6 : t5
+s_s6 --> s_s7 : t6
+s_s7 --> s_s8 : t7
+s_s8 --> s_s9 : t8
+s_s9 --> s_s10 : t9
+s_s10 --> s_s11 : t10
+s_s11 --> s_s12 : t11
+s_s12 --> s_s13 : t12
+s_s13 --> s_s14 : t13
+s_s14 --> s_s15 : t14
+s_s15 --> s_s16 : t15
+s_s16 --> s_s17 : t16
+s_s17 --> s_s18 : t17
+s_s18 --> s_s19 : t18
+s_s19 --> s_s20 : t19
+s_s20 --> s_s21 : t20
+s_s21 --> s_s22 : t21
+s_s22 --> s_s23 : t22
+s_s23 --> s_s24 : t23
+s_s24 --> s_s25 : t24
+s_s25 --> s_s26 : t25
+s_s26 --> s_s27 : t26
+s_s27 --> s_s28 : t27
+s_s28 --> s_s29 : t28
+s_s29 --> s_s30 : t29
+s_s30 --> s_s31 : t30
+s_s0 --> s_s2 : t31
+s_s3 --> s_s5 : t32
+s_s6 --> s_s8 : t33
+s_s9 --> s_s11 : t34
+s_s12 --> s_s14 : t35
+s_s15 --> s_s17 : t36
+s_s18 --> s_s20 : t37
+s_s21 --> s_s23 : t38
+s_s24 --> s_s26 : t39
+s_s27 --> s_s29 : t40
+s_s31 --> [*]
+@enduml

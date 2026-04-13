@@ -1,0 +1,11 @@
+{
+  "transformation": "Class2Relational_frag_canonical",
+  "spec": "examples/class2relational_concrete.dslt",
+  "input_model": "input\\with_many_to_many_input.xmi",
+  "output_model": "output\\out_many_to_many.xmi",
+  "stats": {
+    "created_nodes": 10,
+    "created_edges": 11,
+    "created_traces": 15
+  }
+}

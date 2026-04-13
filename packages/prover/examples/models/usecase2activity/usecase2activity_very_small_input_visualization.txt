@@ -1,0 +1,10 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_very_small_input.xmi
+Objects: 2 | Links: 1 | Traces: 0
+
+Use case model context:
+  System: sm
+
+Use cases:
+- Use case: U0
+  ID: n0
+

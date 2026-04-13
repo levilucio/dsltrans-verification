@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- Root: 1 Model containing 1 Households (containment) -->
+  <objects xmi:id="model1" xsi:type="Household:Model"/>
+  <objects xmi:id="households1" xsi:type="Household:Households"/>
+  <!-- Containment: root Model -> Households -->
+  <links xsi:type="Household:root" source="model1" target="households1"/>
+  <!-- Families: 3 (containment have: Households -> Family) -->
+  <objects xmi:id="family1" xsi:type="Household:Family"/>
+  <objects xmi:id="family2" xsi:type="Household:Family"/>
+  <objects xmi:id="family3" xsi:type="Household:Family"/>
+  <links xsi:type="Household:have" source="households1" target="family1"/>
+  <links xsi:type="Household:have" source="households1" target="family2"/>
+  <links xsi:type="Household:have" source="households1" target="family3"/>
+  <!-- Members: containment members Households -> Member -->
+  <objects xmi:id="father1" xsi:type="Household:Member" isActive="true" roleTag="Father" role="Father"/>
+  <objects xmi:id="mother1" xsi:type="Household:Member" isActive="true" roleTag="Mother" role="Mother"/>
+  <objects xmi:id="son1" xsi:type="Household:Member" isActive="true" roleTag="Son" role="Son"/>
+  <objects xmi:id="son2" xsi:type="Household:Member" isActive="true" roleTag="Son" role="Son"/>
+  <objects xmi:id="daughter1" xsi:type="Household:Member" isActive="true" roleTag="Daughter" role="Daughter"/>
+  <objects xmi:id="daughter2" xsi:type="Household:Member" isActive="true" roleTag="Daughter" role="Daughter"/>
+  <objects xmi:id="father2" xsi:type="Household:Member" isActive="true" roleTag="Father" role="Father"/>
+  <objects xmi:id="mother2" xsi:type="Household:Member" isActive="true" roleTag="Mother" role="Mother"/>
+  <objects xmi:id="son3" xsi:type="Household:Member" isActive="true" roleTag="Son" role="Son"/>
+  <objects xmi:id="daughter3" xsi:type="Household:Member" isActive="true" roleTag="Daughter" role="Daughter"/>
+  <objects xmi:id="daughter4" xsi:type="Household:Member" isActive="true" roleTag="Daughter" role="Daughter"/>
+  <objects xmi:id="father3" xsi:type="Household:Member" isActive="true" roleTag="Father" role="Father"/>
+  <objects xmi:id="mother3" xsi:type="Household:Member" isActive="true" roleTag="Mother" role="Mother"/>
+  <objects xmi:id="son4" xsi:type="Household:Member" isActive="true" roleTag="Son" role="Son"/>
+  <objects xmi:id="son5" xsi:type="Household:Member" isActive="true" roleTag="Son" role="Son"/>
+  <objects xmi:id="daughter5" xsi:type="Household:Member" isActive="true" roleTag="Daughter" role="Daughter"/>
+  <links xsi:type="Household:members" source="households1" target="father1"/>
+  <links xsi:type="Household:members" source="households1" target="mother1"/>
+  <links xsi:type="Household:members" source="households1" target="son1"/>
+  <links xsi:type="Household:members" source="households1" target="son2"/>
+  <links xsi:type="Household:members" source="households1" target="daughter1"/>
+  <links xsi:type="Household:members" source="households1" target="daughter2"/>
+  <links xsi:type="Household:members" source="households1" target="father2"/>
+  <links xsi:type="Household:members" source="households1" target="mother2"/>
+  <links xsi:type="Household:members" source="households1" target="son3"/>
+  <links xsi:type="Household:members" source="households1" target="daughter3"/>
+  <links xsi:type="Household:members" source="households1" target="daughter4"/>
+  <links xsi:type="Household:members" source="households1" target="father3"/>
+  <links xsi:type="Household:members" source="households1" target="mother3"/>
+  <links xsi:type="Household:members" source="households1" target="son4"/>
+  <links xsi:type="Household:members" source="households1" target="son5"/>
+  <links xsi:type="Household:members" source="households1" target="daughter5"/>
+  <!-- References: Family -> Member (father, mother, son, daughter) -->
+  <links xsi:type="Household:father" source="family1" target="father1"/>
+  <links xsi:type="Household:mother" source="family1" target="mother1"/>
+  <links xsi:type="Household:son" source="family1" target="son1"/>
+  <links xsi:type="Household:son" source="family1" target="son2"/>
+  <links xsi:type="Household:daughter" source="family1" target="daughter1"/>
+  <links xsi:type="Household:daughter" source="family1" target="daughter2"/>
+  <links xsi:type="Household:father" source="family2" target="father2"/>
+  <links xsi:type="Household:mother" source="family2" target="mother2"/>
+  <links xsi:type="Household:son" source="family2" target="son3"/>
+  <links xsi:type="Household:daughter" source="family2" target="daughter3"/>
+  <links xsi:type="Household:daughter" source="family2" target="daughter4"/>
+  <links xsi:type="Household:father" source="family3" target="father3"/>
+  <links xsi:type="Household:mother" source="family3" target="mother3"/>
+  <links xsi:type="Household:son" source="family3" target="son4"/>
+  <links xsi:type="Household:son" source="family3" target="son5"/>
+  <links xsi:type="Household:daughter" source="family3" target="daughter5"/>
+</model>

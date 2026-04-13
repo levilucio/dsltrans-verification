@@ -1,0 +1,412 @@
+// =============================================================================
+// Scalability Fragment - 60+ rules for scalability testing
+// Rules: 67
+// =============================================================================
+// Source/target metamodels with many element types (E1..E13, T1..T13).
+// Each element type has 5 mapping rules (basic, tagged, in-pkg, linked, conditional).
+// F-LNR compliant: finite attributes, root containment, match size <= 4 where possible.
+
+metamodel SourceScalability {
+    class Model { }
+    class Pkg { name: String }
+    class E1  { tag: String }
+    class E2  { tag: String }
+    class E3  { tag: String }
+    class E4  { tag: String }
+    class E5  { tag: String }
+    class E6  { tag: String }
+    class E7  { tag: String }
+    class E8  { tag: String }
+    class E9  { tag: String }
+    class E10 { tag: String }
+    class E11 { tag: String }
+    class E12 { tag: String }
+    class E13 { tag: String }
+    containment assoc root: Model[1] -- Pkg[0..*]
+    containment assoc pkgE1:  Pkg[1] -- E1[0..*]
+    containment assoc pkgE2:  Pkg[1] -- E2[0..*]
+    containment assoc pkgE3:  Pkg[1] -- E3[0..*]
+    containment assoc pkgE4:  Pkg[1] -- E4[0..*]
+    containment assoc pkgE5:  Pkg[1] -- E5[0..*]
+    containment assoc pkgE6:  Pkg[1] -- E6[0..*]
+    containment assoc pkgE7:  Pkg[1] -- E7[0..*]
+    containment assoc pkgE8:  Pkg[1] -- E8[0..*]
+    containment assoc pkgE9:  Pkg[1] -- E9[0..*]
+    containment assoc pkgE10: Pkg[1] -- E10[0..*]
+    containment assoc pkgE11: Pkg[1] -- E11[0..*]
+    containment assoc pkgE12: Pkg[1] -- E12[0..*]
+    containment assoc pkgE13: Pkg[1] -- E13[0..*]
+}
+
+metamodel TargetScalability {
+    class Model { }
+    class Pkg { name: String }
+    class T1  { tag: String }
+    class T2  { tag: String }
+    class T3  { tag: String }
+    class T4  { tag: String }
+    class T5  { tag: String }
+    class T6  { tag: String }
+    class T7  { tag: String }
+    class T8  { tag: String }
+    class T9  { tag: String }
+    class T10 { tag: String }
+    class T11 { tag: String }
+    class T12 { tag: String }
+    class T13 { tag: String }
+    containment assoc root: Model[1] -- Pkg[0..*]
+    containment assoc pkgT1:  Pkg[1] -- T1[0..*]
+    containment assoc pkgT2:  Pkg[1] -- T2[0..*]
+    containment assoc pkgT3:  Pkg[1] -- T3[0..*]
+    containment assoc pkgT4:  Pkg[1] -- T4[0..*]
+    containment assoc pkgT5:  Pkg[1] -- T5[0..*]
+    containment assoc pkgT6:  Pkg[1] -- T6[0..*]
+    containment assoc pkgT7:  Pkg[1] -- T7[0..*]
+    containment assoc pkgT8:  Pkg[1] -- T8[0..*]
+    containment assoc pkgT9:  Pkg[1] -- T9[0..*]
+    containment assoc pkgT10: Pkg[1] -- T10[0..*]
+    containment assoc pkgT11: Pkg[1] -- T11[0..*]
+    containment assoc pkgT12: Pkg[1] -- T12[0..*]
+    containment assoc pkgT13: Pkg[1] -- T13[0..*]
+}
+
+transformation Scalability_concrete : SourceScalability -> TargetScalability {
+
+    layer Root {
+        rule CreateRoot {
+            match { any m : Model }
+            apply { outM : Model }
+        }
+        rule Pkg2Pkg {
+            match {
+                any m : Model
+                any p : Pkg
+                direct r : root -- m.p
+            }
+            apply {
+                outM : Model
+                outP : Pkg { name = p.name }
+                outR : root -- outM.outP
+            }
+        }
+    }
+
+    layer MapE1 {
+        rule E1_2_T1 { match { any e : E1 } apply { t : T1 } }
+        rule E1_2_T1_Tagged { match { any e : E1 where e.tag != "" } apply { t : T1 { tag = e.tag } } }
+        rule E1_2_T1_InPkg {
+            match {
+                any p : Pkg
+                any e : E1
+                direct l : pkgE1 -- p.e
+            }
+            apply {
+                outP : Pkg
+                t : T1
+                outL : pkgT1 -- outP.t
+            }
+        }
+        rule E1_2_T1_Linked {
+            match {
+                any m : Model
+                any p : Pkg
+                any e : E1
+                direct r : root -- m.p
+                direct pe : pkgE1 -- p.e
+            }
+            apply {
+                outM : Model
+                outP : Pkg
+                t : T1
+                outR : root -- outM.outP
+                outPe : pkgT1 -- outP.t
+            }
+        }
+        rule E1_2_T1_Cond { match { any e : E1 where e.tag == "a" } apply { t : T1 { tag = "a" } } }
+    }
+    layer MapE2 {
+        rule E2_2_T2 { match { any e : E2 } apply { t : T2 } }
+        rule E2_2_T2_Tagged { match { any e : E2 where e.tag != "" } apply { t : T2 { tag = e.tag } } }
+        rule E2_2_T2_InPkg {
+            match {
+                any p : Pkg
+                any e : E2
+                direct l : pkgE2 -- p.e
+            }
+            apply {
+                outP : Pkg
+                t : T2
+                outL : pkgT2 -- outP.t
+            }
+        }
+        rule E2_2_T2_Linked {
+            match {
+                any m : Model
+                any p : Pkg
+                any e : E2
+                direct r : root -- m.p
+                direct pe : pkgE2 -- p.e
+            }
+            apply {
+                outM : Model
+                outP : Pkg
+                t : T2
+                outR : root -- outM.outP
+                outPe : pkgT2 -- outP.t
+            }
+        }
+        rule E2_2_T2_Cond { match { any e : E2 where e.tag == "a" } apply { t : T2 { tag = "a" } } }
+    }
+    layer MapE3 {
+        rule E3_2_T3 { match { any e : E3 } apply { t : T3 } }
+        rule E3_2_T3_Tagged { match { any e : E3 where e.tag != "" } apply { t : T3 { tag = e.tag } } }
+        rule E3_2_T3_InPkg {
+            match {
+                any p : Pkg
+                any e : E3
+                direct l : pkgE3 -- p.e
+            }
+            apply {
+                outP : Pkg
+                t : T3
+                outL : pkgT3 -- outP.t
+            }
+        }
+        rule E3_2_T3_Linked {
+            match {
+                any m : Model
+                any p : Pkg
+                any e : E3
+                direct r : root -- m.p
+                direct pe : pkgE3 -- p.e
+            }
+            apply {
+                outM : Model
+                outP : Pkg
+                t : T3
+                outR : root -- outM.outP
+                outPe : pkgT3 -- outP.t
+            }
+        }
+        rule E3_2_T3_Cond { match { any e : E3 where e.tag == "a" } apply { t : T3 { tag = "a" } } }
+    }
+    layer MapE4 {
+        rule E4_2_T4 { match { any e : E4 } apply { t : T4 } }
+        rule E4_2_T4_Tagged { match { any e : E4 where e.tag != "" } apply { t : T4 { tag = e.tag } } }
+        rule E4_2_T4_InPkg {
+            match { any p : Pkg
+                any e : E4
+                direct l : pkgE4 -- p.e }
+            apply { outP : Pkg
+                t : T4
+                outL : pkgT4 -- outP.t }
+        }
+        rule E4_2_T4_Linked {
+            match { any m : Model
+                any p : Pkg
+                any e : E4
+                direct r : root -- m.p
+                direct pe : pkgE4 -- p.e }
+            apply { outM : Model
+                outP : Pkg
+                t : T4
+                outR : root -- outM.outP
+                outPe : pkgT4 -- outP.t }
+        }
+        rule E4_2_T4_Cond { match { any e : E4 where e.tag == "a" } apply { t : T4 { tag = "a" } } }
+    }
+    layer MapE5 {
+        rule E5_2_T5 { match { any e : E5 } apply { t : T5 } }
+        rule E5_2_T5_Tagged { match { any e : E5 where e.tag != "" } apply { t : T5 { tag = e.tag } } }
+        rule E5_2_T5_InPkg { match { any p : Pkg
+                any e : E5
+                direct l : pkgE5 -- p.e } apply { outP : Pkg
+                t : T5
+                outL : pkgT5 -- outP.t } }
+        rule E5_2_T5_Linked { match { any m : Model
+                any p : Pkg
+                any e : E5
+                direct r : root -- m.p
+                direct pe : pkgE5 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T5
+                outR : root -- outM.outP
+                outPe : pkgT5 -- outP.t } }
+        rule E5_2_T5_Cond { match { any e : E5 where e.tag == "a" } apply { t : T5 { tag = "a" } } }
+    }
+    layer MapE6 {
+        rule E6_2_T6 { match { any e : E6 } apply { t : T6 } }
+        rule E6_2_T6_Tagged { match { any e : E6 where e.tag != "" } apply { t : T6 { tag = e.tag } } }
+        rule E6_2_T6_InPkg { match { any p : Pkg
+                any e : E6
+                direct l : pkgE6 -- p.e } apply { outP : Pkg
+                t : T6
+                outL : pkgT6 -- outP.t } }
+        rule E6_2_T6_Linked { match { any m : Model
+                any p : Pkg
+                any e : E6
+                direct r : root -- m.p
+                direct pe : pkgE6 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T6
+                outR : root -- outM.outP
+                outPe : pkgT6 -- outP.t } }
+        rule E6_2_T6_Cond { match { any e : E6 where e.tag == "a" } apply { t : T6 { tag = "a" } } }
+    }
+    layer MapE7 {
+        rule E7_2_T7 { match { any e : E7 } apply { t : T7 } }
+        rule E7_2_T7_Tagged { match { any e : E7 where e.tag != "" } apply { t : T7 { tag = e.tag } } }
+        rule E7_2_T7_InPkg { match { any p : Pkg
+                any e : E7
+                direct l : pkgE7 -- p.e } apply { outP : Pkg
+                t : T7
+                outL : pkgT7 -- outP.t } }
+        rule E7_2_T7_Linked { match { any m : Model
+                any p : Pkg
+                any e : E7
+                direct r : root -- m.p
+                direct pe : pkgE7 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T7
+                outR : root -- outM.outP
+                outPe : pkgT7 -- outP.t } }
+        rule E7_2_T7_Cond { match { any e : E7 where e.tag == "a" } apply { t : T7 { tag = "a" } } }
+    }
+    layer MapE8 {
+        rule E8_2_T8 { match { any e : E8 } apply { t : T8 } }
+        rule E8_2_T8_Tagged { match { any e : E8 where e.tag != "" } apply { t : T8 { tag = e.tag } } }
+        rule E8_2_T8_InPkg { match { any p : Pkg
+                any e : E8
+                direct l : pkgE8 -- p.e } apply { outP : Pkg
+                t : T8
+                outL : pkgT8 -- outP.t } }
+        rule E8_2_T8_Linked { match { any m : Model
+                any p : Pkg
+                any e : E8
+                direct r : root -- m.p
+                direct pe : pkgE8 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T8
+                outR : root -- outM.outP
+                outPe : pkgT8 -- outP.t } }
+        rule E8_2_T8_Cond { match { any e : E8 where e.tag == "a" } apply { t : T8 { tag = "a" } } }
+    }
+    layer MapE9 {
+        rule E9_2_T9 { match { any e : E9 } apply { t : T9 } }
+        rule E9_2_T9_Tagged { match { any e : E9 where e.tag != "" } apply { t : T9 { tag = e.tag } } }
+        rule E9_2_T9_InPkg { match { any p : Pkg
+                any e : E9
+                direct l : pkgE9 -- p.e } apply { outP : Pkg
+                t : T9
+                outL : pkgT9 -- outP.t } }
+        rule E9_2_T9_Linked { match { any m : Model
+                any p : Pkg
+                any e : E9
+                direct r : root -- m.p
+                direct pe : pkgE9 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T9
+                outR : root -- outM.outP
+                outPe : pkgT9 -- outP.t } }
+        rule E9_2_T9_Cond { match { any e : E9 where e.tag == "a" } apply { t : T9 { tag = "a" } } }
+    }
+    layer MapE10 {
+        rule E10_2_T10 { match { any e : E10 } apply { t : T10 } }
+        rule E10_2_T10_Tagged { match { any e : E10 where e.tag != "" } apply { t : T10 { tag = e.tag } } }
+        rule E10_2_T10_InPkg { match { any p : Pkg
+                any e : E10
+                direct l : pkgE10 -- p.e } apply { outP : Pkg
+                t : T10
+                outL : pkgT10 -- outP.t } }
+        rule E10_2_T10_Linked { match { any m : Model
+                any p : Pkg
+                any e : E10
+                direct r : root -- m.p
+                direct pe : pkgE10 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T10
+                outR : root -- outM.outP
+                outPe : pkgT10 -- outP.t } }
+        rule E10_2_T10_Cond { match { any e : E10 where e.tag == "a" } apply { t : T10 { tag = "a" } } }
+    }
+    layer MapE11 {
+        rule E11_2_T11 { match { any e : E11 } apply { t : T11 } }
+        rule E11_2_T11_Tagged { match { any e : E11 where e.tag != "" } apply { t : T11 { tag = e.tag } } }
+        rule E11_2_T11_InPkg { match { any p : Pkg
+                any e : E11
+                direct l : pkgE11 -- p.e } apply { outP : Pkg
+                t : T11
+                outL : pkgT11 -- outP.t } }
+        rule E11_2_T11_Linked { match { any m : Model
+                any p : Pkg
+                any e : E11
+                direct r : root -- m.p
+                direct pe : pkgE11 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T11
+                outR : root -- outM.outP
+                outPe : pkgT11 -- outP.t } }
+        rule E11_2_T11_Cond { match { any e : E11 where e.tag == "a" } apply { t : T11 { tag = "a" } } }
+    }
+    layer MapE12 {
+        rule E12_2_T12 { match { any e : E12 } apply { t : T12 } }
+        rule E12_2_T12_Tagged { match { any e : E12 where e.tag != "" } apply { t : T12 { tag = e.tag } } }
+        rule E12_2_T12_InPkg { match { any p : Pkg
+                any e : E12
+                direct l : pkgE12 -- p.e } apply { outP : Pkg
+                t : T12
+                outL : pkgT12 -- outP.t } }
+        rule E12_2_T12_Linked { match { any m : Model
+                any p : Pkg
+                any e : E12
+                direct r : root -- m.p
+                direct pe : pkgE12 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T12
+                outR : root -- outM.outP
+                outPe : pkgT12 -- outP.t } }
+        rule E12_2_T12_Cond { match { any e : E12 where e.tag == "a" } apply { t : T12 { tag = "a" } } }
+    }
+    layer MapE13 {
+        rule E13_2_T13 { match { any e : E13 } apply { t : T13 } }
+        rule E13_2_T13_Tagged { match { any e : E13 where e.tag != "" } apply { t : T13 { tag = e.tag } } }
+        rule E13_2_T13_InPkg { match { any p : Pkg
+                any e : E13
+                direct l : pkgE13 -- p.e } apply { outP : Pkg
+                t : T13
+                outL : pkgT13 -- outP.t } }
+        rule E13_2_T13_Linked { match { any m : Model
+                any p : Pkg
+                any e : E13
+                direct r : root -- m.p
+                direct pe : pkgE13 -- p.e } apply { outM : Model
+                outP : Pkg
+                t : T13
+                outR : root -- outM.outP
+                outPe : pkgT13 -- outP.t } }
+        rule E13_2_T13_Cond { match { any e : E13 where e.tag == "a" } apply { t : T13 { tag = "a" } } }
+    }
+}
+
+// Properties: core traces (expected HOLDS)
+property ModelHasModel { precondition { any m : Model } postcondition { outM : Model outM <--trace-- m } }
+property PkgHasPkg { precondition { any p : Pkg } postcondition { outP : Pkg outP <--trace-- p } }
+property E1HasT1 { precondition { any e : E1 } postcondition { t : T1 t <--trace-- e } }
+property E2HasT2 { precondition { any e : E2 } postcondition { t : T2 t <--trace-- e } }
+property E3HasT3 { precondition { any e : E3 } postcondition { t : T3 t <--trace-- e } }
+property E4HasT4 { precondition { any e : E4 } postcondition { t : T4 t <--trace-- e } }
+property E5HasT5 { precondition { any e : E5 } postcondition { t : T5 t <--trace-- e } }
+property E6HasT6 { precondition { any e : E6 } postcondition { t : T6 t <--trace-- e } }
+property E7HasT7 { precondition { any e : E7 } postcondition { t : T7 t <--trace-- e } }
+property E8HasT8 { precondition { any e : E8 } postcondition { t : T8 t <--trace-- e } }
+property E9HasT9 { precondition { any e : E9 } postcondition { t : T9 t <--trace-- e } }
+property E10HasT10 { precondition { any e : E10 } postcondition { t : T10 t <--trace-- e } }
+property E11HasT11 { precondition { any e : E11 } postcondition { t : T11 t <--trace-- e } }
+property E12HasT12 { precondition { any e : E12 } postcondition { t : T12 t <--trace-- e } }
+property E13HasT13 { precondition { any e : E13 } postcondition { t : T13 t <--trace-- e } }
+// Expected VIOLATED (wrong trace targets)
+property E1TracedToT2_ShouldFail { precondition { any e : E1 } postcondition { t : T2 t <--trace-- e } }
+property PkgTracedToT1_ShouldFail { precondition { any p : Pkg } postcondition { t : T1 t <--trace-- p } }
+
+
+

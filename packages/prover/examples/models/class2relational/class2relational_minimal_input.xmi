@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="ClassDiagram:Model"/>
+  <objects xmi:id="pkg1" xsi:type="ClassDiagram:Package" name="Pkg1"/>
+  <objects xmi:id="cls1" xsi:type="ClassDiagram:Class" name="C" isAbstract="false"/>
+  <objects xmi:id="dt1" xsi:type="ClassDiagram:DataType" name="int"/>
+  <objects xmi:id="attr1" xsi:type="ClassDiagram:Attribute" name="a" isMultivalued="false"/>
+  <links xsi:type="ClassDiagram:root" source="model1" target="pkg1"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls1"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="dt1"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls1" target="attr1"/>
+  <links xsi:type="ClassDiagram:type" source="attr1" target="dt1"/>
+</model>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="UseCaseConcrete:UseCaseModel" systemName="RetailCheckout" domain="Retail" release="3" />
+  <objects xmi:id="n0" xsi:type="UseCaseConcrete:UseCaseNode" name="SubmitPayment" actor="Customer" goal="Collect payment securely" priority="9" complexity="3" />
+  <objects xmi:id="n1" xsi:type="UseCaseConcrete:UseCaseNode" name="AuthenticateUser" actor="System" goal="Authenticate the user before checkout" priority="8" complexity="2" />
+  <objects xmi:id="e0" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Shared authentication requirement" priority="9" />
+
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n0" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n1" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e0" />
+  <links xsi:type="UseCaseConcrete:src" source="e0" target="n0" />
+  <links xsi:type="UseCaseConcrete:dst" source="e0" target="n1" />
+</model>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="m0" xsi:type="ClassDiagram:Model" />
+  <objects xmi:id="pkg0" xsi:type="ClassDiagram:Package" name="Pkg1" />
+  <objects xmi:id="dt_int" xsi:type="ClassDiagram:DataType" name="T1" />
+  <objects xmi:id="dt_str" xsi:type="ClassDiagram:DataType" name="T2" />
+  <objects xmi:id="parent" xsi:type="ClassDiagram:Class" name="C" isAbstract="true" />
+  <objects xmi:id="child" xsi:type="ClassDiagram:Class" name="D" isAbstract="false" />
+  <objects xmi:id="helper" xsi:type="ClassDiagram:Class" name="T1" isAbstract="false" />
+  <objects xmi:id="target" xsi:type="ClassDiagram:Class" name="T2" isAbstract="false" />
+  <objects xmi:id="a0" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false" />
+  <objects xmi:id="a1" xsi:type="ClassDiagram:Attribute" name="ref" isMultivalued="false" />
+  <objects xmi:id="a2" xsi:type="ClassDiagram:Attribute" name="a" isMultivalued="true" />
+  <objects xmi:id="a3" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false" />
+  <objects xmi:id="g0" xsi:type="ClassDiagram:Generalization" />
+  <objects xmi:id="as0" xsi:type="ClassDiagram:Association" name="A1" />
+  <objects xmi:id="as0_e1" xsi:type="ClassDiagram:AssociationEnd" name="end1" isNavigable="true" lowerBound="0" upperBound="1" />
+  <objects xmi:id="as0_e2" xsi:type="ClassDiagram:AssociationEnd" name="end2" isNavigable="true" lowerBound="0" upperBound="1" />
+  <objects xmi:id="ab0" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="1" tgtLower="0" tgtUpper="1" />
+  <objects xmi:id="as1" xsi:type="ClassDiagram:Association" name="A2" />
+  <objects xmi:id="as1_e1" xsi:type="ClassDiagram:AssociationEnd" name="end1" isNavigable="true" lowerBound="0" upperBound="16" />
+  <objects xmi:id="as1_e2" xsi:type="ClassDiagram:AssociationEnd" name="end2" isNavigable="true" lowerBound="0" upperBound="16" />
+  <objects xmi:id="ab1" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="16" tgtLower="0" tgtUpper="16" />
+
+  <links xsi:type="ClassDiagram:root" source="m0" target="pkg0" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg0" target="dt_int" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg0" target="dt_str" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg0" target="parent" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg0" target="child" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg0" target="helper" />
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg0" target="target" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="parent" target="a0" />
+  <links xsi:type="ClassDiagram:type" source="a0" target="dt_str" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="child" target="a1" />
+  <links xsi:type="ClassDiagram:type" source="a1" target="target" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="child" target="a2" />
+  <links xsi:type="ClassDiagram:ownedAttribute" source="target" target="a3" />
+  <links xsi:type="ClassDiagram:type" source="a3" target="dt_int" />
+  <links xsi:type="ClassDiagram:rootGeneralizations" source="m0" target="g0" />
+  <links xsi:type="ClassDiagram:general" source="g0" target="parent" />
+  <links xsi:type="ClassDiagram:specific" source="g0" target="child" />
+  <links xsi:type="ClassDiagram:rootAssociations" source="m0" target="as0" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as0" target="as0_e1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as0" target="as0_e2" />
+  <links xsi:type="ClassDiagram:endType" source="as0_e1" target="child" />
+  <links xsi:type="ClassDiagram:endType" source="as0_e2" target="target" />
+  <links xsi:type="ClassDiagram:association" source="ab0" target="as0" />
+  <links xsi:type="ClassDiagram:sourceClass" source="ab0" target="child" />
+  <links xsi:type="ClassDiagram:targetClass" source="ab0" target="target" />
+  <links xsi:type="ClassDiagram:rootAssociations" source="m0" target="as1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as1" target="as1_e1" />
+  <links xsi:type="ClassDiagram:memberEnd" source="as1" target="as1_e2" />
+  <links xsi:type="ClassDiagram:endType" source="as1_e1" target="helper" />
+  <links xsi:type="ClassDiagram:endType" source="as1_e2" target="target" />
+  <links xsi:type="ClassDiagram:association" source="ab1" target="as1" />
+  <links xsi:type="ClassDiagram:sourceClass" source="ab1" target="helper" />
+  <links xsi:type="ClassDiagram:targetClass" source="ab1" target="target" />
+</model>

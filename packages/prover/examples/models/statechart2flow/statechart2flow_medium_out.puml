@@ -1,0 +1,10 @@
+@startuml
+title statechart2flow_medium_out.xmi
+(*) --> "[Node2Node_tn_2] Node2Node_tn_2"
+"[Node2Node_tn_4] Node2Node_tn_4" -->[Edge2Edge_te_10] "[Node2Node_tn_6] Node2Node_tn_6"
+"[Node2Node_tn_2] Node2Node_tn_2" -->[Edge2Edge_te_7] "[Node2Node_tn_3] Node2Node_tn_3"
+"[Node2Node_tn_3] Node2Node_tn_3" -->[Edge2Edge_te_8] "[Node2Node_tn_4] Node2Node_tn_4"
+"[Node2Node_tn_4] Node2Node_tn_4" -->[Edge2Edge_te_9] "[Node2Node_tn_5] Node2Node_tn_5"
+"[Node2Node_tn_5] Node2Node_tn_5" --> (*)
+"[Node2Node_tn_6] Node2Node_tn_6" --> (*)
+@enduml

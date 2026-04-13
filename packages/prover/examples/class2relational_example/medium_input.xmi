@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- Root containment: Model -> Package -->
+  <objects xmi:id="model1" xsi:type="ClassDiagram:Model"/>
+  <objects xmi:id="pkg1" xsi:type="ClassDiagram:Package" name="Pkg1"/>
+  <links xsi:type="ClassDiagram:root" source="model1" target="pkg1"/>
+  <objects xmi:id="cls_c" xsi:type="ClassDiagram:Class" name="C" isAbstract="false"/>
+  <objects xmi:id="cls_t1" xsi:type="ClassDiagram:Class" name="T1" isAbstract="false"/>
+  <objects xmi:id="cls_t2" xsi:type="ClassDiagram:Class" name="T2" isAbstract="false"/>
+  <objects xmi:id="dt_int" xsi:type="ClassDiagram:DataType" name="T1"/>
+  <objects xmi:id="dt_str" xsi:type="ClassDiagram:DataType" name="T2"/>
+  <objects xmi:id="attr_c_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false"/>
+  <objects xmi:id="attr_t1_val" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false"/>
+  <objects xmi:id="attr_t2_a" xsi:type="ClassDiagram:Attribute" name="a" isMultivalued="false"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_c"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_t1"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_t2"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="dt_int"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="dt_str"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_c" target="attr_c_id"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_t1" target="attr_t1_val"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_t2" target="attr_t2_a"/>
+  <links xsi:type="ClassDiagram:type" source="attr_c_id" target="dt_int"/>
+  <links xsi:type="ClassDiagram:type" source="attr_t1_val" target="dt_str"/>
+  <links xsi:type="ClassDiagram:type" source="attr_t2_a" target="dt_str"/>
+</model>

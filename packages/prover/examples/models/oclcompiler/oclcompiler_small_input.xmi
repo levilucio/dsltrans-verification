@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="OCLASTConcrete:Model"/>
+  <objects xmi:id="module1" xsi:type="OCLASTConcrete:Module" name="MainModule"/>
+  <objects xmi:id="field_age" xsi:type="OCLASTConcrete:Field" name="age" isStatic="false"/>
+  <objects xmi:id="op_isAdult" xsi:type="OCLASTConcrete:Operation" name="isAdult" isStatic="false"/>
+  <objects xmi:id="param_arg" xsi:type="OCLASTConcrete:Parameter" varName="arg"/>
+  <objects xmi:id="self1" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_age" xsi:type="OCLASTConcrete:NavigationCall" propName="age" isStatic="false" isSuper="false"/>
+  <objects xmi:id="int_18" xsi:type="OCLASTConcrete:IntegerExp" valInt="18"/>
+  <objects xmi:id="gt_call" xsi:type="OCLASTConcrete:BuiltInCall" opName=">"/>
+
+  <links xsi:type="OCLASTConcrete:root" source="model1" target="module1"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_age"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_isAdult"/>
+  <links xsi:type="OCLASTConcrete:params" source="op_isAdult" target="param_arg"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="self1"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="nav_age"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="int_18"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="gt_call"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_isAdult" target="gt_call"/>
+
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_age" target="self1"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="gt_call" target="nav_age"/>
+  <links xsi:type="OCLASTConcrete:bi_right" source="gt_call" target="int_18"/>
+</model>

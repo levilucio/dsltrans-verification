@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+hide empty members
+skinparam classAttributeIconSize 0
+title class2relational_medium_input.xmi
+
+package "Pkg1" as pkg0 {
+  class "T1\n[dt_int]" as dt_int <<DataType>>
+  class "T2\n[dt_str]" as dt_str <<DataType>>
+  abstract class "C\n[parent]" as parent
+  class "D\n[child]" as child
+  class "T1\n[helper]" as helper
+  class "T2\n[target]" as target
+}
+child --|> parent
+child "1" --> "1" target : as0
+helper "*" --> "*" target : as1
+@enduml

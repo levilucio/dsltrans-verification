@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="BibTeX:Model"/>
+  <objects xmi:id="bib1" xsi:type="BibTeX:BibFile"/>
+
+  <objects xmi:id="au001" xsi:type="BibTeX:Author" name="Olivier Biberstein"/>
+  <objects xmi:id="au002" xsi:type="BibTeX:Author" name="Mathieu Buffo"/>
+  <objects xmi:id="au003" xsi:type="BibTeX:Author" name="G. Bernot"/>
+  <objects xmi:id="au004" xsi:type="BibTeX:Author" name="M.-C. Gaudel"/>
+  <objects xmi:id="au005" xsi:type="BibTeX:Author" name="B. Marre"/>
+  <objects xmi:id="au006" xsi:type="BibTeX:Author" name="Cecile Peraire"/>
+  <objects xmi:id="au007" xsi:type="BibTeX:Author" name="Stephane Barbey"/>
+  <objects xmi:id="au008" xsi:type="BibTeX:Author" name="David Huerzeler"/>
+  <objects xmi:id="au009" xsi:type="BibTeX:Author" name="Smv Group"/>
+  <objects xmi:id="au010" xsi:type="BibTeX:Author" name="Gordon E. Moore"/>
+  <objects xmi:id="au011" xsi:type="BibTeX:Author" name="Frederick P. Brooks Jr."/>
+  <objects xmi:id="au012" xsi:type="BibTeX:Author" name="Frederick P. Brooks"/>
+  <objects xmi:id="au013" xsi:type="BibTeX:Author" name="E. W. Dijkstra"/>
+  <objects xmi:id="au014" xsi:type="BibTeX:Author" name="Bertrand Meyer"/>
+  <objects xmi:id="au015" xsi:type="BibTeX:Author" name="Object Management Group members"/>
+  <objects xmi:id="au016" xsi:type="BibTeX:Author" name="Ivar Jacobson"/>
+  <objects xmi:id="au017" xsi:type="BibTeX:Author" name="Grady Booch"/>
+  <objects xmi:id="au018" xsi:type="BibTeX:Author" name="James Rumbaugh"/>
+  <objects xmi:id="au019" xsi:type="BibTeX:Author" name="Object Management Group"/>
+  <objects xmi:id="au020" xsi:type="BibTeX:Author" name="Arie van Deursen"/>
+  <objects xmi:id="au021" xsi:type="BibTeX:Author" name="Paul Klint"/>
+  <objects xmi:id="au022" xsi:type="BibTeX:Author" name="Joost Visser"/>
+  <objects xmi:id="au023" xsi:type="BibTeX:Author" name="C B Jones"/>
+  <objects xmi:id="au024" xsi:type="BibTeX:Author" name="J.-R. Abrial"/>
+  <objects xmi:id="au025" xsi:type="BibTeX:Author" name="Edsger W. Dijkstra"/>
+  <objects xmi:id="au026" xsi:type="BibTeX:Author" name="D. Harel"/>
+  <objects xmi:id="au027" xsi:type="BibTeX:Author" name="B. Rumpe"/>
+  <objects xmi:id="au028" xsi:type="BibTeX:Author" name="Glenford J. Myers"/>
+  <objects xmi:id="au029" xsi:type="BibTeX:Author" name="Alexander Pretschner"/>
+  <objects xmi:id="au030" xsi:type="BibTeX:Author" name="Oscar Slotosch"/>
+  <objects xmi:id="au031" xsi:type="BibTeX:Author" name="Ernst Aiglstorfer"/>
+  <objects xmi:id="au032" xsi:type="BibTeX:Author" name="Stefan Kriebel"/>
+  <objects xmi:id="au033" xsi:type="BibTeX:Author" name="John B. Goodenough"/>
+  <objects xmi:id="au034" xsi:type="BibTeX:Author" name="Susan L. Gerhart"/>
+  <objects xmi:id="au035" xsi:type="BibTeX:Author" name="Gilles Bernot"/>
+  <objects xmi:id="au036" xsi:type="BibTeX:Author" name="Hartmut Ehrig"/>
+  <objects xmi:id="au037" xsi:type="BibTeX:Author" name="B. Mahr"/>
+  <objects xmi:id="au038" xsi:type="BibTeX:Author" name="Wolfgang Reisig"/>
+  <objects xmi:id="au039" xsi:type="BibTeX:Author" name="G.W. Brams"/>
+  <objects xmi:id="au040" xsi:type="BibTeX:Author" name="Jean-Marie Proth"/>
+  <objects xmi:id="au041" xsi:type="BibTeX:Author" name="Xiaolan Xie"/>
+  <objects xmi:id="au042" xsi:type="BibTeX:Author" name="Bruno Marre"/>
+  <objects xmi:id="au043" xsi:type="BibTeX:Author" name="G. D. Plotkin"/>
+  <objects xmi:id="au044" xsi:type="BibTeX:Author" name="Y. Ledru"/>
+  <objects xmi:id="au045" xsi:type="BibTeX:Author" name="L. du Bousquet"/>
+  <objects xmi:id="au046" xsi:type="BibTeX:Author" name="P. Bontron"/>
+  <objects xmi:id="au047" xsi:type="BibTeX:Author" name="O. Maury"/>
+  <objects xmi:id="au048" xsi:type="BibTeX:Author" name="C. Oriat"/>
+  <objects xmi:id="au049" xsi:type="BibTeX:Author" name="M.-L. Potet"/>
+  <objects xmi:id="au050" xsi:type="BibTeX:Author" name="Matthew Hennessy"/>
+  <objects xmi:id="au051" xsi:type="BibTeX:Author" name="Robin Milner"/>
+  <objects xmi:id="au052" xsi:type="BibTeX:Author" name="Stanislav Chachkov"/>
+  <objects xmi:id="au053" xsi:type="BibTeX:Author" name="Adrien Chantre"/>
+  <objects xmi:id="au054" xsi:type="BibTeX:Author" name="Sergio Coelho"/>
+  <objects xmi:id="au055" xsi:type="BibTeX:Author" name="Jan Philipps"/>
+  <objects xmi:id="au056" xsi:type="BibTeX:Author" name="Mark Utting"/>
+  <objects xmi:id="au057" xsi:type="BibTeX:Author" name="Bruno Legeard"/>
+  <objects xmi:id="au058" xsi:type="BibTeX:Author" name="Marie-Claude Gaudel"/>
+  <objects xmi:id="au059" xsi:type="BibTeX:Author" name="R. M. Burstall"/>
+  <objects xmi:id="au060" xsi:type="BibTeX:Author" name="John Darlington"/>
+  <objects xmi:id="au061" xsi:type="BibTeX:Author" name="Jan Tretmans"/>
+  <objects xmi:id="au062" xsi:type="BibTeX:Author" name="Gregory Lestiennes"/>
+  <objects xmi:id="au063" xsi:type="BibTeX:Author" name="Didier Buchs"/>
+  <objects xmi:id="au064" xsi:type="BibTeX:Author" name="Yves Ledru"/>
+  <objects xmi:id="au065" xsi:type="BibTeX:Author" name="Lydie du Bousquet"/>
+  <objects xmi:id="au066" xsi:type="BibTeX:Author" name="Olivier Maury"/>
+  <objects xmi:id="au067" xsi:type="BibTeX:Author" name="Pierre Bontron"/>
+  <objects xmi:id="au068" xsi:type="BibTeX:Author" name="Fabien Peureux"/>
+  <objects xmi:id="au069" xsi:type="BibTeX:Author" name="Yuri Gurevich"/>
+  <objects xmi:id="au070" xsi:type="BibTeX:Author" name="Philipp W. Kutter"/>
+  <objects xmi:id="au071" xsi:type="BibTeX:Author" name="Martin Odersky"/>
+  <objects xmi:id="au072" xsi:type="BibTeX:Author" name="Lothar Thiele"/>
+  <objects xmi:id="au073" xsi:type="BibTeX:Author" name="M. Clatin"/>
+
+  <objects xmi:id="kw_formal_methods" xsi:type="BibTeX:Keyword" text="formal_methods"/>
+  <objects xmi:id="kw_testing" xsi:type="BibTeX:Keyword" text="testing"/>
+  <objects xmi:id="kw_model_based_testing" xsi:type="BibTeX:Keyword" text="model_based_testing"/>
+  <objects xmi:id="kw_co_opn" xsi:type="BibTeX:Keyword" text="co_opn"/>
+  <objects xmi:id="kw_petri_nets" xsi:type="BibTeX:Keyword" text="petri_nets"/>
+  <objects xmi:id="kw_software_engineering" xsi:type="BibTeX:Keyword" text="software_engineering"/>
+  <objects xmi:id="kw_concurrency" xsi:type="BibTeX:Keyword" text="concurrency"/>
+  <objects xmi:id="kw_protocol_testing" xsi:type="BibTeX:Keyword" text="protocol_testing"/>
+
+  <!-- Ref [1] from thesis bibliography -->
+  <objects xmi:id="ref01" xsi:type="BibTeX:Article" key="olivierbiberstein1997" title="CO-OPN/2: An Object-Oriented Formalism for the Specification of Concurrent Systems" year="1997" journal="PhD thesis, University of Geneva"/>
+  <!-- Ref [2] from thesis bibliography -->
+  <objects xmi:id="ref02" xsi:type="BibTeX:Book" key="mathieubuffo1997" title="Contextual Coordination: a coordination model for distributed object systems" year="1997" publisher="PhD thesis, Universite de Geneve"/>
+  <!-- Ref [3] from thesis bibliography -->
+  <objects xmi:id="ref03" xsi:type="BibTeX:InProceedings" key="gbernot1991" title="Software testing based on formal specifications: a theory and a tool" year="1991" booktitle="IEEE Software Engineering Journal"/>
+  <!-- Ref [4] from thesis bibliography -->
+  <objects xmi:id="ref04" xsi:type="BibTeX:Article" key="cecileperaire1998" title="Formal testing of object-oriented software: from the method to the tool" year="1998" journal="PhD thesis, EPFL"/>
+  <!-- Ref [5] from thesis bibliography -->
+  <objects xmi:id="ref05" xsi:type="BibTeX:Book" key="stephanebarbey1997" title="Test Selection for Specification-Based Unit Testing of Object-Oriented Software Based on Formal Specifications" year="1997" publisher="PhD thesis, EPFL"/>
+  <!-- Ref [6] from thesis bibliography -->
+  <objects xmi:id="ref06" xsi:type="BibTeX:InProceedings" key="davidhuerzeler2004" title="Flexible subtyping relations for component-oriented formalisms and their verification" year="2004" booktitle="PhD thesis, EPFL"/>
+  <!-- Ref [7] from thesis bibliography -->
+  <objects xmi:id="ref07" xsi:type="BibTeX:Article" key="smvgroup2007" title="CoopnBuilder" year="2007" journal="SMV Group"/>
+  <!-- Ref [8] from thesis bibliography -->
+  <objects xmi:id="ref08" xsi:type="BibTeX:Book" key="gordonemoore2000" title="Cramming more components onto integrated circuits" year="2000" publisher="Readings in computer architecture"/>
+  <!-- Ref [9] from thesis bibliography -->
+  <objects xmi:id="ref09" xsi:type="BibTeX:InProceedings" key="frederickpbrooksjr1975" title="The mythical man-month - Essays on Software-Engineering" year="1975" booktitle="Addison Wesley"/>
+  <!-- Ref [10] from thesis bibliography -->
+  <objects xmi:id="ref10" xsi:type="BibTeX:Article" key="frederickpbrooks1987" title="No silver bullet - essence and accidents of software engineering" year="1987" journal="IEEE Computer"/>
+  <!-- Ref [11] from thesis bibliography -->
+  <objects xmi:id="ref11" xsi:type="BibTeX:Book" key="ewdijkstra1972" title="Notes on structured programming" year="1972" publisher="Structured Programming"/>
+  <!-- Ref [12] from thesis bibliography -->
+  <objects xmi:id="ref12" xsi:type="BibTeX:InProceedings" key="bertrandmeyer1988" title="Eiffel: A language and environment for software engineering" year="1988" booktitle="Journal of Systems and Software"/>
+  <!-- Ref [13] from thesis bibliography -->
+  <objects xmi:id="ref13" xsi:type="BibTeX:Article" key="objectmanagementgr2005" title="UML 2.0 superstructure specification" year="2005" journal="Technical report, OMG"/>
+  <!-- Ref [14] from thesis bibliography -->
+  <objects xmi:id="ref14" xsi:type="BibTeX:Book" key="ivarjacobson1999" title="The Unified Software Development Process" year="1999" publisher="Addison Wesley"/>
+  <!-- Ref [15] from thesis bibliography -->
+  <objects xmi:id="ref15" xsi:type="BibTeX:InProceedings" key="objectmanagementgr2003" title="MDA guide version 1.0.1" year="2003" booktitle="Technical report, OMG"/>
+  <!-- Ref [16] from thesis bibliography -->
+  <objects xmi:id="ref16" xsi:type="BibTeX:Article" key="arievandeursen2000" title="Domain-specific languages: An annotated bibliography" year="2000" journal="SIGPLAN Notices"/>
+  <!-- Ref [17] from thesis bibliography -->
+  <objects xmi:id="ref17" xsi:type="BibTeX:Book" key="cbjones1986" title="Systematic software development using VDM" year="1986" publisher="Prentice Hall"/>
+  <!-- Ref [18] from thesis bibliography -->
+  <objects xmi:id="ref18" xsi:type="BibTeX:InProceedings" key="jrabrial1996" title="The B-book: assigning programs to meanings" year="1996" booktitle="Cambridge University Press"/>
+  <!-- Ref [19] from thesis bibliography -->
+  <objects xmi:id="ref19" xsi:type="BibTeX:Article" key="edsgerwdijkstra1988" title="On the cruelty of really teaching computing science" year="1988" journal="Circulated privately"/>
+  <!-- Ref [20] from thesis bibliography -->
+  <objects xmi:id="ref20" xsi:type="BibTeX:Book" key="dharel2000" title="Modeling languages: Syntax, semantics and all that stuff" year="2000" publisher="Modeling Languages"/>
+  <!-- Ref [21] from thesis bibliography -->
+  <objects xmi:id="ref21" xsi:type="BibTeX:InProceedings" key="glenfordjmyers1979" title="The Art of Software Testing" year="1979" booktitle="John Wiley and Sons"/>
+  <!-- Ref [22] from thesis bibliography -->
+  <objects xmi:id="ref22" xsi:type="BibTeX:Article" key="alexanderpretschne2004" title="Model-based testing for real" year="2004" journal="STTT"/>
+  <!-- Ref [23] from thesis bibliography -->
+  <objects xmi:id="ref23" xsi:type="BibTeX:Book" key="johnbgoodenough1975" title="Toward a theory of test data selection" year="1975" publisher="Proceedings of the International Conference on Reliable Software"/>
+  <!-- Ref [24] from thesis bibliography -->
+  <objects xmi:id="ref24" xsi:type="BibTeX:InProceedings" key="gillesbernot1991" title="Testing against formal specifications: A theoretical view" year="1991" booktitle="TAPSOFT"/>
+  <!-- Ref [25] from thesis bibliography -->
+  <objects xmi:id="ref25" xsi:type="BibTeX:Article" key="hartmutehrig1985" title="Fundamentals of Algebraic Specification I" year="1985" journal="Springer"/>
+  <!-- Ref [26] from thesis bibliography -->
+  <objects xmi:id="ref26" xsi:type="BibTeX:Book" key="wolfgangreisig1991" title="Petri nets and algebraic specifications" year="1991" publisher="Theoretical Computer Science"/>
+  <!-- Ref [27] from thesis bibliography -->
+  <objects xmi:id="ref27" xsi:type="BibTeX:InProceedings" key="gwbrams1983" title="Reseaux de Petri: theorie et pratique - Tome 1" year="1983" booktitle="Masson"/>
+  <!-- Ref [28] from thesis bibliography -->
+  <objects xmi:id="ref28" xsi:type="BibTeX:Article" key="gwbrams1983" title="Reseaux de Petri: theorie et pratique - Tome 2" year="1983" journal="Masson"/>
+  <!-- Ref [29] from thesis bibliography -->
+  <objects xmi:id="ref29" xsi:type="BibTeX:Book" key="jeanmarieproth1998" title="Petri nets: a tool for design and management of manufacturing systems" year="1998" publisher="Quality and Reliability Engineering International"/>
+  <!-- Ref [30] from thesis bibliography -->
+  <objects xmi:id="ref30" xsi:type="BibTeX:InProceedings" key="brunomarre1991" title="Une methode et un outil d'assistance a la selection de jeux de tests a partir de specifications algebriques" year="1991" booktitle="PhD thesis, Universite de Paris-Sud"/>
+  <!-- Ref [31] from thesis bibliography -->
+  <objects xmi:id="ref31" xsi:type="BibTeX:Article" key="brunomarre1989" title="Generation automatique de jeux de tests, une solution: Specifications algebriques et programmation logique" year="1989" journal="SPLT"/>
+  <!-- Ref [32] from thesis bibliography -->
+  <objects xmi:id="ref32" xsi:type="BibTeX:Book" key="mathieubuffo1997" title="Contextual Coordination: a Coordination Model for Distributed Object Systems" year="1997" publisher="PhD thesis, University of Geneva"/>
+  <!-- Ref [33] from thesis bibliography -->
+  <objects xmi:id="ref33" xsi:type="BibTeX:InProceedings" key="gdplotkin1981" title="A Structural Approach to Operational Semantics" year="1981" booktitle="Technical Report DAIMI FN-19, University of Aarhus"/>
+  <!-- Ref [34] from thesis bibliography -->
+  <objects xmi:id="ref34" xsi:type="BibTeX:Article" key="yledru2001" title="Test purposes: Adapting the notion of specification to testing" year="2001" journal="ASE"/>
+  <!-- Ref [35] from thesis bibliography -->
+  <objects xmi:id="ref35" xsi:type="BibTeX:Book" key="matthewhennessy1985" title="Algebraic laws for nondeterminism and concurrency" year="1985" publisher="J. ACM"/>
+  <!-- Ref [36] from thesis bibliography -->
+  <objects xmi:id="ref36" xsi:type="BibTeX:InProceedings" key="stanislavchachkov2004" title="Generation of Object-Oriented programs from CO-OPN Specifications" year="2004" booktitle="PhD thesis, EPFL"/>
+  <!-- Ref [37] from thesis bibliography -->
+  <objects xmi:id="ref37" xsi:type="BibTeX:Article" key="adrienchantre2006" title="Implementation of a test language for co-opn: User guide and graphical user interface" year="2006" journal="Bachelor Thesis, Universite de Geneve"/>
+  <!-- Ref [38] from thesis bibliography -->
+  <objects xmi:id="ref38" xsi:type="BibTeX:Book" key="sergiocoelho2006" title="Implementation of a test language for co-opn: Syntactic and static semantics verifications" year="2006" publisher="Bachelor Thesis, Universite de Geneve"/>
+  <!-- Ref [39] from thesis bibliography -->
+  <objects xmi:id="ref39" xsi:type="BibTeX:InProceedings" key="alexanderpretschne2004" title="Methodological issues in model-based testing" year="2004" booktitle="Model-Based Testing of Reactive Systems"/>
+  <!-- Ref [40] from thesis bibliography -->
+  <objects xmi:id="ref40" xsi:type="BibTeX:Article" key="markutting2006" title="A taxonomy of model-based testing" year="2006" journal="Model-based testing survey"/>
+  <!-- Ref [41] from thesis bibliography -->
+  <objects xmi:id="ref41" xsi:type="BibTeX:Book" key="marieclaudegaudel1995" title="Testing can be formal, too" year="1995" publisher="TAPSOFT"/>
+  <!-- Ref [42] from thesis bibliography -->
+  <objects xmi:id="ref42" xsi:type="BibTeX:InProceedings" key="rmburstall1977" title="A transformation system for developing recursive programs" year="1977" booktitle="J. ACM"/>
+  <!-- Ref [43] from thesis bibliography -->
+  <objects xmi:id="ref43" xsi:type="BibTeX:Article" key="jantretmans1999" title="Testing concurrent systems: A formal approach" year="1999" journal="CONCUR"/>
+  <!-- Ref [44] from thesis bibliography -->
+  <objects xmi:id="ref44" xsi:type="BibTeX:Book" key="gregorylestiennes2002" title="Testing processes from formal specifications with inputs, outputs and data types" year="2002" publisher="ISSRE"/>
+  <!-- Ref [45] from thesis bibliography -->
+  <objects xmi:id="ref45" xsi:type="BibTeX:InProceedings" key="cecileperaire1998" title="Test selection for object-oriented software based on formal specifications" year="1998" booktitle="PROCOMET"/>
+  <!-- Ref [46] from thesis bibliography -->
+  <objects xmi:id="ref46" xsi:type="BibTeX:Article" key="yvesledru2004" title="Filtering tobias combinatorial test suites" year="2004" journal="FASE"/>
+  <!-- Ref [47] from thesis bibliography -->
+  <objects xmi:id="ref47" xsi:type="BibTeX:Book" key="brunolegeard2001" title="Generation of functional test sequences from b formal specifications" year="2001" publisher="ASE"/>
+  <!-- Ref [48] from thesis bibliography -->
+  <objects xmi:id="ref48" xsi:type="BibTeX:InProceedings" key="yurigurevich2000" title="Abstract State Machines, Theory and Applications" year="2000" booktitle="LNCS 1912, Springer"/>
+  <!-- Ref [49] from thesis bibliography -->
+  <objects xmi:id="ref49" xsi:type="BibTeX:Article" key="jantretmans1994" title="A formal approach to conformance testing" year="1994" journal="Protocol Test Systems VI"/>
+  <!-- Ref [50] from thesis bibliography -->
+  <objects xmi:id="ref50" xsi:type="BibTeX:Book" key="mclatin1996" title="Manuel d'utilisation de TVEDA V3" year="1996" publisher="France Telecom"/>
+
+  <links xsi:type="BibTeX:root" source="model1" target="bib1"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref01"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref02"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref03"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref04"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref05"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref06"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref07"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref08"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref09"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref10"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref11"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref12"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref13"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref14"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref15"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref16"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref17"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref18"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref19"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref20"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref21"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref22"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref23"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref24"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref25"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref26"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref27"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref28"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref29"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref30"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref31"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref32"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref33"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref34"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref35"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref36"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref37"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref38"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref39"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref40"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref41"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref42"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref43"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref44"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref45"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref46"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref47"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref48"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref49"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="ref50"/>
+  <links xsi:type="BibTeX:authors" source="ref01" target="au001"/>
+  <links xsi:type="BibTeX:authors" source="ref02" target="au002"/>
+  <links xsi:type="BibTeX:authors" source="ref03" target="au003"/>
+  <links xsi:type="BibTeX:authors" source="ref03" target="au004"/>
+  <links xsi:type="BibTeX:authors" source="ref03" target="au005"/>
+  <links xsi:type="BibTeX:authors" source="ref04" target="au006"/>
+  <links xsi:type="BibTeX:authors" source="ref05" target="au007"/>
+  <links xsi:type="BibTeX:authors" source="ref06" target="au008"/>
+  <links xsi:type="BibTeX:authors" source="ref07" target="au009"/>
+  <links xsi:type="BibTeX:authors" source="ref08" target="au010"/>
+  <links xsi:type="BibTeX:authors" source="ref09" target="au011"/>
+  <links xsi:type="BibTeX:authors" source="ref10" target="au012"/>
+  <links xsi:type="BibTeX:authors" source="ref11" target="au013"/>
+  <links xsi:type="BibTeX:authors" source="ref12" target="au014"/>
+  <links xsi:type="BibTeX:authors" source="ref13" target="au015"/>
+  <links xsi:type="BibTeX:authors" source="ref14" target="au016"/>
+  <links xsi:type="BibTeX:authors" source="ref14" target="au017"/>
+  <links xsi:type="BibTeX:authors" source="ref14" target="au018"/>
+  <links xsi:type="BibTeX:authors" source="ref15" target="au019"/>
+  <links xsi:type="BibTeX:authors" source="ref16" target="au020"/>
+  <links xsi:type="BibTeX:authors" source="ref16" target="au021"/>
+  <links xsi:type="BibTeX:authors" source="ref16" target="au022"/>
+  <links xsi:type="BibTeX:authors" source="ref17" target="au023"/>
+  <links xsi:type="BibTeX:authors" source="ref18" target="au024"/>
+  <links xsi:type="BibTeX:authors" source="ref19" target="au025"/>
+  <links xsi:type="BibTeX:authors" source="ref20" target="au026"/>
+  <links xsi:type="BibTeX:authors" source="ref20" target="au027"/>
+  <links xsi:type="BibTeX:authors" source="ref21" target="au028"/>
+  <links xsi:type="BibTeX:authors" source="ref22" target="au029"/>
+  <links xsi:type="BibTeX:authors" source="ref22" target="au030"/>
+  <links xsi:type="BibTeX:authors" source="ref22" target="au031"/>
+  <links xsi:type="BibTeX:authors" source="ref22" target="au032"/>
+  <links xsi:type="BibTeX:authors" source="ref23" target="au033"/>
+  <links xsi:type="BibTeX:authors" source="ref23" target="au034"/>
+  <links xsi:type="BibTeX:authors" source="ref24" target="au035"/>
+  <links xsi:type="BibTeX:authors" source="ref25" target="au036"/>
+  <links xsi:type="BibTeX:authors" source="ref25" target="au037"/>
+  <links xsi:type="BibTeX:authors" source="ref26" target="au038"/>
+  <links xsi:type="BibTeX:authors" source="ref27" target="au039"/>
+  <links xsi:type="BibTeX:authors" source="ref28" target="au039"/>
+  <links xsi:type="BibTeX:authors" source="ref29" target="au040"/>
+  <links xsi:type="BibTeX:authors" source="ref29" target="au041"/>
+  <links xsi:type="BibTeX:authors" source="ref30" target="au042"/>
+  <links xsi:type="BibTeX:authors" source="ref31" target="au042"/>
+  <links xsi:type="BibTeX:authors" source="ref32" target="au002"/>
+  <links xsi:type="BibTeX:authors" source="ref33" target="au043"/>
+  <links xsi:type="BibTeX:authors" source="ref34" target="au044"/>
+  <links xsi:type="BibTeX:authors" source="ref34" target="au045"/>
+  <links xsi:type="BibTeX:authors" source="ref34" target="au046"/>
+  <links xsi:type="BibTeX:authors" source="ref34" target="au047"/>
+  <links xsi:type="BibTeX:authors" source="ref34" target="au048"/>
+  <links xsi:type="BibTeX:authors" source="ref34" target="au049"/>
+  <links xsi:type="BibTeX:authors" source="ref35" target="au050"/>
+  <links xsi:type="BibTeX:authors" source="ref35" target="au051"/>
+  <links xsi:type="BibTeX:authors" source="ref36" target="au052"/>
+  <links xsi:type="BibTeX:authors" source="ref37" target="au053"/>
+  <links xsi:type="BibTeX:authors" source="ref38" target="au054"/>
+  <links xsi:type="BibTeX:authors" source="ref39" target="au029"/>
+  <links xsi:type="BibTeX:authors" source="ref39" target="au055"/>
+  <links xsi:type="BibTeX:authors" source="ref40" target="au056"/>
+  <links xsi:type="BibTeX:authors" source="ref40" target="au029"/>
+  <links xsi:type="BibTeX:authors" source="ref40" target="au057"/>
+  <links xsi:type="BibTeX:authors" source="ref41" target="au058"/>
+  <links xsi:type="BibTeX:authors" source="ref42" target="au059"/>
+  <links xsi:type="BibTeX:authors" source="ref42" target="au060"/>
+  <links xsi:type="BibTeX:authors" source="ref43" target="au061"/>
+  <links xsi:type="BibTeX:authors" source="ref44" target="au062"/>
+  <links xsi:type="BibTeX:authors" source="ref44" target="au058"/>
+  <links xsi:type="BibTeX:authors" source="ref45" target="au006"/>
+  <links xsi:type="BibTeX:authors" source="ref45" target="au007"/>
+  <links xsi:type="BibTeX:authors" source="ref45" target="au063"/>
+  <links xsi:type="BibTeX:authors" source="ref46" target="au064"/>
+  <links xsi:type="BibTeX:authors" source="ref46" target="au065"/>
+  <links xsi:type="BibTeX:authors" source="ref46" target="au066"/>
+  <links xsi:type="BibTeX:authors" source="ref46" target="au067"/>
+  <links xsi:type="BibTeX:authors" source="ref47" target="au057"/>
+  <links xsi:type="BibTeX:authors" source="ref47" target="au068"/>
+  <links xsi:type="BibTeX:authors" source="ref48" target="au069"/>
+  <links xsi:type="BibTeX:authors" source="ref48" target="au070"/>
+  <links xsi:type="BibTeX:authors" source="ref48" target="au071"/>
+  <links xsi:type="BibTeX:authors" source="ref48" target="au072"/>
+  <links xsi:type="BibTeX:authors" source="ref49" target="au061"/>
+  <links xsi:type="BibTeX:authors" source="ref50" target="au073"/>
+  <links xsi:type="BibTeX:keywords" source="ref01" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref01" target="kw_concurrency"/>
+  <links xsi:type="BibTeX:keywords" source="ref02" target="kw_model_based_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref03" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref03" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref04" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref04" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref05" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref05" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref06" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref07" target="kw_co_opn"/>
+  <links xsi:type="BibTeX:keywords" source="ref08" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref09" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref10" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref11" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref12" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref13" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref14" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref15" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref16" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref17" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref18" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref19" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref20" target="kw_model_based_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref21" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref22" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref22" target="kw_model_based_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref23" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref24" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref24" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref25" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref26" target="kw_petri_nets"/>
+  <links xsi:type="BibTeX:keywords" source="ref26" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref27" target="kw_petri_nets"/>
+  <links xsi:type="BibTeX:keywords" source="ref28" target="kw_petri_nets"/>
+  <links xsi:type="BibTeX:keywords" source="ref29" target="kw_petri_nets"/>
+  <links xsi:type="BibTeX:keywords" source="ref30" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref30" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref31" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref31" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref32" target="kw_model_based_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref33" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref34" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref34" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref35" target="kw_concurrency"/>
+  <links xsi:type="BibTeX:keywords" source="ref36" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref36" target="kw_co_opn"/>
+  <links xsi:type="BibTeX:keywords" source="ref37" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref37" target="kw_co_opn"/>
+  <links xsi:type="BibTeX:keywords" source="ref38" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref38" target="kw_co_opn"/>
+  <links xsi:type="BibTeX:keywords" source="ref39" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref39" target="kw_model_based_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref40" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref40" target="kw_model_based_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref41" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref41" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref42" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref43" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref43" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref44" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref44" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref45" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref45" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref46" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref47" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref47" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref48" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:keywords" source="ref49" target="kw_testing"/>
+  <links xsi:type="BibTeX:keywords" source="ref49" target="kw_formal_methods"/>
+  <links xsi:type="BibTeX:keywords" source="ref50" target="kw_software_engineering"/>
+  <links xsi:type="BibTeX:cites" source="ref01" target="ref02"/>
+  <links xsi:type="BibTeX:cites" source="ref01" target="ref03"/>
+  <links xsi:type="BibTeX:cites" source="ref04" target="ref05"/>
+  <links xsi:type="BibTeX:cites" source="ref07" target="ref06"/>
+  <links xsi:type="BibTeX:cites" source="ref10" target="ref08"/>
+  <links xsi:type="BibTeX:cites" source="ref10" target="ref09"/>
+  <links xsi:type="BibTeX:cites" source="ref13" target="ref10"/>
+  <links xsi:type="BibTeX:cites" source="ref13" target="ref11"/>
+  <links xsi:type="BibTeX:cites" source="ref16" target="ref12"/>
+  <links xsi:type="BibTeX:cites" source="ref16" target="ref13"/>
+  <links xsi:type="BibTeX:cites" source="ref19" target="ref14"/>
+  <links xsi:type="BibTeX:cites" source="ref19" target="ref15"/>
+  <links xsi:type="BibTeX:cites" source="ref22" target="ref16"/>
+  <links xsi:type="BibTeX:cites" source="ref22" target="ref17"/>
+  <links xsi:type="BibTeX:cites" source="ref25" target="ref18"/>
+  <links xsi:type="BibTeX:cites" source="ref25" target="ref19"/>
+  <links xsi:type="BibTeX:cites" source="ref28" target="ref20"/>
+  <links xsi:type="BibTeX:cites" source="ref28" target="ref21"/>
+  <links xsi:type="BibTeX:cites" source="ref31" target="ref22"/>
+  <links xsi:type="BibTeX:cites" source="ref31" target="ref23"/>
+  <links xsi:type="BibTeX:cites" source="ref34" target="ref24"/>
+  <links xsi:type="BibTeX:cites" source="ref34" target="ref25"/>
+  <links xsi:type="BibTeX:cites" source="ref37" target="ref26"/>
+  <links xsi:type="BibTeX:cites" source="ref37" target="ref27"/>
+  <links xsi:type="BibTeX:cites" source="ref40" target="ref28"/>
+  <links xsi:type="BibTeX:cites" source="ref40" target="ref29"/>
+  <links xsi:type="BibTeX:cites" source="ref43" target="ref30"/>
+  <links xsi:type="BibTeX:cites" source="ref43" target="ref31"/>
+  <links xsi:type="BibTeX:cites" source="ref46" target="ref32"/>
+  <links xsi:type="BibTeX:cites" source="ref46" target="ref33"/>
+  <links xsi:type="BibTeX:cites" source="ref49" target="ref34"/>
+  <links xsi:type="BibTeX:cites" source="ref49" target="ref35"/>
+</model>

@@ -1,0 +1,656 @@
+// =============================================================================
+// University2ITSystem Transformation
+// =============================================================================
+// Transforms a University domain model into an IT System access control model.
+//
+// Complexity: Medium
+// Layers: 4
+// Rules: ~10
+//
+// =============================================================================
+// Source Metamodel: University
+// =============================================================================
+
+metamodel UniversityDomain {
+    // Attributes are commented out to fit the decidable fragment, 
+    // which requires attributes to be either ignored or mapped to finite domains
+    // We don't need attributes for our structural properties anyway.
+    // class University { name: String }
+    // class Department { name: String }
+    // class Person { name: String }
+    class University { }
+    class Department { }
+    class Person { }
+    // class Professor extends Person { tenured: Bool }
+    // class Student extends Person { year: Int }
+    class Professor extends Person { }
+    class Student extends Person { }
+    // class Course { title: String, credits: Int }
+    class Course { }
+
+    containment assoc depts: University[1] -- Department[0..*]
+    containment assoc members: Department[1] -- Person[0..*]
+    containment assoc courses: Department[1] -- Course[0..*]
+
+    assoc teaches: Professor[1] -- Course[0..*]
+    assoc enrolled: Student[0..*] -- Course[0..*]
+}
+
+// =============================================================================
+// Target Metamodel: ITSystem
+// =============================================================================
+
+metamodel ITSystem {
+    // Attributes are commented out for the decidable fragment
+    // class System { name: String }
+    // class UserGroup { name: String }
+    // class Account { username: String }
+    class System { }
+    class UserGroup { }
+    class Account { }
+    class StaffAccount extends Account { }
+    // class StudentAccount extends Account { }
+    class StudentAccount extends Account { }
+    // class Resource { name: String }
+    class Resource { }
+    class AccessRecord { }
+
+    containment assoc groups: System[1] -- UserGroup[0..*]
+    containment assoc accounts: UserGroup[1] -- Account[0..*]
+    containment assoc resources: UserGroup[1] -- Resource[0..*]
+
+    assoc owner: Resource[0..*] -- StaffAccount[1]
+    containment assoc accessLogs: Resource[1] -- AccessRecord[0..*]
+    assoc grantedTo: AccessRecord[0..*] -- Account[1]
+}
+
+// =============================================================================
+// Transformation: University2ITSystem
+// =============================================================================
+
+transformation University2ITSystem : UniversityDomain -> ITSystem {
+    
+    // Layer 1: Root
+    layer CreateSystem {
+        rule Univ2System {
+            match {
+                any u : University
+            }
+            apply {
+                sys : System
+            }
+        }
+    }
+
+    // Layer 2: Groups
+    layer CreateGroups {
+        rule Dept2Group {
+            match {
+                any u : University
+                any d : Department
+                direct depts : depts -- u.d
+            }
+            apply {
+                sys : System
+                grp : UserGroup
+                sysGroup : groups -- sys.grp
+            }
+            backward {
+                sys <--trace-- u
+            }
+        }
+    }
+
+    // Layer 3: Accounts and Resources
+    layer CreateAccountsAndResources {
+        rule Prof2StaffAccount {
+            match {
+                any u : University
+                any d : Department
+                any p : Professor
+                direct depts : depts -- u.d
+                direct deptMember : members -- d.p
+            }
+            apply {
+                grp : UserGroup
+                acc : StaffAccount
+                accLink : accounts -- grp.acc
+            }
+            backward {
+                grp <--trace-- u
+                grp <--trace-- d
+            }
+        }
+
+        rule Student2StudentAccount {
+            match {
+                any u : University
+                any d : Department
+                any s : Student
+                direct depts : depts -- u.d
+                direct deptMember : members -- d.s
+            }
+            apply {
+                grp : UserGroup
+                acc : StudentAccount
+                accLink : accounts -- grp.acc
+            }
+            backward {
+                grp <--trace-- u
+                grp <--trace-- d
+            }
+        }
+
+        rule Course2Resource {
+            match {
+                any u : University
+                any d : Department
+                any c : Course
+                direct depts : depts -- u.d
+                direct deptCourse : courses -- d.c
+            }
+            apply {
+                grp : UserGroup
+                res : Resource
+                resLink : resources -- grp.res
+            }
+            backward {
+                grp <--trace-- u
+                grp <--trace-- d
+            }
+        }
+    }
+
+    // Layer 4: Resource Ownership
+    layer MapOwnership {
+        rule Teaches2Owner {
+            match {
+                any u : University
+                any d : Department
+                any p : Professor
+                any c : Course
+                direct depts : depts -- u.d
+                direct deptMember : members -- d.p
+                direct deptCourse : courses -- d.c
+                direct profTeaches : teaches -- p.c
+            }
+            apply {
+                acc : StaffAccount
+                res : Resource
+                ownerLink : owner -- res.acc
+            }
+            backward {
+                acc <--trace-- u
+                acc <--trace-- d
+                acc <--trace-- p
+                res <--trace-- u
+                res <--trace-- d
+                res <--trace-- c
+            }
+        }
+    }
+
+    // Layer 5: Access Records
+    layer MapAccess {
+        rule Enrolled2Access {
+            match {
+                any u : University
+                any d : Department
+                any s : Student
+                any c : Course
+                direct depts : depts -- u.d
+                direct deptMember : members -- d.s
+                direct deptCourse : courses -- d.c
+                direct studentEnrolled : enrolled -- s.c
+            }
+            apply {
+                acc : StudentAccount
+                res : Resource
+                ar : AccessRecord
+                logLink : accessLogs -- res.ar
+                grantedLink : grantedTo -- ar.acc
+            }
+            backward {
+                acc <--trace-- u
+                acc <--trace-- d
+                acc <--trace-- s
+                res <--trace-- u
+                res <--trace-- d
+                res <--trace-- c
+            }
+        }
+
+        // Professors also get access records to their courses
+        rule Teaches2Access {
+            match {
+                any u : University
+                any d : Department
+                any p : Professor
+                any c : Course
+                direct depts : depts -- u.d
+                direct deptMember : members -- d.p
+                direct deptCourse : courses -- d.c
+                direct profTeaches : teaches -- p.c
+            }
+            apply {
+                acc : StaffAccount
+                res : Resource
+                ar : AccessRecord
+                logLink : accessLogs -- res.ar
+                grantedLink : grantedTo -- ar.acc
+            }
+            backward {
+                acc <--trace-- u
+                acc <--trace-- d
+                acc <--trace-- p
+                res <--trace-- u
+                res <--trace-- d
+                res <--trace-- c
+            }
+        }
+    }
+}
+
+// =============================================================================
+// Properties (Black-Box Testing)
+// =============================================================================
+
+// 1. Basic Element Mapping: University to System
+// EXPECTED: HOLDS
+property UnivBecomesSystem {
+    precondition {
+        any u : University
+    }
+    postcondition {
+        sys : System
+        sys <--trace-- u
+    }
+}
+
+// 2. Department to UserGroup
+// EXPECTED: HOLDS
+property DeptBecomesGroup {
+    precondition {
+        any u : University
+        any d : Department
+        direct depts : depts -- u.d
+    }
+    postcondition {
+        grp : UserGroup
+        grp <--trace-- d
+    }
+}
+
+// 3. Professor becomes StaffAccount
+// EXPECTED: HOLDS
+property ProfBecomesStaff {
+    precondition {
+        any u : University
+        any d : Department
+        any p : Professor
+        direct depts : depts -- u.d
+        direct mem : members -- d.p
+    }
+    postcondition {
+        acc : StaffAccount
+        acc <--trace-- p
+    }
+}
+
+// 4. Student becomes StudentAccount
+// EXPECTED: HOLDS
+property StudentBecomesAccount {
+    precondition {
+        any u : University
+        any d : Department
+        any s : Student
+        direct depts : depts -- u.d
+        direct mem : members -- d.s
+    }
+    postcondition {
+        acc : StudentAccount
+        acc <--trace-- s
+    }
+}
+
+// 5. Course becomes Resource
+// EXPECTED: HOLDS
+property CourseBecomesResource {
+    precondition {
+        any u : University
+        any d : Department
+        any c : Course
+        direct depts : depts -- u.d
+        direct crs : courses -- d.c
+    }
+    postcondition {
+        res : Resource
+        res <--trace-- c
+    }
+}
+
+// 6. Teaches relation maps to owner
+// EXPECTED: HOLDS
+property TeachesBecomesOwner {
+    precondition {
+        any u : University
+        any d : Department
+        any p : Professor
+        any c : Course
+        direct depts : depts -- u.d
+        direct m1 : members -- d.p
+        direct m2 : courses -- d.c
+        direct t : teaches -- p.c
+    }
+    postcondition {
+        acc : StaffAccount
+        res : Resource
+        o : owner -- res.acc
+        acc <--trace-- p
+        res <--trace-- c
+    }
+}
+
+// 7. Enrolled student gets AccessRecord
+// EXPECTED: HOLDS
+property EnrolledGetsAccess {
+    precondition {
+        any u : University
+        any d : Department
+        any s : Student
+        any c : Course
+        direct depts : depts -- u.d
+        direct m1 : members -- d.s
+        direct m2 : courses -- d.c
+        direct e : enrolled -- s.c
+    }
+    postcondition {
+        ar : AccessRecord
+        acc : StudentAccount
+        res : Resource
+        g : grantedTo -- ar.acc
+        l : accessLogs -- res.ar
+        acc <--trace-- s
+        res <--trace-- c
+    }
+}
+
+// 8. Professor teaching gets AccessRecord
+// EXPECTED: HOLDS
+property ProfGetsAccess {
+    precondition {
+        any u : University
+        any d : Department
+        any p : Professor
+        any c : Course
+        direct depts : depts -- u.d
+        direct m1 : members -- d.p
+        direct m2 : courses -- d.c
+        direct t : teaches -- p.c
+    }
+    postcondition {
+        ar : AccessRecord
+        acc : StaffAccount
+        res : Resource
+        g : grantedTo -- ar.acc
+        l : accessLogs -- res.ar
+        acc <--trace-- p
+        res <--trace-- c
+    }
+}
+
+// 9. Negative Test: Student does NOT become StaffAccount
+// EXPECTED: VIOLATED
+property StudentNotStaff_ShouldFail {
+    precondition {
+        any u : University
+        any d : Department
+        any s : Student
+        direct depts : depts -- u.d
+        direct mem : members -- d.s
+    }
+    postcondition {
+        acc : StaffAccount
+        acc <--trace-- s
+    }
+}
+
+// 10. Negative Test: Course does NOT become Account
+// EXPECTED: VIOLATED
+property CourseNotAccount_ShouldFail {
+    precondition {
+        any u : University
+        any d : Department
+        any c : Course
+        direct depts : depts -- u.d
+        direct crs : courses -- d.c
+    }
+    postcondition {
+        acc : Account
+        acc <--trace-- c
+    }
+}
+
+// 11. Negative Test: Student does NOT own resource
+// EXPECTED: VIOLATED
+property StudentNotOwner_ShouldFail {
+    precondition {
+        any u : University
+        any d : Department
+        any s : Student
+        any c : Course
+        direct depts : depts -- u.d
+        direct m1 : members -- d.s
+        direct m2 : courses -- d.c
+        direct e : enrolled -- s.c
+    }
+    postcondition {
+        acc : StudentAccount
+        res : Resource
+        o : owner -- res.acc
+        acc <--trace-- s
+        res <--trace-- c
+    }
+}
+
+// 12. Negative Test: Department does NOT trace to Resource
+// EXPECTED: VIOLATED
+property DeptNotResource_ShouldFail {
+    precondition {
+        any u : University
+        any d : Department
+        direct depts : depts -- u.d
+    }
+    postcondition {
+        res : Resource
+        res <--trace-- d
+    }
+}
+
+// 13. Student traces to exactly one StudentAccount (implicit uniqueness)
+// Wait, this is difficult to test purely positively without forall, but we can just do normal trace.
+// We'll just do a complex property: Enrolled student's access record is on the correct resource.
+// EXPECTED: HOLDS
+property StudentAccessOnCorrectResource {
+    precondition {
+        any u : University
+        any d : Department
+        any s : Student
+        any c : Course
+        direct depts : depts -- u.d
+        direct mem : members -- d.s
+        direct crs : courses -- d.c
+        direct e : enrolled -- s.c
+    }
+    postcondition {
+        ar : AccessRecord
+        acc : StudentAccount
+        res : Resource
+        g : grantedTo -- ar.acc
+        l : accessLogs -- res.ar
+        acc <--trace-- s
+        res <--trace-- c
+    }
+}
+
+// 14. Unrelated Professor and Course do NOT have owner link
+// (Cannot express "not teaches" in precondition directly, so we can't test negative preconditions well. 
+// We'll skip this and add something else).
+
+// 14. System has UserGroup (via Department)
+// EXPECTED: HOLDS
+property SystemHasGroup {
+    precondition {
+        any u : University
+        any d : Department
+        direct depts : depts -- u.d
+    }
+    postcondition {
+        sys : System
+        grp : UserGroup
+        sysGroup : groups -- sys.grp
+        sys <--trace-- u
+        grp <--trace-- d
+    }
+}
+
+// 15. UserGroup has StaffAccount (since we fixed links)
+// EXPECTED: HOLDS
+property GroupHasStaffAccountLink {
+    precondition {
+        any d : Department
+        any p : Professor
+        direct mem : members -- d.p
+    }
+    postcondition {
+        grp : UserGroup
+        acc : StaffAccount
+        l : accounts -- grp.acc
+    }
+}
+
+// 15b. UserGroup has StudentAccount
+// EXPECTED: HOLDS
+property GroupHasStudentAccountLink {
+    precondition {
+        any d : Department
+        any s : Student
+        direct mem : members -- d.s
+    }
+    postcondition {
+        grp : UserGroup
+        acc : StudentAccount
+        l : accounts -- grp.acc
+    }
+}
+
+// Let's test just the existence of multiple elements.
+// 16. Professor teaching course means StaffAccount and Resource exist.
+// EXPECTED: HOLDS
+property ProfCourseElementsExist {
+    precondition {
+        any u : University
+        any d1 : Department
+        any p : Professor
+        any d2 : Department
+        any c : Course
+        direct u1 : depts -- u.d1
+        direct u2 : depts -- u.d2
+        direct m : members -- d1.p
+        direct crs : courses -- d2.c
+        direct t : teaches -- p.c
+    }
+    postcondition {
+        acc : StaffAccount
+        res : Resource
+        acc <--trace-- p
+        res <--trace-- c
+    }
+}
+
+// 17. Every Course has an AccessRecord (if it has students enrolled)
+// EXPECTED: HOLDS
+property CourseWithStudentHasAccessRecord {
+    precondition {
+        any u : University
+        any d : Department
+        any c : Course
+        any s : Student
+        direct u1 : depts -- u.d
+        direct m1 : courses -- d.c
+        direct m2 : members -- d.s
+        direct e : enrolled -- s.c
+    }
+    postcondition {
+        ar : AccessRecord
+        res : Resource
+        l : accessLogs -- res.ar
+        res <--trace-- c
+    }
+}
+
+// 18. Every Course has an AccessRecord (if taught by professor)
+// EXPECTED: HOLDS
+property CourseWithProfHasAccessRecord {
+    precondition {
+        any u : University
+        any d : Department
+        any c : Course
+        any p : Professor
+        direct u1 : depts -- u.d
+        direct m1 : courses -- d.c
+        direct m2 : members -- d.p
+        direct t : teaches -- p.c
+    }
+    postcondition {
+        ar : AccessRecord
+        res : Resource
+        l : accessLogs -- res.ar
+        res <--trace-- c
+    }
+}
+
+// 19. A Resource owner must be a StaffAccount
+// EXPECTED: HOLDS
+property ResourceOwnerIsStaff {
+    precondition {
+        any u : University
+        any d : Department
+        any p : Professor
+        any c : Course
+        direct u1 : depts -- u.d
+        direct m1 : members -- d.p
+        direct m2 : courses -- d.c
+        direct t : teaches -- p.c
+    }
+    postcondition {
+        acc : StaffAccount
+        res : Resource
+        o : owner -- res.acc
+        acc <--trace-- p
+        res <--trace-- c
+    }
+}
+
+// 20. AccessRecord grantedTo is either Staff or Student
+// Since we only have StaffAccount and StudentAccount mapped, any AccessRecord must link to one of them.
+// We can test this by checking that if a student is enrolled, the grantedTo links to a StudentAccount.
+// EXPECTED: HOLDS
+property GrantedToStudentAccount {
+    precondition {
+        any u : University
+        any d : Department
+        any s : Student
+        any c : Course
+        direct u1 : depts -- u.d
+        direct m1 : members -- d.s
+        direct m2 : courses -- d.c
+        direct e : enrolled -- s.c
+    }
+    postcondition {
+        ar : AccessRecord
+        acc : StudentAccount
+        g : grantedTo -- ar.acc
+        acc <--trace-- s
+    }
+}

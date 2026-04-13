@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+hide methods
+skinparam classAttributeIconSize 0
+title class2relational_medium_out.xmi
+
+package "Pkg1" as Package2Schema_schema_11 {
+  class "C\n[AbstractClass2TableWithDiscriminator_tbl_28]" as AbstractClass2TableWithDiscriminator_tbl_28 {
+      discrim: discrim
+  }
+  class "D\n[Class2Table_tbl_2]" as Class2Table_tbl_2 {
+    + id: int
+      ref: ref
+      val: varchar
+      fk: ref
+  }
+  class "T1\n[Class2Table_tbl_5]" as Class2Table_tbl_5 {
+    + id: int
+  }
+  class "T2\n[Class2Table_tbl_8]" as Class2Table_tbl_8 {
+    + id: int
+      id: T1
+  }
+  class "A2\n[ManyToManyAssoc2JunctionTable_junctionTbl_21]" as ManyToManyAssoc2JunctionTable_junctionTbl_21 {
+    + fk1: ref
+    + fk2: ref
+  }
+  class "a\n[MultiAttribute2Table_attrTbl_15]" as MultiAttribute2Table_attrTbl_15 {
+      fk: ref
+      val: varchar
+  }
+}
+Class2Table_tbl_2 --> Class2Table_tbl_8 : FK fk
+Class2Table_tbl_2 --> Class2Table_tbl_8 : FK fk
+ManyToManyAssoc2JunctionTable_junctionTbl_21 --> Class2Table_tbl_5 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_21 --> Class2Table_tbl_8 : FK fk2
+@enduml

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "atlcompiler",
+    "title": "Atlcompiler",
+    "description": "Atlcompiler transformation example",
+    "specPath": "/example-library/atlcompiler_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "attributes",
+    "title": "Attributes",
+    "description": "Attributes transformation example",
+    "specPath": "/example-library/attributes_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "bibtex2docbook",
+    "title": "Bibtex2docbook",
+    "description": "Bibtex2docbook transformation example",
+    "specPath": "/example-library/bibtex2docbook_concrete.dslt",
+    "modelPath": "/example-library/bibtex2docbook__bibtex2docbook_large50_input.xmi"
+  },
+  {
+    "id": "bpmn2petri",
+    "title": "Bpmn2petri",
+    "description": "Bpmn2petri transformation example",
+    "specPath": "/example-library/bpmn2petri_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "class2relational",
+    "title": "Class2relational",
+    "description": "Class2relational transformation example",
+    "specPath": "/example-library/class2relational_concrete.dslt",
+    "modelPath": "/example-library/class2relational__class2relational_large_input.xmi"
+  },
+  {
+    "id": "component2deployment",
+    "title": "Component2deployment",
+    "description": "Component2deployment transformation example",
+    "specPath": "/example-library/component2deployment_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "deep_dependency_boundary",
+    "title": "Deep Dependency Boundary",
+    "description": "Deep Dependency Boundary transformation example",
+    "specPath": "/example-library/deep_dependency_boundary_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "ecore2jsonschema",
+    "title": "Ecore2jsonschema",
+    "description": "Ecore2jsonschema transformation example",
+    "specPath": "/example-library/ecore2jsonschema_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "er2relational_zoo",
+    "title": "Er2relational Zoo",
+    "description": "Er2relational Zoo transformation example",
+    "specPath": "/example-library/er2relational_zoo_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "family2socialnetwork",
+    "title": "Family2socialnetwork",
+    "description": "Family2socialnetwork transformation example",
+    "specPath": "/example-library/family2socialnetwork_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "featuremodel2configuration",
+    "title": "Featuremodel2configuration",
+    "description": "Featuremodel2configuration transformation example",
+    "specPath": "/example-library/featuremodel2configuration_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "fsm2petrinet",
+    "title": "Fsm2petrinet",
+    "description": "Fsm2petrinet transformation example",
+    "specPath": "/example-library/fsm2petrinet_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "km32owl",
+    "title": "Km32owl",
+    "description": "Km32owl transformation example",
+    "specPath": "/example-library/km32owl_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "mega_stress_78rules_100props",
+    "title": "Mega Stress 78rules 100props",
+    "description": "Mega Stress 78rules 100props transformation example",
+    "specPath": "/example-library/mega_stress_78rules_100props_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "mindmap2graph",
+    "title": "Mindmap2graph",
+    "description": "Mindmap2graph transformation example",
+    "specPath": "/example-library/mindmap2graph_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "oclcompiler",
+    "title": "Oclcompiler",
+    "description": "Oclcompiler transformation example",
+    "specPath": "/example-library/oclcompiler_concrete.dslt",
+    "modelPath": "/example-library/oclcompiler__oclcompiler_large_input.xmi"
+  },
+  {
+    "id": "organization2accesscontrol",
+    "title": "Organization2accesscontrol",
+    "description": "Organization2accesscontrol transformation example",
+    "specPath": "/example-library/organization2accesscontrol_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "persons",
+    "title": "Persons",
+    "description": "Persons transformation example",
+    "specPath": "/example-library/persons_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "pnml2nupn",
+    "title": "Pnml2nupn",
+    "description": "Pnml2nupn transformation example",
+    "specPath": "/example-library/pnml2nupn_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "scalability",
+    "title": "Scalability",
+    "description": "Scalability transformation example",
+    "specPath": "/example-library/scalability_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "simplepdl2tina",
+    "title": "Simplepdl2tina",
+    "description": "Simplepdl2tina transformation example",
+    "specPath": "/example-library/simplepdl2tina_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "statechart2flow",
+    "title": "Statechart2flow",
+    "description": "Statechart2flow transformation example",
+    "specPath": "/example-library/statechart2flow_concrete.dslt",
+    "modelPath": "/example-library/statechart2flow__statechart2flow_large_input.xmi"
+  },
+  {
+    "id": "target_tight_boundary",
+    "title": "Target Tight Boundary",
+    "description": "Target Tight Boundary transformation example",
+    "specPath": "/example-library/target_tight_boundary_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "tree2graph",
+    "title": "Tree2graph",
+    "description": "Tree2graph transformation example",
+    "specPath": "/example-library/tree2graph_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "ultra_stress_200rules_300props",
+    "title": "Ultra Stress 200rules 300props",
+    "description": "Ultra Stress 200rules 300props transformation example",
+    "specPath": "/example-library/ultra_stress_200rules_300props_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "ultra_timeout_stress_200rules_300props",
+    "title": "Ultra Timeout Stress 200rules 300props",
+    "description": "Ultra Timeout Stress 200rules 300props transformation example",
+    "specPath": "/example-library/ultra_timeout_stress_200rules_300props_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "uml2java",
+    "title": "Uml2java",
+    "description": "Uml2java transformation example",
+    "specPath": "/example-library/uml2java_concrete.dslt",
+    "modelPath": "/example-library/uml2java__uml2java_large_input.xmi"
+  },
+  {
+    "id": "university2itsystem",
+    "title": "University2itsystem",
+    "description": "University2itsystem transformation example",
+    "specPath": "/example-library/university2itsystem_concrete.dslt",
+    "modelPath": null
+  },
+  {
+    "id": "usecase2activity",
+    "title": "Usecase2activity",
+    "description": "Usecase2activity transformation example",
+    "specPath": "/example-library/usecase2activity_concrete.dslt",
+    "modelPath": "/example-library/usecase2activity__usecase2activity_large_input.xmi"
+  },
+  {
+    "id": "workflow2petrinet_zoo",
+    "title": "Workflow2petrinet Zoo",
+    "description": "Workflow2petrinet Zoo transformation example",
+    "specPath": "/example-library/workflow2petrinet_zoo_concrete.dslt",
+    "modelPath": null
+  }
+]

@@ -1,0 +1,62 @@
+UML model: dsltrans-prover/examples/models/uml2java/uml2java_large_input.xmi
+Objects: 24 | Links: 32 | Traces: 0
+Packages: 3 | Classifiers: 7
+
+Models:
+- Model(m1) name='RetailModel'
+  rootPackage: Package(pkg_domain) name='domain'
+  rootPackage: Package(pkg_service) name='service'
+  rootPackage: Package(pkg_infra) name='infra'
+
+Packages:
+- Package(pkg_domain) name='domain'
+  packagedElement: Class(cls_entity) isAbstract='true', isFinal='false', kind='ValueObject', layerTag='Core', name='EntityBase', priority='1'
+  packagedElement: Class(cls_order) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Order', priority='4'
+  packagedElement: Class(cls_order_item) isAbstract='false', isFinal='false', kind='ValueObject', layerTag='Domain', name='OrderItem', priority='3'
+  packagedElement: Enumeration(enum_status) name='OrderStatus'
+  packagedElement: PrimitiveType(prim_integer) name='Integer'
+- Package(pkg_infra) name='infra'
+  packagedElement: Interface(iface_repo) name='CustomerRepository'
+- Package(pkg_service) name='service'
+  packagedElement: Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='5'
+
+Classifiers:
+- Class(cls_entity) isAbstract='true', isFinal='false', kind='ValueObject', layerTag='Core', name='EntityBase', priority='1'
+- Class(cls_order) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Order', priority='4'
+  property: Property(prop_order_status) defaultValue='NEW', isDerived='false', isOrdered='false', isReadOnly='false', isStatic='false', isUnique='true', lower='1', name='status', upper='1', visibility='private'
+    type: Enumeration(enum_status) name='OrderStatus'
+  property: Property(prop_order_items) defaultValue='', isDerived='false', isOrdered='true', isReadOnly='false', isStatic='false', isUnique='false', lower='0', name='items', upper='5', visibility='private'
+    type: Class(cls_order_item) isAbstract='false', isFinal='false', kind='ValueObject', layerTag='Domain', name='OrderItem', priority='3'
+- Class(cls_order_item) isAbstract='false', isFinal='false', kind='ValueObject', layerTag='Domain', name='OrderItem', priority='3'
+- Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='5'
+  comment: Comment(comment_service) body='Service entry point.'
+  property: Property(prop_service_total) defaultValue='0', isDerived='false', isOrdered='false', isReadOnly='true', isStatic='true', isUnique='true', lower='1', name='total', upper='1', visibility='private'
+    type: PrimitiveType(prim_integer) name='Integer'
+  operation: Operation(op_service_calc) isAbstract='false', isQuery='true', isStatic='false', name='calculateTotal', visibility='public'
+    returnType: PrimitiveType(prim_integer) name='Integer'
+- Enumeration(enum_status) name='OrderStatus'
+  literal: EnumerationLiteral(lit_new) name='NEW'
+  literal: EnumerationLiteral(lit_processing) name='PROCESSING'
+  literal: EnumerationLiteral(lit_complete) name='COMPLETE'
+- Interface(iface_repo) name='CustomerRepository'
+  operation: Operation(op_repo_save) isAbstract='true', isQuery='false', isStatic='false', name='save', visibility='public'
+    parameter: Parameter(param_order) direction='in', name='order'
+      paramType: Class(cls_order) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Order', priority='4'
+    returnType: Class(cls_order) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Order', priority='4'
+- PrimitiveType(prim_integer) name='Integer'
+
+Generalizations:
+- Generalization(gen_order) isSubstitutable='true'
+  general: Class(cls_entity) isAbstract='true', isFinal='false', kind='ValueObject', layerTag='Core', name='EntityBase', priority='1'
+  specific: Class(cls_order) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Order', priority='4'
+
+Interface Realizations:
+- InterfaceRealization(real_service)
+  contract: Interface(iface_repo) name='CustomerRepository'
+  implementingClass: Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='5'
+
+Dependencies:
+- Dependency(dep_service_repo) name='dependsOn'
+  client: Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='5'
+  supplier: Interface(iface_repo) name='CustomerRepository'
+

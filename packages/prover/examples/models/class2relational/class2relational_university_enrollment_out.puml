@@ -1,0 +1,61 @@
+@startuml
+left to right direction
+hide methods
+skinparam classAttributeIconSize 0
+title class2relational_university_enrollment_out.xmi
+
+package "UniversityEnrollment" as Package2Schema_schema_17 {
+  class "Person\n[AbstractClass2TableWithDiscriminator_tbl_52]" as AbstractClass2TableWithDiscriminator_tbl_52 {
+      discrim: discrim
+  }
+  class "Instructor\n[Class2Table_tbl_11]" as Class2Table_tbl_11 {
+    + id: int
+      ref: ref
+      val: varchar
+      id: Integer
+  }
+  class "Student\n[Class2Table_tbl_14]" as Class2Table_tbl_14 {
+    + id: int
+      ref: ref
+      val: varchar
+      fk_uq: ref
+      id: Integer
+  }
+  class "Course\n[Class2Table_tbl_2]" as Class2Table_tbl_2 {
+    + id: int
+      ref: ref
+      id: String
+      val: String
+      fk_tgt: ref
+      fk_src: ref
+  }
+  class "Department\n[Class2Table_tbl_5]" as Class2Table_tbl_5 {
+    + id: int
+      id: String
+      val: String
+  }
+  class "Enrollment\n[Class2Table_tbl_8]" as Class2Table_tbl_8 {
+    + id: int
+      ref: ref
+      val: String
+      id: String
+  }
+  class "EnrolledIn\n[ManyToManyAssoc2JunctionTable_junctionTbl_44]" as ManyToManyAssoc2JunctionTable_junctionTbl_44 {
+    + fk1: ref
+    + fk2: ref
+  }
+  class "a\n[MultiAttribute2Table_attrTbl_34]" as MultiAttribute2Table_attrTbl_34 {
+      fk: ref
+      val: varchar
+  }
+}
+Class2Table_tbl_11 --> Class2Table_tbl_5 : FK fk
+Class2Table_tbl_14 --> Class2Table_tbl_5 : FK fk
+Class2Table_tbl_14 --> Class2Table_tbl_11 : FK fk_uq
+Class2Table_tbl_2 --> Class2Table_tbl_11 : FK fk
+Class2Table_tbl_2 --> Class2Table_tbl_11 : FK fk_tgt
+Class2Table_tbl_2 --> Class2Table_tbl_5 : FK fk_src
+Class2Table_tbl_8 --> Class2Table_tbl_14 : FK fk
+ManyToManyAssoc2JunctionTable_junctionTbl_44 --> Class2Table_tbl_14 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_44 --> Class2Table_tbl_2 : FK fk2
+@enduml

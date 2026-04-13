@@ -1,0 +1,369 @@
+
+metamodel Organization {
+    class OrgModel { }
+    class Role { }
+    class Delegation { }
+
+    containment assoc nodes : OrgModel[1] -- Role[0..*]
+    containment assoc edges : OrgModel[1] -- Delegation[0..*]
+    assoc src : Delegation[0..*] -- Role[1]
+    assoc dst : Delegation[0..*] -- Role[1]
+}
+
+metamodel AccessControl {
+    class AclModel { }
+    class Principal { }
+    class Grant { }
+
+    containment assoc nodes : AclModel[1] -- Principal[0..*]
+    containment assoc edges : AclModel[1] -- Grant[0..*]
+    assoc src : Grant[0..*] -- Principal[1]
+    assoc dst : Grant[0..*] -- Principal[1]
+}
+
+transformation Organization2AccessControl : Organization -> AccessControl {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : OrgModel
+            }
+            apply {
+                tm : AclModel
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : OrgModel
+                any sn : Role
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : AclModel
+                tn : Principal
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : OrgModel
+                any se : Delegation
+                any sn1 : Role
+                any sn2 : Role
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : AclModel
+                tn1 : Principal
+                tn2 : Principal
+                te : Grant
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : OrgModel
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : OrgModel
+        any se : Delegation
+        any sn1 : Role
+        any sn2 : Role
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        any se : Delegation
+        any sn2 : Role
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        any se : Delegation
+        any sn2 : Role
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : OrgModel
+        any sn1 : Role
+        any sn2 : Role
+        any se : Delegation
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : OrgModel
+        any se : Delegation
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        any se : Delegation
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : OrgModel
+        any sn1 : Role
+        any sn2 : Role
+        any se : Delegation
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Grant
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any se : Delegation
+        any sn1 : Role
+        any sn2 : Role
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Principal
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any se : Delegation
+        any sn1 : Role
+        any sn2 : Role
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : OrgModel
+    }
+    postcondition {
+        tn : Principal
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : OrgModel
+    }
+    postcondition {
+        te : Grant
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        any se : Delegation
+        any sn2 : Role
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : Grant
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any sn : Role
+        any se : Delegation
+        any sn2 : Role
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any se : Delegation
+        any sn1 : Role
+        any sn2 : Role
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Principal
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : OrgModel
+        any se : Delegation
+        any sn1 : Role
+        any sn2 : Role
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : AclModel
+        tm <--trace-- se
+    }
+}

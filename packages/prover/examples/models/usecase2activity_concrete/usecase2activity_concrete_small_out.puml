@@ -1,0 +1,6 @@
+@startuml
+title RetailCheckout — usecase2activity_concrete_small_out.xmi
+(*) --> "[Node2Node_tn_2] SubmitPayment · actor=Customer · goal=Collect payment securely"
+"[Node2Node_tn_2] SubmitPayment · actor=Customer · goal=Collect payment securely" -->[include · p=9 · Shared authentication requirement] "[Node2Node_tn_3] AuthenticateUser · actor=System · goal=Authenticate the user before checkout"
+"[Node2Node_tn_3] AuthenticateUser · actor=System · goal=Authenticate the user before checkout" --> (*)
+@enduml

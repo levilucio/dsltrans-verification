@@ -1,0 +1,72 @@
+﻿// File: Customer.java
+package domain;
+
+public class Customer extends EntityBase {
+    private String name;
+
+    /**
+     * Aggregate root for customer data.
+     */
+    public Customer(String name) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    private String name() {
+    }
+
+    private void name(String name) {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: EntityBase.java
+package domain;
+
+public abstract class EntityBase {
+    public EntityBase() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: CustomerService.java
+package service;
+
+public class CustomerService implements CustomerRepository {
+    public CustomerService() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public Customer findById(Integer id) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: CustomerRepository.java
+package service;
+
+public interface CustomerRepository {
+    Customer findById(Integer id);
+}
+

@@ -1,0 +1,65 @@
+
+metamodel Tree {
+    class Node { name: String }
+    class Edge { }
+    
+    assoc root : Node[0..*] -- Node[0..1]
+    assoc children : Node[1] -- Node[0..*]
+    assoc edges : Node[1] -- Edge[0..*]
+    assoc target : Edge[0..*] -- Node[1]
+}
+
+metamodel Graph {
+    class Vertex { label: String }
+    class Arc { }
+    
+    assoc vertices : Vertex[1] -- Vertex[0..*]
+    assoc arcs : Vertex[1] -- Arc[0..*]
+    assoc to : Arc[0..*] -- Vertex[1]
+}
+
+transformation Tree2Graph : Tree -> Graph {
+    layer L1 {
+        rule Node2Vertex {
+            match {
+                any n : Node
+            }
+            apply {
+                v : Vertex { label = n.name }
+            }
+        }
+    }
+    layer L2 {
+        rule Edge2Arc {
+            match {
+                any src : Node
+                any e : Edge
+                any dst : Node
+                direct l1 : edges -- src.e
+                direct l2 : target -- e.dst
+            }
+            apply {
+                vSrc : Vertex
+                vDst : Vertex
+                a : Arc
+                
+                out1 : arcs -- vSrc.a
+                out2 : to -- a.vDst
+            }
+            backward {
+                vSrc <--trace-- src
+                vDst <--trace-- dst
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property NodeHasVertex { precondition { any n : Node } postcondition { v : Vertex v <--trace-- n } }
+property EdgeHasArc { precondition { any src : Node any e : Edge any dst : Node direct l1 : edges -- src.e direct l2 : target -- e.dst } postcondition { vSrc : Vertex a : Arc a <--trace-- e vSrc <--trace-- src } }
+property ConnectedNodesHaveConnectedVertices { precondition { any n1 : Node any e : Edge any n2 : Node direct l1 : edges -- n1.e direct l2 : target -- e.n2 } postcondition { v1 : Vertex v2 : Vertex a : Arc v1 <--trace-- n1 v2 <--trace-- n2 a <--trace-- e } }
+
+// Expected to FAIL
+property NodeHasArc_ShouldFail { precondition { any n : Node } postcondition { a : Arc a <--trace-- n } }
+property EdgeHasVertex_ShouldFail { precondition { any e : Edge } postcondition { v : Vertex v <--trace-- e } }
+property EdgeWithoutSrcHasArc_ShouldFail { precondition { any e : Edge } postcondition { a : Arc a <--trace-- e } }

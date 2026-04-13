@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="m1" xsi:type="UMLConcrete:Model" name="RetailModel"/>
+  <objects xmi:id="pkg_domain" xsi:type="UMLConcrete:Package" name="domain"/>
+  <objects xmi:id="cls_customer" xsi:type="UMLConcrete:Class" name="Customer" isAbstract="false" isFinal="false" priority="2" layerTag="Domain" kind="Entity"/>
+  <objects xmi:id="prop_id" xsi:type="UMLConcrete:Property" name="id" visibility="private" isStatic="false" isReadOnly="true" isDerived="false" isOrdered="false" isUnique="true" lower="1" upper="1" defaultValue="0"/>
+  <objects xmi:id="op_find" xsi:type="UMLConcrete:Operation" name="findById" visibility="public" isStatic="false" isAbstract="false" isQuery="true"/>
+  <objects xmi:id="param_id" xsi:type="UMLConcrete:Parameter" name="id" direction="in"/>
+  <objects xmi:id="prim_integer" xsi:type="UMLConcrete:PrimitiveType" name="Integer"/>
+
+  <links xsi:type="UMLConcrete:rootPackages" source="m1" target="pkg_domain"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_customer" target="prop_id"/>
+  <links xsi:type="UMLConcrete:type" source="prop_id" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:ownedOperation" source="cls_customer" target="op_find"/>
+  <links xsi:type="UMLConcrete:ownedParameter" source="op_find" target="param_id"/>
+  <links xsi:type="UMLConcrete:paramType" source="param_id" target="prim_integer"/>
+  <links xsi:type="UMLConcrete:returnType" source="op_find" target="cls_customer"/>
+</model>

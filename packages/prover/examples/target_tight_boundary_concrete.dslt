@@ -1,0 +1,108 @@
+// =============================================================================
+// Target-tight boundary fixture
+// =============================================================================
+// Synthetic fragment for validating target-side per-class slot sensitivity.
+// Each negative property is violated in the full encoding, but reducing a
+// target class that is required by the relevant rule and not mentioned in the
+// postcondition should make the witness unrepresentable and eliminate the
+// counterexample.
+
+metamodel TightSrc {
+    class Root { }
+    class S { }
+
+    containment assoc rootS : Root[1] -- S[0..*]
+}
+
+metamodel TightTgt {
+    class TA { }
+    class TB { }
+    class TC { }
+    class TD { }
+    class TE { }
+    class TF { }
+}
+
+transformation TargetTightBoundary_concrete : TightSrc -> TightTgt {
+    layer L1 {
+        rule S2TwoTAAndTB {
+            match {
+                any root : Root
+                any s : S
+                direct l1 : rootS -- root.s
+            }
+            apply {
+                ta1 : TA
+                ta2 : TA
+                tb : TB
+            }
+        }
+        rule S2TwoTCAndTD {
+            match {
+                any root : Root
+                any s : S
+                direct l1 : rootS -- root.s
+            }
+            apply {
+                tc1 : TC
+                tc2 : TC
+                td : TD
+            }
+        }
+        rule S2ThreeTEAndTF {
+            match {
+                any root : Root
+                any s : S
+                direct l1 : rootS -- root.s
+            }
+            apply {
+                te1 : TE
+                te2 : TE
+                te3 : TE
+                tf : TF
+            }
+        }
+    }
+}
+
+property SourceHasTwoTB_ShouldFail {
+    precondition {
+        any root : Root
+        any s : S
+        direct l1 : rootS -- root.s
+    }
+    postcondition {
+        tb1 : TB
+        tb2 : TB
+        tb1 <--trace-- s
+        tb2 <--trace-- s
+    }
+}
+
+property SourceHasTwoTD_ShouldFail {
+    precondition {
+        any root : Root
+        any s : S
+        direct l1 : rootS -- root.s
+    }
+    postcondition {
+        td1 : TD
+        td2 : TD
+        td1 <--trace-- s
+        td2 <--trace-- s
+    }
+}
+
+property SourceHasTwoTF_ShouldFail {
+    precondition {
+        any root : Root
+        any s : S
+        direct l1 : rootS -- root.s
+    }
+    postcondition {
+        tf1 : TF
+        tf2 : TF
+        tf1 <--trace-- s
+        tf2 <--trace-- s
+    }
+}

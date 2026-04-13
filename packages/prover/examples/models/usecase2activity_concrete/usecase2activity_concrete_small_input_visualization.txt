@@ -1,0 +1,27 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_small_input.xmi
+Objects: 4 | Links: 5 | Traces: 0
+
+Use case model context:
+  System: RetailCheckout
+  Domain: Retail
+  Release: 3
+
+Use cases:
+- Use case: SubmitPayment
+  ID: n0
+  Primary actor: Customer
+  Goal: Collect payment securely
+  Priority: 9
+  Complexity: 3
+  Includes:
+    - [include] AuthenticateUser (priority=9, rationale='Shared authentication requirement')
+
+- Use case: AuthenticateUser
+  ID: n1
+  Primary actor: System
+  Goal: Authenticate the user before checkout
+  Priority: 8
+  Complexity: 2
+  Included by:
+    - [include] SubmitPayment
+

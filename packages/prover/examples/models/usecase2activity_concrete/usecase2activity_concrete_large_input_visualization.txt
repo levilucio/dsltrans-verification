@@ -1,0 +1,169 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_large_input.xmi
+Objects: 33 | Links: 68 | Traces: 0
+
+Use case model context:
+  System: RetailCheckout
+  Domain: Retail
+  Release: 4
+
+Use cases:
+- Use case: CheckoutStep0
+  ID: n0
+  Primary actor: System
+  Goal: Execute checkout step 0
+  Priority: 3
+  Complexity: 1
+  Includes:
+    - [include] CheckoutStep1 (priority=3, rationale='Step 0 enables step 1')
+    - [precedes] CheckoutStep2 (priority=5, rationale='Fast path from step 0 to 2')
+
+- Use case: CheckoutStep1
+  ID: n1
+  Primary actor: Customer
+  Goal: Execute checkout step 1
+  Priority: 4
+  Complexity: 2
+  Includes:
+    - [include] CheckoutStep2 (priority=4, rationale='Step 1 enables step 2')
+  Included by:
+    - [include] CheckoutStep0
+
+- Use case: CheckoutStep2
+  ID: n2
+  Primary actor: Customer
+  Goal: Execute checkout step 2
+  Priority: 5
+  Complexity: 3
+  Includes:
+    - [include] CheckoutStep3 (priority=5, rationale='Step 2 enables step 3')
+    - [precedes] CheckoutStep4 (priority=7, rationale='Fast path from step 2 to 4')
+  Included by:
+    - [include] CheckoutStep1
+    - [precedes] CheckoutStep0
+
+- Use case: CheckoutStep3
+  ID: n3
+  Primary actor: System
+  Goal: Execute checkout step 3
+  Priority: 6
+  Complexity: 4
+  Includes:
+    - [include] CheckoutStep4 (priority=6, rationale='Step 3 enables step 4')
+  Included by:
+    - [include] CheckoutStep2
+
+- Use case: CheckoutStep4
+  ID: n4
+  Primary actor: Customer
+  Goal: Execute checkout step 4
+  Priority: 7
+  Complexity: 5
+  Includes:
+    - [include] CheckoutStep5 (priority=7, rationale='Step 4 enables step 5')
+    - [precedes] CheckoutStep6 (priority=5, rationale='Fast path from step 4 to 6')
+  Included by:
+    - [include] CheckoutStep3
+    - [precedes] CheckoutStep2
+
+- Use case: CheckoutStep5
+  ID: n5
+  Primary actor: Customer
+  Goal: Execute checkout step 5
+  Priority: 8
+  Complexity: 1
+  Includes:
+    - [include] CheckoutStep6 (priority=8, rationale='Step 5 enables step 6')
+  Included by:
+    - [include] CheckoutStep4
+
+- Use case: CheckoutStep6
+  ID: n6
+  Primary actor: System
+  Goal: Execute checkout step 6
+  Priority: 9
+  Complexity: 2
+  Includes:
+    - [include] CheckoutStep7 (priority=9, rationale='Step 6 enables step 7')
+    - [precedes] CheckoutStep8 (priority=7, rationale='Fast path from step 6 to 8')
+  Included by:
+    - [include] CheckoutStep5
+    - [precedes] CheckoutStep4
+
+- Use case: CheckoutStep7
+  ID: n7
+  Primary actor: Customer
+  Goal: Execute checkout step 7
+  Priority: 10
+  Complexity: 3
+  Includes:
+    - [include] CheckoutStep8 (priority=10, rationale='Step 7 enables step 8')
+  Included by:
+    - [include] CheckoutStep6
+
+- Use case: CheckoutStep8
+  ID: n8
+  Primary actor: Customer
+  Goal: Execute checkout step 8
+  Priority: 3
+  Complexity: 4
+  Includes:
+    - [include] CheckoutStep9 (priority=3, rationale='Step 8 enables step 9')
+    - [precedes] CheckoutStep10 (priority=5, rationale='Fast path from step 8 to 10')
+  Included by:
+    - [include] CheckoutStep7
+    - [precedes] CheckoutStep6
+
+- Use case: CheckoutStep9
+  ID: n9
+  Primary actor: System
+  Goal: Execute checkout step 9
+  Priority: 4
+  Complexity: 5
+  Includes:
+    - [include] CheckoutStep10 (priority=4, rationale='Step 9 enables step 10')
+  Included by:
+    - [include] CheckoutStep8
+
+- Use case: CheckoutStep10
+  ID: n10
+  Primary actor: Customer
+  Goal: Execute checkout step 10
+  Priority: 5
+  Complexity: 1
+  Includes:
+    - [include] CheckoutStep11 (priority=5, rationale='Step 10 enables step 11')
+  Included by:
+    - [include] CheckoutStep9
+    - [precedes] CheckoutStep8
+
+- Use case: CheckoutStep11
+  ID: n11
+  Primary actor: Customer
+  Goal: Execute checkout step 11
+  Priority: 6
+  Complexity: 2
+  Includes:
+    - [include] CheckoutStep12 (priority=6, rationale='Step 11 enables step 12')
+  Included by:
+    - [include] CheckoutStep10
+
+- Use case: CheckoutStep12
+  ID: n12
+  Primary actor: System
+  Goal: Execute checkout step 12
+  Priority: 7
+  Complexity: 3
+  Includes:
+    - [include] CheckoutStep13 (priority=7, rationale='Step 12 enables step 13')
+  Included by:
+    - [include] CheckoutStep11
+
+- Use case: CheckoutStep13
+  ID: n13
+  Primary actor: Customer
+  Goal: Execute checkout step 13
+  Priority: 8
+  Complexity: 4
+  Included by:
+    - [include] CheckoutStep12
+

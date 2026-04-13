@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: dsltrans-prover
+Version: 0.1.0
+Summary: Symbolic execution engine for DSLTrans model transformations
+Requires-Python: >=3.12
+Requires-Dist: z3-solver==4.13.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"

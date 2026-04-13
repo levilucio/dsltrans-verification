@@ -1,0 +1,19 @@
+BibTeX model: dsltrans-prover/examples/models/bibtex2docbook/bibtex2docbook_mixed_entries_input.xmi
+Objects: 10 | Links: 13
+Models: 1 | BibFiles: 1 | Entries: 3
+- root: model1 -> bib1
+- entries: bib1 -> art1, book1, proc1
+
+Entry details:
+- Article(art1) key='k1' year=2018
+    authors: a1, a2
+    keywords: kw1
+    cites: k2, k3
+- Book(book1) key='k2' year=2004
+    authors: a3
+    keywords: kw2
+    cites: (none)
+- InProceedings(proc1) key='k3' year=2012
+    authors: a2
+    keywords: kw1
+    cites: (none)

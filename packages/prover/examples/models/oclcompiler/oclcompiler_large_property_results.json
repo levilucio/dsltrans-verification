@@ -1,0 +1,302 @@
+[
+  {
+    "id": "ModelHasModel",
+    "name": "ModelHasModel",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ModuleHasExecEnv",
+    "name": "ModuleHasExecEnv",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "FieldHasField",
+    "name": "FieldHasField",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationHasOperation",
+    "name": "OperationHasOperation",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ParameterHasParameter",
+    "name": "ParameterHasParameter",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "LetVariableHasLocalVariable",
+    "name": "LetVariableHasLocalVariable",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IteratorHasLocalVariable",
+    "name": "IteratorHasLocalVariable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "FieldOwnedByTracedExecEnv",
+    "name": "FieldOwnedByTracedExecEnv",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationOwnedByTracedExecEnv",
+    "name": "OperationOwnedByTracedExecEnv",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ParameterOwnedByTracedOperation",
+    "name": "ParameterOwnedByTracedOperation",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "LetVariableOwnedByTracedOperation",
+    "name": "LetVariableOwnedByTracedOperation",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IteratorOwnedByTracedOperation",
+    "name": "IteratorOwnedByTracedOperation",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NavigationCallHasGet",
+    "name": "NavigationCallHasGet",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "StaticNavigationCallHasGetStatic",
+    "name": "StaticNavigationCallHasGetStatic",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "SuperNavigationCallHasInvokeSuper",
+    "name": "SuperNavigationCallHasInvokeSuper",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "OperationCallHasInvoke",
+    "name": "OperationCallHasInvoke",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "StaticOperationCallHasInvokeStatic",
+    "name": "StaticOperationCallHasInvokeStatic",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "SuperOperationCallHasInvokeSuper",
+    "name": "SuperOperationCallHasInvokeSuper",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "BuiltInNotHasInvoke",
+    "name": "BuiltInNotHasInvoke",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "BuiltInBinaryHasInvoke",
+    "name": "BuiltInBinaryHasInvoke",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "BuiltInUndefinedHasIsnull",
+    "name": "BuiltInUndefinedHasIsnull",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "LetExpHasStore",
+    "name": "LetExpHasStore",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "VariableExpHasLoad",
+    "name": "VariableExpHasLoad",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SelfExpHasLoad",
+    "name": "SelfExpHasLoad",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ThisModuleExpHasLoad",
+    "name": "ThisModuleExpHasLoad",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IteratorExpHasIterate",
+    "name": "IteratorExpHasIterate",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "StringExpHasPush",
+    "name": "StringExpHasPush",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "IntegerExpHasPushInt",
+    "name": "IntegerExpHasPushInt",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "BooleanTrueHasPushT",
+    "name": "BooleanTrueHasPushT",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "BooleanFalseHasPushF",
+    "name": "BooleanFalseHasPushF",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "SequenceExpHasPushSeq",
+    "name": "SequenceExpHasPushSeq",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SetExpHasPushSet",
+    "name": "SetExpHasPushSet",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "UndefinedExpHasPushUndef",
+    "name": "UndefinedExpHasPushUndef",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IfExpHasIfInstr",
+    "name": "IfExpHasIfInstr",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationWithBodyHasTracedTargetOperation",
+    "name": "OperationWithBodyHasTracedTargetOperation",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ParameterTracedToLocalVariable_ShouldFail",
+    "name": "ParameterTracedToLocalVariable_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "FieldTracedToOperation_ShouldFail",
+    "name": "FieldTracedToOperation_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "VariableExpHasPushInt_ShouldFail",
+    "name": "VariableExpHasPushInt_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BuiltInNotHasGet_ShouldFail",
+    "name": "BuiltInNotHasGet_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IfExpHasPushSeq_ShouldFail",
+    "name": "IfExpHasPushSeq_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  }
+]

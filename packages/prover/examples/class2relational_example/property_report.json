@@ -1,0 +1,211 @@
+[
+  {
+    "id": "PackageBecomesSchema",
+    "name": "PackageBecomesSchema",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassMapsToTable",
+    "name": "ClassMapsToTable",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "TableHasPrimaryKey",
+    "name": "TableHasPrimaryKey",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AttributeBecomesColumn",
+    "name": "AttributeBecomesColumn",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SingleValuedAttributeWithDataTypeBecomesColumn",
+    "name": "SingleValuedAttributeWithDataTypeBecomesColumn",
+    "status": "holds",
+    "checked_pre_matches": 145,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassTypedAttributeBecomesFKColumn",
+    "name": "ClassTypedAttributeBecomesFKColumn",
+    "status": "holds",
+    "checked_pre_matches": 65,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MultiValuedAttributeCreatesTable",
+    "name": "MultiValuedAttributeCreatesTable",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "InheritanceFlattened",
+    "name": "InheritanceFlattened",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "InheritanceHasDiscriminator",
+    "name": "InheritanceHasDiscriminator",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "AbstractClassHasDiscriminatorTable",
+    "name": "AbstractClassHasDiscriminatorTable",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "SchemaHasTable",
+    "name": "SchemaHasTable",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AssociationCreatesForeignKey",
+    "name": "AssociationCreatesForeignKey",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "OneToManyAssociationCreatesForeignKey",
+    "name": "OneToManyAssociationCreatesForeignKey",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ManyToManyCreatesJunctionTable",
+    "name": "ManyToManyCreatesJunctionTable",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "OneToOneCreatesFKWithUnique",
+    "name": "OneToOneCreatesFKWithUnique",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "TablesExist",
+    "name": "TablesExist",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_ConcreteClassGetsTable",
+    "name": "Diag_ConcreteClassGetsTable",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_AbstractClassNoDirectTable_ShouldFail",
+    "name": "Diag_AbstractClassNoDirectTable_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "Diag_DataTypeBecomesTable_ShouldFail",
+    "name": "Diag_DataTypeBecomesTable_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_DataTypeExistsSchemaExists",
+    "name": "Diag_DataTypeExistsSchemaExists",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_SingleAttrWithDataType",
+    "name": "Diag_SingleAttrWithDataType",
+    "status": "holds",
+    "checked_pre_matches": 145,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_MultiValuedAttrCreatesSeparateTable",
+    "name": "Diag_MultiValuedAttrCreatesSeparateTable",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "Diag_ConcreteClassTableHasPK",
+    "name": "Diag_ConcreteClassTableHasPK",
+    "status": "holds",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_AttributeTracedToTable_ShouldFail",
+    "name": "Diag_AttributeTracedToTable_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_PKTracedFromClass_ShouldFail",
+    "name": "Diag_PKTracedFromClass_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 210,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_AssociationTracedToTable_ShouldFail",
+    "name": "Diag_AssociationTracedToTable_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "Diag_AssocBetweenTracedToTable_ShouldFail",
+    "name": "Diag_AssocBetweenTracedToTable_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "Diag_ManyToManyHasJunctionTable",
+    "name": "Diag_ManyToManyHasJunctionTable",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  }
+]

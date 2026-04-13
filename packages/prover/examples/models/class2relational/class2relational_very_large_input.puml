@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+hide empty members
+skinparam classAttributeIconSize 0
+title class2relational_very_large_input.xmi
+
+package "Pkg1" as pkg0 {
+  class "T1\n[dt_int]" as dt_int <<DataType>>
+  class "T2\n[dt_str]" as dt_str <<DataType>>
+  abstract class "C\n[c0]" as c0
+  class "D\n[c1]" as c1
+  class "T1\n[c2]" as c2
+  class "T2\n[c3]" as c3
+  class "C\n[c4]" as c4
+  class "D\n[c5]" as c5
+  class "T1\n[c6]" as c6
+  class "T2\n[c7]" as c7
+  class "C\n[c8]" as c8
+  abstract class "D\n[c9]" as c9
+  class "T1\n[c10]" as c10
+  class "T2\n[c11]" as c11
+  class "C\n[c12]" as c12
+  class "D\n[c13]" as c13
+  class "T1\n[c14]" as c14
+  class "T2\n[c15]" as c15
+  class "C\n[c16]" as c16
+  class "D\n[c17]" as c17
+  abstract class "T1\n[c18]" as c18
+  class "T2\n[c19]" as c19
+  class "C\n[c20]" as c20
+  class "D\n[c21]" as c21
+  class "T1\n[c22]" as c22
+  class "T2\n[c23]" as c23
+  class "C\n[c24]" as c24
+  class "D\n[c25]" as c25
+  class "T1\n[c26]" as c26
+  abstract class "T2\n[c27]" as c27
+  class "C\n[c28]" as c28
+  class "D\n[c29]" as c29
+  class "T1\n[c30]" as c30
+  class "T2\n[c31]" as c31
+}
+c1 --|> c0
+c10 --|> c9
+c19 --|> c18
+c28 --|> c27
+c2 "1" --> "*" c5 : as0
+c5 "*" --> "1" c8 : as1
+c0 "1" --> "1" c3 : as10
+c3 "*" --> "*" c6 : as11
+c8 "1" --> "1" c11 : as2
+c11 "*" --> "*" c14 : as3
+c14 "1" --> "*" c17 : as4
+c17 "*" --> "1" c20 : as5
+c20 "1" --> "1" c23 : as6
+c23 "*" --> "*" c26 : as7
+c26 "1" --> "*" c29 : as8
+c29 "*" --> "1" c0 : as9
+@enduml

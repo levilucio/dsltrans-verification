@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="UML:Model" name="M1"/>
+  <objects xmi:id="pkg1" xsi:type="UML:Package" name="Pkg1"/>
+  <objects xmi:id="cls1" xsi:type="UML:Class" name="C" isAbstract="false" isFinal="false" priority="1" layerTag="Core" kind="Entity"/>
+  <objects xmi:id="prop1" xsi:type="UML:Property" name="f" visibility="public" isStatic="false" isReadOnly="false" isDerived="false" isOrdered="false" isUnique="true" lower="0" upper="1"/>
+  <objects xmi:id="prim1" xsi:type="UML:PrimitiveType" name="int"/>
+  
+  <links xsi:type="UML:rootPackages" source="model1" target="pkg1"/>
+  <links xsi:type="UML:packagedElement" source="pkg1" target="cls1"/>
+  <links xsi:type="UML:packagedElement" source="pkg1" target="prim1"/>
+  <links xsi:type="UML:ownedAttribute" source="cls1" target="prop1"/>
+  <links xsi:type="UML:type" source="prop1" target="prim1"/>
+</model>

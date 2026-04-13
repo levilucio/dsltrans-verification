@@ -1,0 +1,369 @@
+
+metamodel Component {
+    class ComponentModel { }
+    class ComponentNode { }
+    class Dependency { }
+
+    containment assoc nodes : ComponentModel[1] -- ComponentNode[0..*]
+    containment assoc edges : ComponentModel[1] -- Dependency[0..*]
+    assoc src : Dependency[0..*] -- ComponentNode[1]
+    assoc dst : Dependency[0..*] -- ComponentNode[1]
+}
+
+metamodel Deployment {
+    class DeploymentModel { }
+    class Node { }
+    class Connector { }
+
+    containment assoc nodes : DeploymentModel[1] -- Node[0..*]
+    containment assoc edges : DeploymentModel[1] -- Connector[0..*]
+    assoc src : Connector[0..*] -- Node[1]
+    assoc dst : Connector[0..*] -- Node[1]
+}
+
+transformation Component2Deployment : Component -> Deployment {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : ComponentModel
+            }
+            apply {
+                tm : DeploymentModel
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : ComponentModel
+                any sn : ComponentNode
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : DeploymentModel
+                tn : Node
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : ComponentModel
+                any se : Dependency
+                any sn1 : ComponentNode
+                any sn2 : ComponentNode
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : DeploymentModel
+                tn1 : Node
+                tn2 : Node
+                te : Connector
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : ComponentModel
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any se : Dependency
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        any se : Dependency
+        any sn2 : ComponentNode
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        any se : Dependency
+        any sn2 : ComponentNode
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        any se : Dependency
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any se : Dependency
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        any se : Dependency
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : ComponentModel
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        any se : Dependency
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Connector
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any se : Dependency
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Node
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any se : Dependency
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+    }
+    postcondition {
+        tn : Node
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+    }
+    postcondition {
+        te : Connector
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        any se : Dependency
+        any sn2 : ComponentNode
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : Connector
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any sn : ComponentNode
+        any se : Dependency
+        any sn2 : ComponentNode
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any se : Dependency
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Node
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : ComponentModel
+        any se : Dependency
+        any sn1 : ComponentNode
+        any sn2 : ComponentNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : DeploymentModel
+        tm <--trace-- se
+    }
+}

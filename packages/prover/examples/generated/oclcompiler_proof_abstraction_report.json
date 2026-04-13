@@ -1,0 +1,546 @@
+{
+  "metamodelMapping": {
+    "OCLASTConcrete": "OCLASTProof",
+    "EMFTVMASTConcrete": "EMFTVMASTProof"
+  },
+  "transformationMapping": {
+    "OCLCompiler_concrete": "OCLCompiler_proof"
+  },
+  "attributeDecisions": [
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Module",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{MainModule, HelpersModule, OTHER}",
+      "decision": "override",
+      "reason": "Preserve proof-relevant module naming distinctions"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Field",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{name, age, status, children, value, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite field/property vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Field",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Operation",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{isAdult, resolveStatus, helper, compute, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite operation-name vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Operation",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Parameter",
+      "attributeName": "varName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite source parameter vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "LetVariable",
+      "attributeName": "varName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite let-variable vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "Iterator",
+      "attributeName": "varName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite iterator-variable vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "NavigationCall",
+      "attributeName": "propName",
+      "concreteType": "String",
+      "abstractType": "String{name, age, status, children, value, OTHER}",
+      "decision": "override",
+      "reason": "Preserve navigation-property distinctions used in compilation"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "NavigationCall",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "NavigationCall",
+      "attributeName": "isSuper",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "OperationCall",
+      "attributeName": "opName",
+      "concreteType": "String",
+      "abstractType": "String{isAdult, resolveStatus, helper, not, and, or, =, <, >, oclIsUndefined, OTHER}",
+      "decision": "override",
+      "reason": "Preserve operation-call distinctions used in compilation"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "OperationCall",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "OperationCall",
+      "attributeName": "isSuper",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "BuiltInCall",
+      "attributeName": "opName",
+      "concreteType": "String",
+      "abstractType": "String{not, and, or, =, <, >, oclIsUndefined, OTHER}",
+      "decision": "override",
+      "reason": "Finite built-in operator vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "VariableExp",
+      "attributeName": "varName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite variable-expression vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "IteratorExp",
+      "attributeName": "iterName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite iterator-expression vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "StringExp",
+      "attributeName": "val",
+      "concreteType": "String",
+      "abstractType": "String{adult, minor, active, guest, OTHER}",
+      "decision": "override",
+      "reason": "Finite representative string literal vocabulary"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "IntegerExp",
+      "attributeName": "valInt",
+      "concreteType": "Int",
+      "abstractType": "Int[0..120]",
+      "decision": "override",
+      "reason": "Finite integer range covering typical example predicates"
+    },
+    {
+      "metamodel": "OCLASTProof",
+      "className": "BooleanExp",
+      "attributeName": "valBool",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "ExecEnv",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{MainModule, HelpersModule, OTHER}",
+      "decision": "override",
+      "reason": "Keep target exec env names aligned with source modules"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Field",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{name, age, status, children, value, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite field/property vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Field",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Operation",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{isAdult, resolveStatus, helper, compute, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite operation-name vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Operation",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Parameter",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite target parameter vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "LocalVariable",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Get",
+      "attributeName": "propName",
+      "concreteType": "String",
+      "abstractType": "String{name, age, status, children, value, OTHER}",
+      "decision": "override",
+      "reason": "Align target Get instruction property names with source navigations"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "GetStatic",
+      "attributeName": "propName",
+      "concreteType": "String",
+      "abstractType": "String{name, age, status, children, value, OTHER}",
+      "decision": "override",
+      "reason": "Align target GetStatic property names with source navigations"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Invoke",
+      "attributeName": "opName",
+      "concreteType": "String",
+      "abstractType": "String{isAdult, resolveStatus, helper, not, and, or, =, <, >, oclIsUndefined, OTHER}",
+      "decision": "override",
+      "reason": "Align target Invoke op names with source calls and built-ins"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "InvokeStatic",
+      "attributeName": "opName",
+      "concreteType": "String",
+      "abstractType": "String{isAdult, resolveStatus, helper, not, and, or, =, <, >, oclIsUndefined, OTHER}",
+      "decision": "override",
+      "reason": "Align target InvokeStatic op names with source calls"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "InvokeSuper",
+      "attributeName": "opName",
+      "concreteType": "String",
+      "abstractType": "String{isAdult, resolveStatus, helper, not, and, or, =, <, >, oclIsUndefined, OTHER, name, age, status, children, value, OTHER}",
+      "decision": "override",
+      "reason": "Align target InvokeSuper op names with source super calls and super navigations"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Store",
+      "attributeName": "varName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite store-variable vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Load",
+      "attributeName": "varName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite load-variable vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Iterate",
+      "attributeName": "iterName",
+      "concreteType": "String",
+      "abstractType": "String{self, thisModule, arg, tmp, item, acc, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite iterate-variable vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "Push",
+      "attributeName": "val",
+      "concreteType": "String",
+      "abstractType": "String{adult, minor, active, guest, OTHER}",
+      "decision": "override",
+      "reason": "Finite representative pushed string literal vocabulary"
+    },
+    {
+      "metamodel": "EMFTVMASTProof",
+      "className": "PushInt",
+      "attributeName": "valInt",
+      "concreteType": "Int",
+      "abstractType": "Int[0..120]",
+      "decision": "override",
+      "reason": "Finite pushed integer range aligned with source integer literals"
+    }
+  ],
+  "propertyDecisions": [
+    {
+      "propertyName": "ModelHasModel",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ModuleHasExecEnv",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "FieldHasField",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OperationHasOperation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ParameterHasParameter",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "LetVariableHasLocalVariable",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "IteratorHasLocalVariable",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "FieldOwnedByTracedExecEnv",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OperationOwnedByTracedExecEnv",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ParameterOwnedByTracedOperation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "LetVariableOwnedByTracedOperation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "IteratorOwnedByTracedOperation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "NavigationCallHasGet",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "StaticNavigationCallHasGetStatic",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "SuperNavigationCallHasInvokeSuper",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OperationCallHasInvoke",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "StaticOperationCallHasInvokeStatic",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "SuperOperationCallHasInvokeSuper",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BuiltInNotHasInvoke",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BuiltInBinaryHasInvoke",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BuiltInUndefinedHasIsnull",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "LetExpHasStore",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "VariableExpHasLoad",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "SelfExpHasLoad",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ThisModuleExpHasLoad",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "IteratorExpHasIterate",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "StringExpHasPush",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "IntegerExpHasPushInt",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BooleanTrueHasPushT",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BooleanFalseHasPushF",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "SequenceExpHasPushSeq",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "SetExpHasPushSet",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "UndefinedExpHasPushUndef",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "IfExpHasIfInstr",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OperationWithBodyHasTracedTargetOperation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ParameterTracedToLocalVariable_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "FieldTracedToOperation_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "VariableExpHasPushInt_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BuiltInNotHasGet_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "IfExpHasPushSeq_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    }
+  ]
+}

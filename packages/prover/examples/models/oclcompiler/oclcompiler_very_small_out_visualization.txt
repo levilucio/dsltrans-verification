@@ -1,0 +1,15 @@
+EMFTVM model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_very_small_out.xmi
+Objects: 6 | Links: 5 | Traces: 12
+Models: 1 | ExecEnvs: 1 | Operations: 1 | Instrs: 2
+- root: Model2Model_outM_1 -> Module2ExecEnv_env_2
+
+ExecEnvs:
+- ExecEnv(Module2ExecEnv_env_2) name='MainModule'
+  fields:
+    - Field(Field2Field_e_f_3) isStatic='false', name='age'
+  operations:
+    - Operation(Operation2Operation_e_op_4) isStatic='false', name='getAge'
+      instr_count: 2
+      instructions:
+        - Get(NavigationCall2Get_i_5) propName='age'
+        - Load(SelfExp2Load_i_6) varName='self'

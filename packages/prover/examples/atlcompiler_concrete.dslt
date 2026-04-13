@@ -1,0 +1,761 @@
+// =============================================================================
+// ATLCompiler Fragment (inspired by ATLtoEMFTVM)
+// Rules: 55
+// =============================================================================
+// Translates a subset of ATL AST into EMFTVM bytecode blocks.
+// Models real-world compiler passes where AST nodes map to instruction sequences.
+// F-LNR compliant: single root, finite domains, bounded match size.
+
+metamodel ATLAST {
+    class Model { }
+    class Module { name: String }
+    class MatchedRule { name: String }
+    class LazyRule { name: String }
+    class CalledRule { name: String }
+    class Helper { name: String }
+    
+    class InPattern { }
+    class OutPattern { }
+    class ActionBlock { }
+    
+    class InPatternElement { varName: String }
+    class OutPatternElement { varName: String }
+    class Binding { propName: String }
+    
+    class ExpressionStat { }
+    class BindingStat { }
+    class IfStat { }
+    class ForStat { }
+    class ReturnStat { }
+    class DupStat { }
+    class GotoStat { }
+    class IsnullStat { }
+    
+    class StringExp { val: String }
+    class IntegerExp { valInt: Int }
+    class BooleanExp { valBool: Bool }
+    class VariableExp { varName: String }
+    class PropertyCallExp { propName: String }
+    class OperationCallExp { opName: String }
+    class IteratorExp { iterName: String }
+    class IterateExp { }
+    class IfExp { }
+    class LetExp { }
+    class SequenceExp { }
+    class SetExp { }
+    class BagExp { }
+    class TupleExp { }
+    class MapExp { }
+    class OclUndefinedExp { }
+    class EnumLiteralExp { }
+    class SuperExp { }
+    class AddExp { }
+    class SubExp { }
+    class MulExp { }
+    class DivExp { }
+    class AndExp { }
+    class OrExp { }
+    class XorExp { }
+    class NotExp { }
+    class ImpliesExp { }
+    
+    class CollectionType { }
+    class StringType { }
+    class IntegerType { }
+    class BooleanType { }
+    class OclAnyType { }
+    class OclVoidType { }
+    class OclModelElement { }
+
+    containment assoc root: Model[1] -- Module[0..*]
+    containment assoc r_matched: Module[1] -- MatchedRule[0..*]
+    containment assoc r_lazy: Module[1] -- LazyRule[0..*]
+    containment assoc r_called: Module[1] -- CalledRule[0..*]
+    containment assoc r_helper: Module[1] -- Helper[0..*]
+    
+    containment assoc in_p1: MatchedRule[1] -- InPattern[0..1]
+    containment assoc out_p1: MatchedRule[1] -- OutPattern[0..1]
+    containment assoc act_1: MatchedRule[1] -- ActionBlock[0..1]
+    
+    containment assoc in_p2: LazyRule[1] -- InPattern[0..1]
+    containment assoc out_p2: LazyRule[1] -- OutPattern[0..1]
+    
+    containment assoc out_p3: CalledRule[1] -- OutPattern[0..1]
+    containment assoc act_3: CalledRule[1] -- ActionBlock[0..1]
+    
+    containment assoc in_el: InPattern[1] -- InPatternElement[0..*]
+    containment assoc out_el: OutPattern[1] -- OutPatternElement[0..*]
+    containment assoc out_bind: OutPatternElement[1] -- Binding[0..*]
+    
+    containment assoc st_exp: ActionBlock[1] -- ExpressionStat[0..*]
+    containment assoc st_bind: ActionBlock[1] -- BindingStat[0..*]
+    containment assoc st_if: ActionBlock[1] -- IfStat[0..*]
+    containment assoc st_for: ActionBlock[1] -- ForStat[0..*]
+    containment assoc st_return: ActionBlock[1] -- ReturnStat[0..*]
+    containment assoc st_dup: ActionBlock[1] -- DupStat[0..*]
+    containment assoc st_goto: ActionBlock[1] -- GotoStat[0..*]
+    containment assoc st_isnull: ActionBlock[1] -- IsnullStat[0..*]
+    
+    containment assoc ex_str: ActionBlock[1] -- StringExp[0..*]
+    containment assoc ex_int: ActionBlock[1] -- IntegerExp[0..*]
+    containment assoc ex_bool: ActionBlock[1] -- BooleanExp[0..*]
+    containment assoc ex_var: ActionBlock[1] -- VariableExp[0..*]
+    containment assoc ex_prop: ActionBlock[1] -- PropertyCallExp[0..*]
+    containment assoc ex_op: ActionBlock[1] -- OperationCallExp[0..*]
+    containment assoc ex_iter: ActionBlock[1] -- IteratorExp[0..*]
+    containment assoc ex_iterate: ActionBlock[1] -- IterateExp[0..*]
+    containment assoc ex_if: ActionBlock[1] -- IfExp[0..*]
+    containment assoc ex_let: ActionBlock[1] -- LetExp[0..*]
+    containment assoc ex_seq: ActionBlock[1] -- SequenceExp[0..*]
+    containment assoc ex_set: ActionBlock[1] -- SetExp[0..*]
+    containment assoc ex_bag: ActionBlock[1] -- BagExp[0..*]
+    containment assoc ex_tup: ActionBlock[1] -- TupleExp[0..*]
+    containment assoc ex_map: ActionBlock[1] -- MapExp[0..*]
+    containment assoc ex_undef: ActionBlock[1] -- OclUndefinedExp[0..*]
+    containment assoc ex_enum: ActionBlock[1] -- EnumLiteralExp[0..*]
+    containment assoc ex_sup: ActionBlock[1] -- SuperExp[0..*]
+    containment assoc ex_add: ActionBlock[1] -- AddExp[0..*]
+    containment assoc ex_sub: ActionBlock[1] -- SubExp[0..*]
+    containment assoc ex_mul: ActionBlock[1] -- MulExp[0..*]
+    containment assoc ex_div: ActionBlock[1] -- DivExp[0..*]
+    containment assoc ex_and: ActionBlock[1] -- AndExp[0..*]
+    containment assoc ex_or: ActionBlock[1] -- OrExp[0..*]
+    containment assoc ex_xor: ActionBlock[1] -- XorExp[0..*]
+    containment assoc ex_not: ActionBlock[1] -- NotExp[0..*]
+    containment assoc ex_implies: ActionBlock[1] -- ImpliesExp[0..*]
+    
+    containment assoc ty_col: ActionBlock[1] -- CollectionType[0..*]
+    containment assoc ty_str: ActionBlock[1] -- StringType[0..*]
+    containment assoc ty_int: ActionBlock[1] -- IntegerType[0..*]
+    containment assoc ty_bool: ActionBlock[1] -- BooleanType[0..*]
+    containment assoc ty_any: ActionBlock[1] -- OclAnyType[0..*]
+    containment assoc ty_void: ActionBlock[1] -- OclVoidType[0..*]
+    containment assoc ty_mod: ActionBlock[1] -- OclModelElement[0..*]
+}
+
+metamodel EMFTVMAST {
+    class Model { }
+    class ExecEnv { name: String }
+    class RuleBlock { name: String }
+    class Field { name: String }
+    
+    class CodeBlock { }
+    class Parameter { name: String }
+    
+    class Push { val: String }
+    class PushInt { valInt: Int }
+    class PushT { }
+    class PushF { }
+    class Load { varName: String }
+    class Store { varName: String }
+    class Get { propName: String }
+    class Set { propName: String }
+    class Invoke { opName: String }
+    class Iterate { iterName: String }
+    class EndIterate { }
+    class IfInstr { }
+    class Goto { }
+    class Return { }
+    class New { }
+    class Dup { }
+    class Pop { }
+    class Isnull { }
+    class PushSeq { }
+    class PushSet { }
+    class PushBag { }
+    class PushTuple { }
+    class PushMap { }
+    class PushUndef { }
+    class PushEnum { }
+    class InvokeSuper { }
+    class TypeColl { }
+    class TypeStr { }
+    class TypeInt { }
+    class TypeBool { }
+    class TypeAny { }
+    class TypeVoid { }
+    class TypeModel { }
+    
+    containment assoc root: Model[1] -- ExecEnv[0..*]
+    containment assoc rules: ExecEnv[1] -- RuleBlock[0..*]
+    containment assoc fields: ExecEnv[1] -- Field[0..*]
+    
+    containment assoc code: RuleBlock[1] -- CodeBlock[0..*]
+    containment assoc params: RuleBlock[1] -- Parameter[0..*]
+    
+    containment assoc inst_push: CodeBlock[1] -- Push[0..*]
+    containment assoc inst_pushi: CodeBlock[1] -- PushInt[0..*]
+    containment assoc inst_pusht: CodeBlock[1] -- PushT[0..*]
+    containment assoc inst_pushf: CodeBlock[1] -- PushF[0..*]
+    containment assoc inst_load: CodeBlock[1] -- Load[0..*]
+    containment assoc inst_store: CodeBlock[1] -- Store[0..*]
+    containment assoc inst_get: CodeBlock[1] -- Get[0..*]
+    containment assoc inst_set: CodeBlock[1] -- Set[0..*]
+    containment assoc inst_invoke: CodeBlock[1] -- Invoke[0..*]
+    containment assoc inst_iterate: CodeBlock[1] -- Iterate[0..*]
+    containment assoc inst_enditerate: CodeBlock[1] -- EndIterate[0..*]
+    containment assoc inst_if: CodeBlock[1] -- IfInstr[0..*]
+    containment assoc inst_goto: CodeBlock[1] -- Goto[0..*]
+    containment assoc inst_return: CodeBlock[1] -- Return[0..*]
+    containment assoc inst_new: CodeBlock[1] -- New[0..*]
+    containment assoc inst_dup: CodeBlock[1] -- Dup[0..*]
+    containment assoc inst_pop: CodeBlock[1] -- Pop[0..*]
+    containment assoc inst_isnull: CodeBlock[1] -- Isnull[0..*]
+    
+    containment assoc inst_pushseq: CodeBlock[1] -- PushSeq[0..*]
+    containment assoc inst_pushset: CodeBlock[1] -- PushSet[0..*]
+    containment assoc inst_pushbag: CodeBlock[1] -- PushBag[0..*]
+    containment assoc inst_pushtup: CodeBlock[1] -- PushTuple[0..*]
+    containment assoc inst_pushmap: CodeBlock[1] -- PushMap[0..*]
+    containment assoc inst_pushundef: CodeBlock[1] -- PushUndef[0..*]
+    containment assoc inst_pushenum: CodeBlock[1] -- PushEnum[0..*]
+    containment assoc inst_invokesup: CodeBlock[1] -- InvokeSuper[0..*]
+    containment assoc inst_typecoll: CodeBlock[1] -- TypeColl[0..*]
+    containment assoc inst_typestr: CodeBlock[1] -- TypeStr[0..*]
+    containment assoc inst_typeint: CodeBlock[1] -- TypeInt[0..*]
+    containment assoc inst_typebool: CodeBlock[1] -- TypeBool[0..*]
+    containment assoc inst_typeany: CodeBlock[1] -- TypeAny[0..*]
+    containment assoc inst_typevoid: CodeBlock[1] -- TypeVoid[0..*]
+    containment assoc inst_typemodel: CodeBlock[1] -- TypeModel[0..*]
+}
+
+transformation ATLCompiler_concrete : ATLAST -> EMFTVMAST {
+
+    layer TopLevel {
+        rule Model2Model {
+            match {
+                any mIn : Model
+            }
+            apply {
+                mOut : Model
+            }
+        }
+        
+        rule Module2ExecEnv {
+            match {
+                any mIn : Model
+                any mod : Module
+                direct r : root -- mIn.mod
+            }
+            apply {
+                mOut : Model
+                env : ExecEnv { name = mod.name }
+                outR : root -- mOut.env
+            }
+        }
+    }
+
+    layer Structure {
+        rule MatchedRule2RuleBlock {
+            match {
+                any mod : Module
+                any r : MatchedRule
+                direct l : r_matched -- mod.r
+            }
+            apply {
+                env : ExecEnv
+                rb : RuleBlock { name = r.name }
+                outL : rules -- env.rb
+            }
+        }
+
+        rule LazyRule2RuleBlock {
+            match {
+                any mod : Module
+                any r : LazyRule
+                direct l : r_lazy -- mod.r
+            }
+            apply {
+                env : ExecEnv
+                rb : RuleBlock { name = r.name }
+                outL : rules -- env.rb
+            }
+        }
+
+        rule CalledRule2RuleBlock {
+            match {
+                any mod : Module
+                any r : CalledRule
+                direct l : r_called -- mod.r
+            }
+            apply {
+                env : ExecEnv
+                rb : RuleBlock { name = r.name }
+                outL : rules -- env.rb
+            }
+        }
+
+        rule Helper2Field {
+            match {
+                any mod : Module
+                any h : Helper
+                direct l : r_helper -- mod.h
+            }
+            apply {
+                env : ExecEnv
+                f : Field { name = h.name }
+                outL : fields -- env.f
+            }
+        }
+    }
+
+    layer Patterns {
+        rule InPattern2CodeBlock {
+            match {
+                any r : MatchedRule
+                any p : InPattern
+                direct l : in_p1 -- r.p
+            }
+            apply {
+                rb : RuleBlock
+                cb : CodeBlock
+                outL : code -- rb.cb
+            }
+        }
+
+        rule OutPattern2CodeBlock {
+            match {
+                any r : MatchedRule
+                any p : OutPattern
+                direct l : out_p1 -- r.p
+            }
+            apply {
+                rb : RuleBlock
+                cb : CodeBlock
+                outL : code -- rb.cb
+            }
+        }
+
+        rule ActionBlock2CodeBlock {
+            match {
+                any r : MatchedRule
+                any a : ActionBlock
+                direct l : act_1 -- r.a
+            }
+            apply {
+                rb : RuleBlock
+                cb : CodeBlock
+                outL : code -- rb.cb
+            }
+        }
+    }
+
+    layer Elements {
+        rule InPatternElement2Parameter {
+            match {
+                any p : InPattern
+                any e : InPatternElement
+                direct l : in_el -- p.e
+            }
+            apply {
+                cb : CodeBlock
+                param : Parameter { name = e.varName }
+            }
+        }
+
+        rule OutPatternElement2New {
+            match {
+                any p : OutPattern
+                any e : OutPatternElement
+                direct l : out_el -- p.e
+            }
+            apply {
+                cb : CodeBlock
+                n : New
+                outL : inst_new -- cb.n
+            }
+        }
+
+        rule Binding2Set {
+            match {
+                any e : OutPatternElement
+                any b : Binding
+                direct l : out_bind -- e.b
+            }
+            apply {
+                n : New
+                s : Set { propName = b.propName }
+            }
+        }
+    }
+
+    layer Statements {
+        rule ExpressionStat2Pop {
+            match {
+                any a : ActionBlock
+                any s : ExpressionStat
+                direct l : st_exp -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                p : Pop
+                outL : inst_pop -- cb.p
+            }
+        }
+
+        rule BindingStat2Set {
+            match {
+                any a : ActionBlock
+                any s : BindingStat
+                direct l : st_bind -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                st : Set
+                outL : inst_set -- cb.st
+            }
+        }
+
+        rule IfStat2IfInstr {
+            match {
+                any a : ActionBlock
+                any s : IfStat
+                direct l : st_if -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                instr : IfInstr
+                outL : inst_if -- cb.instr
+            }
+        }
+
+        rule ForStat2Iterate {
+            match {
+                any a : ActionBlock
+                any s : ForStat
+                direct l : st_for -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                instr : Iterate
+                outL : inst_iterate -- cb.instr
+            }
+        }
+
+        rule ReturnStat2Return {
+            match {
+                any a : ActionBlock
+                any s : ReturnStat
+                direct l : st_return -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                instr : Return
+                outL : inst_return -- cb.instr
+            }
+        }
+
+        rule DupStat2Dup {
+            match {
+                any a : ActionBlock
+                any s : DupStat
+                direct l : st_dup -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                instr : Dup
+                outL : inst_dup -- cb.instr
+            }
+        }
+
+        rule GotoStat2Goto {
+            match {
+                any a : ActionBlock
+                any s : GotoStat
+                direct l : st_goto -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                instr : Goto
+                outL : inst_goto -- cb.instr
+            }
+        }
+
+        rule IsnullStat2Isnull {
+            match {
+                any a : ActionBlock
+                any s : IsnullStat
+                direct l : st_isnull -- a.s
+            }
+            apply {
+                cb : CodeBlock
+                instr : Isnull
+                outL : inst_isnull -- cb.instr
+            }
+        }
+    }
+
+    layer BasicExpressions {
+        rule StringExp2Push {
+            match {
+                any a : ActionBlock
+                any e : StringExp
+                direct l : ex_str -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Push { val = e.val }
+                outL : inst_push -- cb.instr
+            }
+        }
+
+        rule IntegerExp2PushInt {
+            match {
+                any a : ActionBlock
+                any e : IntegerExp
+                direct l : ex_int -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : PushInt { valInt = e.valInt }
+                outL : inst_pushi -- cb.instr
+            }
+        }
+
+        rule BooleanExpTrue2PushT {
+            match {
+                any a : ActionBlock
+                any e : BooleanExp where e.valBool == true
+                direct l : ex_bool -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : PushT
+                outL : inst_pusht -- cb.instr
+            }
+        }
+
+        rule BooleanExpFalse2PushF {
+            match {
+                any a : ActionBlock
+                any e : BooleanExp where e.valBool == false
+                direct l : ex_bool -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : PushF
+                outL : inst_pushf -- cb.instr
+            }
+        }
+
+        rule VariableExp2Load {
+            match {
+                any a : ActionBlock
+                any e : VariableExp
+                direct l : ex_var -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Load { varName = e.varName }
+                outL : inst_load -- cb.instr
+            }
+        }
+    }
+
+    layer ComplexExpressions {
+        rule PropertyCallExp2Get {
+            match {
+                any a : ActionBlock
+                any e : PropertyCallExp
+                direct l : ex_prop -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Get { propName = e.propName }
+                outL : inst_get -- cb.instr
+            }
+        }
+
+        rule OperationCallExp2Invoke {
+            match {
+                any a : ActionBlock
+                any e : OperationCallExp
+                direct l : ex_op -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Invoke { opName = e.opName }
+                outL : inst_invoke -- cb.instr
+            }
+        }
+
+        rule IteratorExp2Iterate {
+            match {
+                any a : ActionBlock
+                any e : IteratorExp
+                direct l : ex_iter -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Iterate { iterName = e.iterName }
+                outL : inst_iterate -- cb.instr
+            }
+        }
+
+        rule IterateExp2Iterate {
+            match {
+                any a : ActionBlock
+                any e : IterateExp
+                direct l : ex_iterate -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Iterate
+                outL : inst_iterate -- cb.instr
+            }
+        }
+
+        rule IfExp2IfInstr {
+            match {
+                any a : ActionBlock
+                any e : IfExp
+                direct l : ex_if -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : IfInstr
+                outL : inst_if -- cb.instr
+            }
+        }
+
+        rule LetExp2Store {
+            match {
+                any a : ActionBlock
+                any e : LetExp
+                direct l : ex_let -- a.e
+            }
+            apply {
+                cb : CodeBlock
+                instr : Store
+                outL : inst_store -- cb.instr
+            }
+        }
+    }
+
+    layer CollectionsAndTypes {
+        rule SequenceExp2PushSeq {
+            match { any a : ActionBlock any e : SequenceExp direct l : ex_seq -- a.e }
+            apply { cb : CodeBlock instr : PushSeq outL : inst_pushseq -- cb.instr }
+        }
+        rule SetExp2PushSet {
+            match { any a : ActionBlock any e : SetExp direct l : ex_set -- a.e }
+            apply { cb : CodeBlock instr : PushSet outL : inst_pushset -- cb.instr }
+        }
+        rule BagExp2PushBag {
+            match { any a : ActionBlock any e : BagExp direct l : ex_bag -- a.e }
+            apply { cb : CodeBlock instr : PushBag outL : inst_pushbag -- cb.instr }
+        }
+        rule TupleExp2PushTuple {
+            match { any a : ActionBlock any e : TupleExp direct l : ex_tup -- a.e }
+            apply { cb : CodeBlock instr : PushTuple outL : inst_pushtup -- cb.instr }
+        }
+        rule MapExp2PushMap {
+            match { any a : ActionBlock any e : MapExp direct l : ex_map -- a.e }
+            apply { cb : CodeBlock instr : PushMap outL : inst_pushmap -- cb.instr }
+        }
+        rule OclUndefinedExp2PushUndef {
+            match { any a : ActionBlock any e : OclUndefinedExp direct l : ex_undef -- a.e }
+            apply { cb : CodeBlock instr : PushUndef outL : inst_pushundef -- cb.instr }
+        }
+        rule EnumLiteralExp2PushEnum {
+            match { any a : ActionBlock any e : EnumLiteralExp direct l : ex_enum -- a.e }
+            apply { cb : CodeBlock instr : PushEnum outL : inst_pushenum -- cb.instr }
+        }
+        rule SuperExp2InvokeSuper {
+            match { any a : ActionBlock any e : SuperExp direct l : ex_sup -- a.e }
+            apply { cb : CodeBlock instr : InvokeSuper outL : inst_invokesup -- cb.instr }
+        }
+
+        rule CollectionType2TypeColl {
+            match { any a : ActionBlock any e : CollectionType direct l : ty_col -- a.e }
+            apply { cb : CodeBlock instr : TypeColl outL : inst_typecoll -- cb.instr }
+        }
+        rule StringType2TypeStr {
+            match { any a : ActionBlock any e : StringType direct l : ty_str -- a.e }
+            apply { cb : CodeBlock instr : TypeStr outL : inst_typestr -- cb.instr }
+        }
+        rule IntegerType2TypeInt {
+            match { any a : ActionBlock any e : IntegerType direct l : ty_int -- a.e }
+            apply { cb : CodeBlock instr : TypeInt outL : inst_typeint -- cb.instr }
+        }
+        rule BooleanType2TypeBool {
+            match { any a : ActionBlock any e : BooleanType direct l : ty_bool -- a.e }
+            apply { cb : CodeBlock instr : TypeBool outL : inst_typebool -- cb.instr }
+        }
+        rule OclAnyType2TypeAny {
+            match { any a : ActionBlock any e : OclAnyType direct l : ty_any -- a.e }
+            apply { cb : CodeBlock instr : TypeAny outL : inst_typeany -- cb.instr }
+        }
+        rule OclVoidType2TypeVoid {
+            match { any a : ActionBlock any e : OclVoidType direct l : ty_void -- a.e }
+            apply { cb : CodeBlock instr : TypeVoid outL : inst_typevoid -- cb.instr }
+        }
+        rule OclModelElement2TypeModel {
+            match { any a : ActionBlock any e : OclModelElement direct l : ty_mod -- a.e }
+            apply { cb : CodeBlock instr : TypeModel outL : inst_typemodel -- cb.instr }
+        }
+    }
+
+    layer MathLogicOperators {
+        rule AddExp2Invoke {
+            match { any a : ActionBlock any e : AddExp direct l : ex_add -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "+" } outL : inst_invoke -- cb.instr }
+        }
+        rule SubExp2Invoke {
+            match { any a : ActionBlock any e : SubExp direct l : ex_sub -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "-" } outL : inst_invoke -- cb.instr }
+        }
+        rule MulExp2Invoke {
+            match { any a : ActionBlock any e : MulExp direct l : ex_mul -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "*" } outL : inst_invoke -- cb.instr }
+        }
+        rule DivExp2Invoke {
+            match { any a : ActionBlock any e : DivExp direct l : ex_div -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "/" } outL : inst_invoke -- cb.instr }
+        }
+        rule AndExp2Invoke {
+            match { any a : ActionBlock any e : AndExp direct l : ex_and -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "and" } outL : inst_invoke -- cb.instr }
+        }
+        rule OrExp2Invoke {
+            match { any a : ActionBlock any e : OrExp direct l : ex_or -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "or" } outL : inst_invoke -- cb.instr }
+        }
+        rule XorExp2Invoke {
+            match { any a : ActionBlock any e : XorExp direct l : ex_xor -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "xor" } outL : inst_invoke -- cb.instr }
+        }
+        rule NotExp2Invoke {
+            match { any a : ActionBlock any e : NotExp direct l : ex_not -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "not" } outL : inst_invoke -- cb.instr }
+        }
+        rule ImpliesExp2Invoke {
+            match { any a : ActionBlock any e : ImpliesExp direct l : ex_implies -- a.e }
+            apply { cb : CodeBlock instr : Invoke { opName = "implies" } outL : inst_invoke -- cb.instr }
+        }
+    }
+}
+
+// 15 Expected HOLDS
+property ModelHasModel { precondition { any m : Model } postcondition { outM : Model outM <--trace-- m } }
+property ModuleHasExecEnv { precondition { any mod : Module } postcondition { env : ExecEnv env <--trace-- mod } }
+property MatchedRuleHasRuleBlock { precondition { any r : MatchedRule } postcondition { rb : RuleBlock rb <--trace-- r } }
+property LazyRuleHasRuleBlock { precondition { any r : LazyRule } postcondition { rb : RuleBlock rb <--trace-- r } }
+property CalledRuleHasRuleBlock { precondition { any r : CalledRule } postcondition { rb : RuleBlock rb <--trace-- r } }
+property HelperHasField { precondition { any h : Helper } postcondition { f : Field f <--trace-- h } }
+property InPatternHasCodeBlock { precondition { any r : MatchedRule any p : InPattern direct l : in_p1 -- r.p } postcondition { cb : CodeBlock cb <--trace-- p } }
+property OutPatternHasCodeBlock { precondition { any r : MatchedRule any p : OutPattern direct l : out_p1 -- r.p } postcondition { cb : CodeBlock cb <--trace-- p } }
+property ActionBlockHasCodeBlock { precondition { any r : MatchedRule any a : ActionBlock direct l : act_1 -- r.a } postcondition { cb : CodeBlock cb <--trace-- a } }
+property InPatternElementHasParameter { precondition { any e : InPatternElement } postcondition { param : Parameter param <--trace-- e } }
+property OutPatternElementHasNew { precondition { any e : OutPatternElement } postcondition { n : New n <--trace-- e } }
+property StringExpHasPush { precondition { any e : StringExp } postcondition { instr : Push instr <--trace-- e } }
+property IntegerExpHasPushInt { precondition { any e : IntegerExp } postcondition { instr : PushInt instr <--trace-- e } }
+property BooleanExpTrueHasPushT { precondition { any e : BooleanExp where e.valBool == true } postcondition { instr : PushT instr <--trace-- e } }
+property ReturnStatHasReturn { precondition { any s : ReturnStat } postcondition { instr : Return instr <--trace-- s } }
+
+// 5 Expected VIOLATED
+property MatchedRuleTracedToField_ShouldFail { precondition { any r : MatchedRule } postcondition { f : Field f <--trace-- r } }
+property ModuleTracedToRuleBlock_ShouldFail { precondition { any mod : Module } postcondition { rb : RuleBlock rb <--trace-- mod } }
+property InPatternElementTracedToNew_ShouldFail { precondition { any e : InPatternElement } postcondition { n : New n <--trace-- e } }
+property StringExpTracedToPop_ShouldFail { precondition { any e : StringExp } postcondition { p : Pop p <--trace-- e } }
+property IntegerExpTracedToPush_ShouldFail { precondition { any e : IntegerExp } postcondition { instr : Push instr <--trace-- e } }

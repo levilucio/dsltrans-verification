@@ -1,0 +1,293 @@
+// =============================================================================
+// UseCase2Activity Concrete Execution Spec
+// =============================================================================
+// Purpose:
+// - Use this spec for concrete execution on realistic use-case models with
+//   textual metadata (actors, goals, relation rationale, etc.).
+// - Keep the proof-oriented finite-domain spec in usecase2activity_concrete.dslt for
+//   direct theorem-fragment reasoning.
+//
+// Key difference from the proof spec:
+// - This concrete variant uses unrestricted String / Int attributes and copies
+//   them into the target activity model.
+
+metamodel UseCaseConcrete {
+    class UseCaseModel {
+        systemName: String
+        domain: String
+        release: Int
+    }
+    class UseCaseNode {
+        name: String
+        actor: String
+        goal: String
+        priority: Int
+        complexity: Int
+    }
+    class Include {
+        relationKind: String
+        rationale: String
+        priority: Int
+    }
+
+    containment assoc nodes : UseCaseModel[1] -- UseCaseNode[0..*]
+    containment assoc edges : UseCaseModel[1] -- Include[0..*]
+    assoc src : Include[0..*] -- UseCaseNode[1]
+    assoc dst : Include[0..*] -- UseCaseNode[1]
+}
+
+metamodel ActivityConcrete {
+    class ActivityModel {
+        workflowName: String
+        domain: String
+        release: Int
+    }
+    class Action {
+        name: String
+        actor: String
+        summary: String
+        priority: Int
+        complexity: Int
+    }
+    class Flow {
+        relationKind: String
+        rationale: String
+        priority: Int
+    }
+
+    containment assoc nodes : ActivityModel[1] -- Action[0..*]
+    containment assoc edges : ActivityModel[1] -- Flow[0..*]
+    assoc src : Flow[0..*] -- Action[1]
+    assoc dst : Flow[0..*] -- Action[1]
+}
+
+transformation UseCase2Activity_concrete : UseCaseConcrete -> ActivityConcrete {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : UseCaseModel
+            }
+            apply {
+                tm : ActivityModel {
+                    workflowName = sm.systemName,
+                    domain = sm.domain,
+                    release = sm.release
+                }
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : UseCaseModel
+                any sn : UseCaseNode
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : ActivityModel
+                tn : Action {
+                    name = sn.name,
+                    actor = sn.actor,
+                    summary = sn.goal,
+                    priority = sn.priority,
+                    complexity = sn.complexity
+                }
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : UseCaseModel
+                any se : Include
+                any sn1 : UseCaseNode
+                any sn2 : UseCaseNode
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : ActivityModel
+                tn1 : Action
+                tn2 : Action
+                te : Flow {
+                    relationKind = se.relationKind,
+                    rationale = se.rationale,
+                    priority = se.priority
+                }
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : UseCaseModel
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any sn : UseCaseNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any se : Include
+        any sn1 : UseCaseNode
+        any sn2 : UseCaseNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any sn : UseCaseNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any se : Include
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property CustomerActorContextMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any sn : UseCaseNode where sn.actor == "Customer"
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property CriticalUseCaseContextMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any sn : UseCaseNode where sn.priority >= 8
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+property CriticalIncludeContextMapsModel {
+    precondition {
+        any sm : UseCaseModel
+        any se : Include where se.priority >= 8
+        any sn1 : UseCaseNode
+        any sn2 : UseCaseNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : UseCaseModel
+        any sn : UseCaseNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Flow
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : UseCaseModel
+        any sn : UseCaseNode
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : UseCaseModel
+        any se : Include
+        any sn1 : UseCaseNode
+        any sn2 : UseCaseNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Action
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : UseCaseModel
+        any se : Include
+        any sn1 : UseCaseNode
+        any sn2 : UseCaseNode
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ActivityModel
+        tm <--trace-- se
+    }
+}

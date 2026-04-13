@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="Statechart:StatechartModel" />
+  <objects xmi:id="s0" xsi:type="Statechart:State" />
+
+  <links xsi:type="Statechart:nodes" source="sm" target="s0" />
+</model>

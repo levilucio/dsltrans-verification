@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="UseCase:UseCaseModel" />
+  <objects xmi:id="n0" xsi:type="UseCase:UseCaseNode" name="U0" />
+
+  <links xsi:type="UseCase:nodes" source="sm" target="n0" />
+</model>

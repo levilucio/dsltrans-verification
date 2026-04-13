@@ -1,0 +1,79 @@
+// =============================================================================
+// Attribute-focused DSLTrans fragment (finite domains only)
+// =============================================================================
+// Demonstrates tractable attribute-aware proofs with:
+// - bounded Int: Int
+// - finite String vocabulary: String
+// - enum literals: PriorityKind
+//
+// This spec is intentionally small and in-fragment.
+
+metamodel SourceMM {
+    enum PriorityKind { Low, Medium, High }
+
+    class Item {
+        rank: Int
+        layerTag: String
+        priority: PriorityKind
+        active: Bool
+    }
+}
+
+metamodel TargetMM {
+    enum PriorityKind { Low, Medium, High }
+
+    class Record {
+        rank: Int
+        layerTag: String
+        priority: PriorityKind
+        active: Bool
+    }
+}
+
+transformation AttributesFrag : SourceMM -> TargetMM {
+    layer L1_MapItems {
+        rule Item2Record {
+            match {
+                any item : Item
+            }
+            apply {
+                rec : Record {
+                    rank = item.rank,
+                    layerTag = item.layerTag,
+                    priority = item.priority,
+                    active = item.active
+                }
+            }
+        }
+    }
+}
+
+property HighRankItemRecorded {
+    precondition {
+        any item : Item where item.rank >= 3
+    }
+    postcondition {
+        rec : Record
+        rec <--trace-- item
+    }
+}
+
+property CoreTaggedItemRecorded {
+    precondition {
+        any item : Item where item.layerTag == "Core"
+    }
+    postcondition {
+        rec : Record
+        rec <--trace-- item
+    }
+}
+
+property HighPriorityItemRecorded {
+    precondition {
+        any item : Item where item.priority == "High"
+    }
+    postcondition {
+        rec : Record
+        rec <--trace-- item
+    }
+}

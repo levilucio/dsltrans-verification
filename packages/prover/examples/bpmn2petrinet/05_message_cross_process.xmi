@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="def1" xsi:type="BPMN:Definitions"/>
+  <objects xmi:id="proc_sender" xsi:type="BPMN:Process"/>
+  <objects xmi:id="proc_receiver" xsi:type="BPMN:Process"/>
+  <links xsi:type="BPMN:processes" source="def1" target="proc_sender"/>
+  <links xsi:type="BPMN:processes" source="def1" target="proc_receiver"/>
+
+  <objects xmi:id="task_send" xsi:type="BPMN:Task"/>
+  <objects xmi:id="task_recv" xsi:type="BPMN:Task"/>
+  <links xsi:type="BPMN:flowNodes" source="proc_sender" target="task_send"/>
+  <links xsi:type="BPMN:flowNodes" source="proc_receiver" target="task_recv"/>
+
+  <objects xmi:id="msg1" xsi:type="BPMN:MessageFlow"/>
+  <links xsi:type="BPMN:messageFlows" source="def1" target="msg1"/>
+  <links xsi:type="BPMN:msgSource" source="msg1" target="task_send"/>
+  <links xsi:type="BPMN:msgTarget" source="msg1" target="task_recv"/>
+</model>

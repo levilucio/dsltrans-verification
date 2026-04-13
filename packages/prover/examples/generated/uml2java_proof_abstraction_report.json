@@ -1,0 +1,729 @@
+{
+  "metamodelMapping": {
+    "UMLConcrete": "UMLProof",
+    "JavaASTConcrete": "JavaASTProof"
+  },
+  "transformationMapping": {
+    "UML2Java_concrete": "UML2Java_proof"
+  },
+  "attributeDecisions": [
+    {
+      "metamodel": "UMLProof",
+      "className": "Model",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{RetailModel, OTHER}",
+      "decision": "override",
+      "reason": "Preserve representative model names used by the UML case study"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Package",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{root, domain, service, OTHER}",
+      "decision": "override",
+      "reason": "Preserve representative package namespaces"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Classifier",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{Customer, Order, CustomerService, String, Integer, OTHER}",
+      "decision": "override",
+      "reason": "Keep core classifier/type names aligned across source and target"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Class",
+      "attributeName": "isAbstract",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Class",
+      "attributeName": "isFinal",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Class",
+      "attributeName": "priority",
+      "concreteType": "Int",
+      "abstractType": "Int[0..5]",
+      "decision": "override",
+      "reason": "Finite class-priority range aligned with the proof fragment"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Class",
+      "attributeName": "layerTag",
+      "concreteType": "String",
+      "abstractType": "String{Core, Domain, Infra, OTHER}",
+      "decision": "override",
+      "reason": "Preserve representative architectural layer tags"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Class",
+      "attributeName": "kind",
+      "concreteType": "ClassKind",
+      "abstractType": "ClassKind",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Feature",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{id, name, items, findById, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite feature-name vocabulary"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Feature",
+      "attributeName": "visibility",
+      "concreteType": "String",
+      "abstractType": "String{public, private, protected, package}",
+      "decision": "override",
+      "reason": "Finite representative visibility vocabulary"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Feature",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "isDerived",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "isReadOnly",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "isOrdered",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "isUnique",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "lower",
+      "concreteType": "Int",
+      "abstractType": "Int[0..4]",
+      "decision": "override",
+      "reason": "Finite multiplicity lower-bound range"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "upper",
+      "concreteType": "Int",
+      "abstractType": "Int[0..8]",
+      "decision": "override",
+      "reason": "Finite multiplicity upper-bound range covering singular and collection cases"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Property",
+      "attributeName": "defaultValue",
+      "concreteType": "String",
+      "abstractType": "String{, OTHER}",
+      "decision": "override",
+      "reason": "Finite representative default-value vocabulary"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Operation",
+      "attributeName": "isAbstract",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Operation",
+      "attributeName": "isQuery",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Parameter",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{id, item, obj, status, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite parameter-name vocabulary"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Parameter",
+      "attributeName": "direction",
+      "concreteType": "String",
+      "abstractType": "String{in, out, inout}",
+      "decision": "override",
+      "reason": "Finite representative parameter-direction vocabulary"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "EnumerationLiteral",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{NEW, COMPLETE, OTHER}",
+      "decision": "override",
+      "reason": "Finite representative enum-literal vocabulary"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Association",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{OTHER}",
+      "decision": "singleton_vocab",
+      "reason": "attribute unused by rules/properties; keep explicit but collapsed domain"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Association",
+      "attributeName": "isDerived",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Dependency",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{uses, OTHER}",
+      "decision": "override",
+      "reason": "Representative dependency labels for proof"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Generalization",
+      "attributeName": "isSubstitutable",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "UMLProof",
+      "className": "Comment",
+      "attributeName": "body",
+      "concreteType": "String",
+      "abstractType": "String{, Aggregate root for customer data., Repository contract., Service entry point., OTHER}",
+      "decision": "override",
+      "reason": "Finite representative comment vocabulary"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "CompilationUnit",
+      "attributeName": "fileName",
+      "concreteType": "String",
+      "abstractType": "String{Customer, Order, CustomerService, String, Integer, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "PackageDeclaration",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{root, domain, service, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ImportDeclaration",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{Customer, Order, CustomerService, String, Integer, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ImportDeclaration",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ImportDeclaration",
+      "attributeName": "isOnDemand",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "TypeDeclaration",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{Customer, Order, CustomerService, String, Integer, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "TypeDeclaration",
+      "attributeName": "visibility",
+      "concreteType": "String",
+      "abstractType": "String{public, OTHER}",
+      "decision": "finite_vocab",
+      "reason": "derived from observed string literals plus OTHER"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ClassDeclaration",
+      "attributeName": "isAbstract",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ClassDeclaration",
+      "attributeName": "isFinal",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ClassDeclaration",
+      "attributeName": "priority",
+      "concreteType": "Int",
+      "abstractType": "Int[0..5]",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ClassDeclaration",
+      "attributeName": "layerTag",
+      "concreteType": "String",
+      "abstractType": "String{Core, Domain, Infra, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ClassDeclaration",
+      "attributeName": "kind",
+      "concreteType": "ClassKind",
+      "abstractType": "ClassKind",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "FieldDeclaration",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{id, name, items, findById, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "FieldDeclaration",
+      "attributeName": "visibility",
+      "concreteType": "String",
+      "abstractType": "String{public, private, protected, package}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "FieldDeclaration",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "FieldDeclaration",
+      "attributeName": "isFinal",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "FieldDeclaration",
+      "attributeName": "isVolatile",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "FieldDeclaration",
+      "attributeName": "isTransient",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "MethodDeclaration",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{add, equals, hashCode, remove, toString, OTHER, id, name, items, findById}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "MethodDeclaration",
+      "attributeName": "visibility",
+      "concreteType": "String",
+      "abstractType": "String{public, OTHER, private, protected, package}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "MethodDeclaration",
+      "attributeName": "isStatic",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "MethodDeclaration",
+      "attributeName": "isFinal",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "MethodDeclaration",
+      "attributeName": "isAbstract",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "MethodDeclaration",
+      "attributeName": "isSynchronized",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "ConstructorDeclaration",
+      "attributeName": "visibility",
+      "concreteType": "String",
+      "abstractType": "String{public, OTHER}",
+      "decision": "finite_vocab",
+      "reason": "derived from observed string literals plus OTHER"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "EnumConstant",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{NEW, COMPLETE, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "SingleVariableDeclaration",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{obj, OTHER, id, item, status, name, items, findById}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "SingleVariableDeclaration",
+      "attributeName": "isFinal",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "SingleVariableDeclaration",
+      "attributeName": "isVarargs",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "TypeReference",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{Customer, Order, CustomerService, String, Integer, OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "TypeReference",
+      "attributeName": "isArray",
+      "concreteType": "Bool",
+      "abstractType": "Bool",
+      "decision": "unchanged",
+      "reason": "non-attribute or already finite"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "TypeReference",
+      "attributeName": "arrayDimensions",
+      "concreteType": "Int",
+      "abstractType": "Int[0..2]",
+      "decision": "override",
+      "reason": "Finite representative array-dimension range"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "Annotation",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{Override, Deprecated, OTHER}",
+      "decision": "override",
+      "reason": "Representative annotation vocabulary"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "Javadoc",
+      "attributeName": "comment",
+      "concreteType": "String",
+      "abstractType": "String{, Aggregate root for customer data., Repository contract., Service entry point., OTHER}",
+      "decision": "propagated_copy_domain",
+      "reason": "propagated through attribute copy dependency graph"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "LineComment",
+      "attributeName": "text",
+      "concreteType": "String",
+      "abstractType": "String{OTHER}",
+      "decision": "singleton_vocab",
+      "reason": "attribute unused by rules/properties; keep explicit but collapsed domain"
+    },
+    {
+      "metamodel": "JavaASTProof",
+      "className": "BlockComment",
+      "attributeName": "text",
+      "concreteType": "String",
+      "abstractType": "String{OTHER}",
+      "decision": "singleton_vocab",
+      "reason": "attribute unused by rules/properties; keep explicit but collapsed domain"
+    }
+  ],
+  "propertyDecisions": [
+    {
+      "propertyName": "PackageHasPackageDeclaration",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PackagedClassHasCompilationUnitAndDeclaration",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PackagedInterfaceHasCompilationUnitAndDeclaration",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PackagedEnumerationHasCompilationUnitAndDeclaration",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OwnedPropertyHasOwnedField",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PropertyTypeHasFieldTypeReference",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "MultiValuedPropertyHasArrayFieldType",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "StaticPropertyHasField",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ReadOnlyPropertyHasField",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ClassOperationHasOwnedMethod",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InterfaceOperationHasOwnedMethod",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OperationParameterHasOwnedParameter",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OperationReturnTypeHasReference",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "EnumerationLiteralHasOwnedEnumConstant",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ClassHasConstructor",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PropertyHasConstructorParameter",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PropertyHasGetter",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "WritablePropertyHasSetter",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "MultiValuedPropertyHasAddRemoveHelpers",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "GeneralizationHasExtendsReference",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InterfaceRealizationHasImplementsReference",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ClassCommentHasJavadoc",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "DependencyYieldsImport",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PropertyTypeUsedHasImport",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ClassHasObjectMethods",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InterfaceMappedToClassDeclaration_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ClassMappedToInterfaceDeclaration_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "PropertyMappedToJavadoc_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    }
+  ]
+}

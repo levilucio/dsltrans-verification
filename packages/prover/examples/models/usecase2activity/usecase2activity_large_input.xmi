@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="UseCase:UseCaseModel" />
+  <objects xmi:id="n0" xsi:type="UseCase:UseCaseNode" name="U0" />
+  <objects xmi:id="n1" xsi:type="UseCase:UseCaseNode" name="U1" />
+  <objects xmi:id="n2" xsi:type="UseCase:UseCaseNode" name="U2" />
+  <objects xmi:id="n3" xsi:type="UseCase:UseCaseNode" name="U3" />
+  <objects xmi:id="n4" xsi:type="UseCase:UseCaseNode" name="U4" />
+  <objects xmi:id="n5" xsi:type="UseCase:UseCaseNode" name="U5" />
+  <objects xmi:id="n6" xsi:type="UseCase:UseCaseNode" name="U6" />
+  <objects xmi:id="n7" xsi:type="UseCase:UseCaseNode" name="U7" />
+  <objects xmi:id="n8" xsi:type="UseCase:UseCaseNode" name="U8" />
+  <objects xmi:id="n9" xsi:type="UseCase:UseCaseNode" name="U9" />
+  <objects xmi:id="n10" xsi:type="UseCase:UseCaseNode" name="U10" />
+  <objects xmi:id="n11" xsi:type="UseCase:UseCaseNode" name="U11" />
+  <objects xmi:id="n12" xsi:type="UseCase:UseCaseNode" name="U12" />
+  <objects xmi:id="n13" xsi:type="UseCase:UseCaseNode" name="U13" />
+  <objects xmi:id="e0" xsi:type="UseCase:Include" />
+  <objects xmi:id="e1" xsi:type="UseCase:Include" />
+  <objects xmi:id="e2" xsi:type="UseCase:Include" />
+  <objects xmi:id="e3" xsi:type="UseCase:Include" />
+  <objects xmi:id="e4" xsi:type="UseCase:Include" />
+  <objects xmi:id="e5" xsi:type="UseCase:Include" />
+  <objects xmi:id="e6" xsi:type="UseCase:Include" />
+  <objects xmi:id="e7" xsi:type="UseCase:Include" />
+  <objects xmi:id="e8" xsi:type="UseCase:Include" />
+  <objects xmi:id="e9" xsi:type="UseCase:Include" />
+  <objects xmi:id="e10" xsi:type="UseCase:Include" />
+  <objects xmi:id="e11" xsi:type="UseCase:Include" />
+  <objects xmi:id="e12" xsi:type="UseCase:Include" />
+  <objects xmi:id="e13" xsi:type="UseCase:Include" />
+  <objects xmi:id="e14" xsi:type="UseCase:Include" />
+  <objects xmi:id="e15" xsi:type="UseCase:Include" />
+  <objects xmi:id="e16" xsi:type="UseCase:Include" />
+
+  <links xsi:type="UseCase:nodes" source="sm" target="n0" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n1" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n2" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n3" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n4" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n5" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n6" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n7" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n8" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n9" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n10" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n11" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n12" />
+  <links xsi:type="UseCase:nodes" source="sm" target="n13" />
+  <links xsi:type="UseCase:edges" source="sm" target="e0" />
+  <links xsi:type="UseCase:src" source="e0" target="n0" />
+  <links xsi:type="UseCase:dst" source="e0" target="n1" />
+  <links xsi:type="UseCase:edges" source="sm" target="e1" />
+  <links xsi:type="UseCase:src" source="e1" target="n1" />
+  <links xsi:type="UseCase:dst" source="e1" target="n2" />
+  <links xsi:type="UseCase:edges" source="sm" target="e2" />
+  <links xsi:type="UseCase:src" source="e2" target="n2" />
+  <links xsi:type="UseCase:dst" source="e2" target="n3" />
+  <links xsi:type="UseCase:edges" source="sm" target="e3" />
+  <links xsi:type="UseCase:src" source="e3" target="n3" />
+  <links xsi:type="UseCase:dst" source="e3" target="n4" />
+  <links xsi:type="UseCase:edges" source="sm" target="e4" />
+  <links xsi:type="UseCase:src" source="e4" target="n4" />
+  <links xsi:type="UseCase:dst" source="e4" target="n5" />
+  <links xsi:type="UseCase:edges" source="sm" target="e5" />
+  <links xsi:type="UseCase:src" source="e5" target="n5" />
+  <links xsi:type="UseCase:dst" source="e5" target="n6" />
+  <links xsi:type="UseCase:edges" source="sm" target="e6" />
+  <links xsi:type="UseCase:src" source="e6" target="n6" />
+  <links xsi:type="UseCase:dst" source="e6" target="n7" />
+  <links xsi:type="UseCase:edges" source="sm" target="e7" />
+  <links xsi:type="UseCase:src" source="e7" target="n7" />
+  <links xsi:type="UseCase:dst" source="e7" target="n8" />
+  <links xsi:type="UseCase:edges" source="sm" target="e8" />
+  <links xsi:type="UseCase:src" source="e8" target="n8" />
+  <links xsi:type="UseCase:dst" source="e8" target="n9" />
+  <links xsi:type="UseCase:edges" source="sm" target="e9" />
+  <links xsi:type="UseCase:src" source="e9" target="n9" />
+  <links xsi:type="UseCase:dst" source="e9" target="n10" />
+  <links xsi:type="UseCase:edges" source="sm" target="e10" />
+  <links xsi:type="UseCase:src" source="e10" target="n10" />
+  <links xsi:type="UseCase:dst" source="e10" target="n11" />
+  <links xsi:type="UseCase:edges" source="sm" target="e11" />
+  <links xsi:type="UseCase:src" source="e11" target="n11" />
+  <links xsi:type="UseCase:dst" source="e11" target="n12" />
+  <links xsi:type="UseCase:edges" source="sm" target="e12" />
+  <links xsi:type="UseCase:src" source="e12" target="n12" />
+  <links xsi:type="UseCase:dst" source="e12" target="n13" />
+  <links xsi:type="UseCase:edges" source="sm" target="e13" />
+  <links xsi:type="UseCase:src" source="e13" target="n0" />
+  <links xsi:type="UseCase:dst" source="e13" target="n2" />
+  <links xsi:type="UseCase:edges" source="sm" target="e14" />
+  <links xsi:type="UseCase:src" source="e14" target="n3" />
+  <links xsi:type="UseCase:dst" source="e14" target="n5" />
+  <links xsi:type="UseCase:edges" source="sm" target="e15" />
+  <links xsi:type="UseCase:src" source="e15" target="n6" />
+  <links xsi:type="UseCase:dst" source="e15" target="n8" />
+  <links xsi:type="UseCase:edges" source="sm" target="e16" />
+  <links xsi:type="UseCase:src" source="e16" target="n9" />
+  <links xsi:type="UseCase:dst" source="e16" target="n11" />
+</model>

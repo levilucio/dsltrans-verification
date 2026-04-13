@@ -1,0 +1,136 @@
+// =============================================================================
+// Deep dependency boundary fixture
+// =============================================================================
+// Small synthetic fragment used to exercise a clean d=3 cutoff case without
+// requiring a very large theorem-facing bound.
+
+metamodel DeepSrc {
+    class Root { }
+    class A { }
+    class B { }
+    class C { }
+    class D { }
+
+    containment assoc rootA : Root[1] -- A[0..*]
+    containment assoc aB : A[1] -- B[0..*]
+    containment assoc bC : B[1] -- C[0..*]
+    containment assoc cD : C[1] -- D[0..*]
+}
+
+metamodel DeepTgt {
+    class TA { }
+    class TB { }
+    class TC { }
+    class TD { }
+
+    containment assoc taTb : TA[1] -- TB[0..*]
+    containment assoc tbTc : TB[1] -- TC[0..*]
+    containment assoc tcTd : TC[1] -- TD[0..*]
+}
+
+transformation DeepDependencyBoundary_concrete : DeepSrc -> DeepTgt {
+    layer L1 {
+        rule A2TA {
+            match {
+                any root : Root
+                any a : A
+                direct l1 : rootA -- root.a
+            }
+            apply {
+                ta : TA
+            }
+        }
+    }
+
+    layer L2 {
+        rule B2TB {
+            match {
+                any a : A
+                any b : B
+                direct l1 : aB -- a.b
+            }
+            apply {
+                ta : TA
+                tb : TB
+                out1 : taTb -- ta.tb
+            }
+            backward {
+                ta <--trace-- a
+            }
+        }
+    }
+
+    layer L3 {
+        rule C2TC {
+            match {
+                any b : B
+                any c : C
+                direct l1 : bC -- b.c
+            }
+            apply {
+                tb : TB
+                tc : TC
+                out1 : tbTc -- tb.tc
+            }
+            backward {
+                tb <--trace-- b
+            }
+        }
+    }
+
+    layer L4 {
+        rule D2TD {
+            match {
+                any c : C
+                any d : D
+                direct l1 : cD -- c.d
+            }
+            apply {
+                tc : TC
+                td : TD
+                out1 : tcTd -- tc.td
+            }
+            backward {
+                tc <--trace-- c
+            }
+        }
+    }
+}
+
+property DeepLeafMaps {
+    precondition {
+        any root : Root
+        any a : A
+        any b : B
+        any c : C
+        any d : D
+        direct l1 : rootA -- root.a
+        direct l2 : aB -- a.b
+        direct l3 : bC -- b.c
+        direct l4 : cD -- c.d
+    }
+    postcondition {
+        td : TD
+        td <--trace-- d
+    }
+}
+
+property DeepLeafMapsToTwoTD_ShouldFail {
+    precondition {
+        any root : Root
+        any a : A
+        any b : B
+        any c : C
+        any d : D
+        direct l1 : rootA -- root.a
+        direct l2 : aB -- a.b
+        direct l3 : bC -- b.c
+        direct l4 : cD -- c.d
+    }
+    postcondition {
+        td1 : TD
+        td2 : TD
+        td1 <--trace-- d
+        td2 <--trace-- d
+    }
+}

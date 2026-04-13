@@ -1,0 +1,369 @@
+
+metamodel MindMap {
+    class MindMapModel { }
+    class Topic { }
+    class Branch { }
+
+    containment assoc nodes : MindMapModel[1] -- Topic[0..*]
+    containment assoc edges : MindMapModel[1] -- Branch[0..*]
+    assoc src : Branch[0..*] -- Topic[1]
+    assoc dst : Branch[0..*] -- Topic[1]
+}
+
+metamodel Graph {
+    class GraphModel { }
+    class Vertex { }
+    class Arc { }
+
+    containment assoc nodes : GraphModel[1] -- Vertex[0..*]
+    containment assoc edges : GraphModel[1] -- Arc[0..*]
+    assoc src : Arc[0..*] -- Vertex[1]
+    assoc dst : Arc[0..*] -- Vertex[1]
+}
+
+transformation MindMap2Graph : MindMap -> Graph {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : MindMapModel
+            }
+            apply {
+                tm : GraphModel
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : MindMapModel
+                any sn : Topic
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : GraphModel
+                tn : Vertex
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : MindMapModel
+                any se : Branch
+                any sn1 : Topic
+                any sn2 : Topic
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : GraphModel
+                tn1 : Vertex
+                tn2 : Vertex
+                te : Arc
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : MindMapModel
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any se : Branch
+        any sn1 : Topic
+        any sn2 : Topic
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        any se : Branch
+        any sn2 : Topic
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        any se : Branch
+        any sn2 : Topic
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any sn1 : Topic
+        any sn2 : Topic
+        any se : Branch
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any se : Branch
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        any se : Branch
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : MindMapModel
+        any sn1 : Topic
+        any sn2 : Topic
+        any se : Branch
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Arc
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any se : Branch
+        any sn1 : Topic
+        any sn2 : Topic
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Vertex
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any se : Branch
+        any sn1 : Topic
+        any sn2 : Topic
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+    }
+    postcondition {
+        tn : Vertex
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+    }
+    postcondition {
+        te : Arc
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        any se : Branch
+        any sn2 : Topic
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : Arc
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any sn : Topic
+        any se : Branch
+        any sn2 : Topic
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any se : Branch
+        any sn1 : Topic
+        any sn2 : Topic
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Vertex
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : MindMapModel
+        any se : Branch
+        any sn1 : Topic
+        any sn2 : Topic
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : GraphModel
+        tm <--trace-- se
+    }
+}

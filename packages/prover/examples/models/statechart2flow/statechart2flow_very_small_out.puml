@@ -1,0 +1,5 @@
+@startuml
+title statechart2flow_very_small_out.xmi
+(*) --> "[Node2Node_tn_2] Node2Node_tn_2"
+"[Node2Node_tn_2] Node2Node_tn_2" --> (*)
+@enduml

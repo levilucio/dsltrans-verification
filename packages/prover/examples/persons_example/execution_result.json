@@ -1,0 +1,11 @@
+{
+  "transformation": "Persons_frag",
+  "spec": "dsltrans_examples/persons_concrete.dslt",
+  "input_model": "input\\household_input.xmi",
+  "output_model": "output\\community_output.xmi",
+  "stats": {
+    "created_nodes": 34,
+    "created_edges": 16,
+    "created_traces": 17
+  }
+}

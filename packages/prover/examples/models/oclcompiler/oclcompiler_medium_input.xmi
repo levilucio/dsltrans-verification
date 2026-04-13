@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="OCLASTConcrete:Model"/>
+  <objects xmi:id="module1" xsi:type="OCLASTConcrete:Module" name="MainModule"/>
+  <objects xmi:id="field_status" xsi:type="OCLASTConcrete:Field" name="status" isStatic="false"/>
+  <objects xmi:id="op_resolveStatus" xsi:type="OCLASTConcrete:Operation" name="resolveStatus" isStatic="false"/>
+  <objects xmi:id="let_tmp" xsi:type="OCLASTConcrete:LetVariable" varName="tmp"/>
+  <objects xmi:id="self1" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_status" xsi:type="OCLASTConcrete:NavigationCall" propName="status" isStatic="false" isSuper="false"/>
+  <objects xmi:id="var_tmp" xsi:type="OCLASTConcrete:VariableExp" varName="tmp"/>
+  <objects xmi:id="str_active" xsi:type="OCLASTConcrete:StringExp" val="active"/>
+  <objects xmi:id="eq_call" xsi:type="OCLASTConcrete:BuiltInCall" opName="="/>
+  <objects xmi:id="let_exp" xsi:type="OCLASTConcrete:LetExp"/>
+
+  <links xsi:type="OCLASTConcrete:root" source="model1" target="module1"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_status"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_resolveStatus"/>
+  <links xsi:type="OCLASTConcrete:letvars" source="op_resolveStatus" target="let_tmp"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="self1"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="var_tmp"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="str_active"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="eq_call"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="let_exp"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_resolveStatus" target="let_exp"/>
+
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_status" target="self1"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="eq_call" target="var_tmp"/>
+  <links xsi:type="OCLASTConcrete:bi_right" source="eq_call" target="str_active"/>
+  <links xsi:type="OCLASTConcrete:let_var" source="let_exp" target="let_tmp"/>
+  <links xsi:type="OCLASTConcrete:let_init" source="let_exp" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:let_in" source="let_exp" target="eq_call"/>
+</model>

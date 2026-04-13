@@ -1,0 +1,69 @@
+EMFTVM model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_very_large_out.xmi
+Objects: 47 | Links: 46 | Traces: 110
+Models: 1 | ExecEnvs: 1 | Operations: 6 | Instrs: 32
+- root: Model2Model_outM_1 -> Module2ExecEnv_env_2
+
+ExecEnvs:
+- ExecEnv(Module2ExecEnv_env_2) name='MainModule'
+  fields:
+    - Field(Field2Field_e_f_3) isStatic='false', name='age'
+    - Field(Field2Field_e_f_4) isStatic='false', name='name'
+    - Field(Field2Field_e_f_5) isStatic='false', name='status'
+    - Field(Field2Field_e_f_6) isStatic='true', name='value'
+  operations:
+    - Operation(Operation2Operation_e_op_10) isStatic='false', name='isAdult'
+      params:
+        - Parameter(Parameter2Parameter_e_p_13) name='arg'
+      instr_count: 4
+      instructions:
+        - Get(NavigationCall2Get_i_16) propName='age'
+        - Invoke(BuiltInBinary2Invoke_i_26) opName='>'
+        - Load(SelfExp2Load_i_32) varName='self'
+        - PushInt(IntegerExp2PushInt_i_42) valInt='18'
+    - Operation(Operation2Operation_e_op_11) isStatic='false', name='resolveStatus'
+      locals:
+        - LocalVariable(LetVariable2LocalVariable_e_l_14) name='tmp'
+      instr_count: 8
+      instructions:
+        - Get(NavigationCall2Get_i_17) propName='status'
+        - IfInstr(IfExp2IfInstr_i_47)
+        - InvokeStatic(OperationCall2InvokeStatic_i_21) opName='helper'
+        - Isnull(BuiltInUndefined2Isnull_i_27)
+        - Load(SelfExp2Load_i_33) varName='self'
+        - Load(ThisModuleExp2Load_i_36) varName='thisModule'
+        - Push(StringExp2Push_i_41) val='guest'
+        - Store(LetExp2Store_i_28) varName='tmp'
+    - Operation(Operation2Operation_e_op_12) isStatic='false', name='superDemo'
+      instr_count: 2
+      instructions:
+        - InvokeSuper(NavigationCall2InvokeSuper_i_19) opName='name'
+        - Load(SelfExp2Load_i_34) varName='self'
+    - Operation(Operation2Operation_e_op_7) isStatic='false', name='callDemo'
+      instr_count: 11
+      instructions:
+        - GetStatic(NavigationCall2GetStatic_i_18) propName='value'
+        - Invoke(BuiltInBinary2Invoke_i_24) opName='='
+        - Invoke(BuiltInNot2Invoke_i_23) opName='not'
+        - Invoke(BuiltInBinary2Invoke_i_25) opName='or'
+        - Invoke(OperationCall2Invoke_i_20) opName='resolveStatus'
+        - InvokeSuper(OperationCall2InvokeSuper_i_22) opName='helper'
+        - Load(VariableExp2Load_i_29) varName='arg'
+        - Load(SelfExp2Load_i_31) varName='self'
+        - Load(ThisModuleExp2Load_i_35) varName='thisModule'
+        - PushT(BooleanTrue2PushT_i_43)
+        - PushUndef(OclUndefinedExp2PushUndef_i_46)
+    - Operation(Operation2Operation_e_op_8) isStatic='false', name='collectNames'
+      locals:
+        - LocalVariable(Iterator2LocalVariable_e_l_15) name='item'
+      instr_count: 6
+      instructions:
+        - Iterate(IteratorExp2Iterate_i_37) iterName='item'
+        - Load(VariableExp2Load_i_30) varName='item'
+        - Push(StringExp2Push_i_38) val='adult'
+        - Push(StringExp2Push_i_39) val='minor'
+        - PushSeq(SequenceExp2PushSeq_i_44)
+        - PushSet(SetExp2PushSet_i_45)
+    - Operation(Operation2Operation_e_op_9) isStatic='true', name='helper'
+      instr_count: 1
+      instructions:
+        - Push(StringExp2Push_i_40) val='active'

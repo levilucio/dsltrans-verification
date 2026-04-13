@@ -1,0 +1,762 @@
+// =============================================================================
+// OCLCompiler Concrete Execution Spec
+// =============================================================================
+// Purpose:
+// - Use this spec for concrete execution on richer OCL AST models.
+// - Keep the proof-oriented finite-domain spec generated from this file.
+//
+// Design:
+// - The source AST is nested through expression links, but every expression is
+//   also directly owned by its containing operation to keep matching local and
+//   fragment-friendly.
+// - Target instructions are attached to the traced target operation via
+//   backward links so the concrete execution reuses previously created owners.
+
+metamodel OCLASTConcrete {
+    class Model { }
+    class Module { name: String }
+
+    class Field { name: String isStatic: Bool }
+    class Operation { name: String isStatic: Bool }
+    class Parameter { varName: String }
+    class LetVariable { varName: String }
+    class Iterator { varName: String }
+
+    abstract class Expr { }
+    class NavigationCall extends Expr { propName: String isStatic: Bool isSuper: Bool }
+    class OperationCall extends Expr { opName: String isStatic: Bool isSuper: Bool }
+    class BuiltInCall extends Expr { opName: String }
+    class LetExp extends Expr { }
+    class VariableExp extends Expr { varName: String }
+    class SelfExp extends Expr { }
+    class ThisModuleExp extends Expr { }
+    class IteratorExp extends Expr { iterName: String }
+    class StringExp extends Expr { val: String }
+    class IntegerExp extends Expr { valInt: Int }
+    class BooleanExp extends Expr { valBool: Bool }
+    class SequenceExp extends Expr { }
+    class SetExp extends Expr { }
+    class OclUndefinedExp extends Expr { }
+    class IfExp extends Expr { }
+    class CollectionElement { }
+
+    containment assoc root: Model[1] -- Module[0..*]
+    containment assoc fields: Module[1] -- Field[0..*]
+    containment assoc ops: Module[1] -- Operation[0..*]
+
+    containment assoc params: Operation[1] -- Parameter[0..*]
+    containment assoc letvars: Operation[1] -- LetVariable[0..*]
+    containment assoc iters: Operation[1] -- Iterator[0..*]
+    containment assoc exprs: Operation[1] -- Expr[0..*]
+    assoc body: Operation[1] -- Expr[0..1]
+
+    assoc nav_src: NavigationCall[1] -- Expr[1]
+
+    assoc op_src: OperationCall[1] -- Expr[0..1]
+    assoc op_arg: OperationCall[1] -- Expr[0..*]
+
+    assoc bi_left: BuiltInCall[1] -- Expr[0..1]
+    assoc bi_right: BuiltInCall[1] -- Expr[0..1]
+
+    assoc let_var: LetExp[1] -- LetVariable[1]
+    assoc let_init: LetExp[1] -- Expr[1]
+    assoc let_in: LetExp[1] -- Expr[1]
+
+    assoc iter_var: IteratorExp[1] -- Iterator[1]
+    assoc iter_source: IteratorExp[1] -- Expr[1]
+    assoc iter_body: IteratorExp[1] -- Expr[1]
+
+    assoc if_cond: IfExp[1] -- Expr[1]
+    assoc if_then: IfExp[1] -- Expr[1]
+    assoc if_else: IfExp[1] -- Expr[1]
+
+    containment assoc seq_elems: SequenceExp[1] -- CollectionElement[0..*]
+    containment assoc set_elems: SetExp[1] -- CollectionElement[0..*]
+    assoc elem_expr: CollectionElement[1] -- Expr[1]
+}
+
+metamodel EMFTVMASTConcrete {
+    class Model { }
+    class ExecEnv { name: String }
+
+    class Field { name: String isStatic: Bool }
+    class Operation { name: String isStatic: Bool }
+    class Parameter { name: String }
+    class LocalVariable { name: String }
+
+    abstract class Instr { }
+    class Get extends Instr { propName: String }
+    class GetStatic extends Instr { propName: String }
+    class Invoke extends Instr { opName: String }
+    class InvokeStatic extends Instr { opName: String }
+    class InvokeSuper extends Instr { opName: String }
+    class Store extends Instr { varName: String }
+    class Load extends Instr { varName: String }
+    class Iterate extends Instr { iterName: String }
+    class Push extends Instr { val: String }
+    class PushInt extends Instr { valInt: Int }
+    class PushT extends Instr { }
+    class PushF extends Instr { }
+    class PushSeq extends Instr { }
+    class PushSet extends Instr { }
+    class PushUndef extends Instr { }
+    class IfInstr extends Instr { }
+    class Isnull extends Instr { }
+
+    containment assoc root: Model[1] -- ExecEnv[0..*]
+    containment assoc e_fields: ExecEnv[1] -- Field[0..*]
+    containment assoc e_ops: ExecEnv[1] -- Operation[0..*]
+
+    containment assoc e_params: Operation[1] -- Parameter[0..*]
+    containment assoc e_locals: Operation[1] -- LocalVariable[0..*]
+    containment assoc e_instrs: Operation[1] -- Instr[0..*]
+}
+
+transformation OCLCompiler_concrete : OCLASTConcrete -> EMFTVMASTConcrete {
+
+    layer CreateModel {
+        rule Model2Model {
+            match {
+                any mIn : Model
+            }
+            apply {
+                outM : Model
+            }
+        }
+    }
+
+    layer CreateExecEnv {
+        rule Module2ExecEnv {
+            match {
+                any mIn : Model
+                any mod : Module
+                direct r : root -- mIn.mod
+            }
+            apply {
+                outM : Model
+                env : ExecEnv { name = mod.name }
+                outR : root -- outM.env
+            }
+            backward {
+                outM <--trace-- mIn
+            }
+        }
+    }
+
+    layer Declarations {
+        rule Field2Field {
+            match {
+                any mod : Module
+                any f : Field
+                direct l : fields -- mod.f
+            }
+            apply {
+                env : ExecEnv
+                e_f : Field { name = f.name, isStatic = f.isStatic }
+                outL : e_fields -- env.e_f
+            }
+            backward {
+                env <--trace-- mod
+            }
+        }
+
+        rule Operation2Operation {
+            match {
+                any mod : Module
+                any op : Operation
+                direct l : ops -- mod.op
+            }
+            apply {
+                env : ExecEnv
+                e_op : Operation { name = op.name, isStatic = op.isStatic }
+                outL : e_ops -- env.e_op
+            }
+            backward {
+                env <--trace-- mod
+            }
+        }
+    }
+
+    layer OperationLocals {
+        rule Parameter2Parameter {
+            match {
+                any op : Operation
+                any p : Parameter
+                direct l : params -- op.p
+            }
+            apply {
+                e_op : Operation
+                e_p : Parameter { name = p.varName }
+                outL : e_params -- e_op.e_p
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule LetVariable2LocalVariable {
+            match {
+                any op : Operation
+                any v : LetVariable
+                direct l : letvars -- op.v
+            }
+            apply {
+                e_op : Operation
+                e_l : LocalVariable { name = v.varName }
+                outL : e_locals -- e_op.e_l
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule Iterator2LocalVariable {
+            match {
+                any op : Operation
+                any it : Iterator
+                direct l : iters -- op.it
+            }
+            apply {
+                e_op : Operation
+                e_l : LocalVariable { name = it.varName }
+                outL : e_locals -- e_op.e_l
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+    }
+
+    layer Calls {
+        rule NavigationCall2Get {
+            match {
+                any op : Operation
+                any c : NavigationCall where c.isStatic == false && c.isSuper == false
+                any src : Expr
+                direct owns : exprs -- op.c
+                direct rel : nav_src -- c.src
+            }
+            apply {
+                e_op : Operation
+                i : Get { propName = c.propName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule NavigationCall2GetStatic {
+            match {
+                any op : Operation
+                any c : NavigationCall where c.isStatic == true
+                any src : Expr
+                direct owns : exprs -- op.c
+                direct rel : nav_src -- c.src
+            }
+            apply {
+                e_op : Operation
+                i : GetStatic { propName = c.propName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule NavigationCall2InvokeSuper {
+            match {
+                any op : Operation
+                any c : NavigationCall where c.isSuper == true
+                any src : Expr
+                direct owns : exprs -- op.c
+                direct rel : nav_src -- c.src
+            }
+            apply {
+                e_op : Operation
+                i : InvokeSuper { opName = c.propName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule OperationCall2Invoke {
+            match {
+                any op : Operation
+                any c : OperationCall where c.isStatic == false && c.isSuper == false
+                direct owns : exprs -- op.c
+            }
+            apply {
+                e_op : Operation
+                i : Invoke { opName = c.opName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule OperationCall2InvokeStatic {
+            match {
+                any op : Operation
+                any c : OperationCall where c.isStatic == true
+                direct owns : exprs -- op.c
+            }
+            apply {
+                e_op : Operation
+                i : InvokeStatic { opName = c.opName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule OperationCall2InvokeSuper {
+            match {
+                any op : Operation
+                any c : OperationCall where c.isSuper == true
+                direct owns : exprs -- op.c
+            }
+            apply {
+                e_op : Operation
+                i : InvokeSuper { opName = c.opName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule BuiltInNot2Invoke {
+            match {
+                any op : Operation
+                any c : BuiltInCall where c.opName == "not"
+                any left : Expr
+                direct owns : exprs -- op.c
+                direct rel : bi_left -- c.left
+            }
+            apply {
+                e_op : Operation
+                i : Invoke { opName = c.opName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule BuiltInBinary2Invoke {
+            match {
+                any op : Operation
+                any c : BuiltInCall where c.opName == "and" || c.opName == "or" || c.opName == "=" || c.opName == "<" || c.opName == ">"
+                any left : Expr
+                any right : Expr
+                direct owns : exprs -- op.c
+                direct l : bi_left -- c.left
+                direct r : bi_right -- c.right
+            }
+            apply {
+                e_op : Operation
+                i : Invoke { opName = c.opName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule BuiltInUndefined2Isnull {
+            match {
+                any op : Operation
+                any c : BuiltInCall where c.opName == "oclIsUndefined"
+                any left : Expr
+                direct owns : exprs -- op.c
+                direct rel : bi_left -- c.left
+            }
+            apply {
+                e_op : Operation
+                i : Isnull
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+    }
+
+    layer Expressions {
+        rule LetExp2Store {
+            match {
+                any op : Operation
+                any e : LetExp
+                any v : LetVariable
+                direct owns : exprs -- op.e
+                direct rel : let_var -- e.v
+            }
+            apply {
+                e_op : Operation
+                i : Store { varName = v.varName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule VariableExp2Load {
+            match {
+                any op : Operation
+                any e : VariableExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : Load { varName = e.varName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule SelfExp2Load {
+            match {
+                any op : Operation
+                any e : SelfExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : Load { varName = "self" }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule ThisModuleExp2Load {
+            match {
+                any op : Operation
+                any e : ThisModuleExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : Load { varName = "thisModule" }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule IteratorExp2Iterate {
+            match {
+                any op : Operation
+                any e : IteratorExp
+                any it : Iterator
+                direct owns : exprs -- op.e
+                direct rel : iter_var -- e.it
+            }
+            apply {
+                e_op : Operation
+                i : Iterate { iterName = it.varName }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule StringExp2Push {
+            match {
+                any op : Operation
+                any e : StringExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : Push { val = e.val }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule IntegerExp2PushInt {
+            match {
+                any op : Operation
+                any e : IntegerExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : PushInt { valInt = e.valInt }
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule BooleanTrue2PushT {
+            match {
+                any op : Operation
+                any e : BooleanExp where e.valBool == true
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : PushT
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule BooleanFalse2PushF {
+            match {
+                any op : Operation
+                any e : BooleanExp where e.valBool == false
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : PushF
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule SequenceExp2PushSeq {
+            match {
+                any op : Operation
+                any e : SequenceExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : PushSeq
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule SetExp2PushSet {
+            match {
+                any op : Operation
+                any e : SetExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : PushSet
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule OclUndefinedExp2PushUndef {
+            match {
+                any op : Operation
+                any e : OclUndefinedExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : PushUndef
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+
+        rule IfExp2IfInstr {
+            match {
+                any op : Operation
+                any e : IfExp
+                direct owns : exprs -- op.e
+            }
+            apply {
+                e_op : Operation
+                i : IfInstr
+                outL : e_instrs -- e_op.i
+            }
+            backward {
+                e_op <--trace-- op
+            }
+        }
+    }
+}
+
+// 31 expected HOLDS, 5 expected VIOLATED
+property ModelHasModel { precondition { any m : Model } postcondition { outM : Model outM <--trace-- m } }
+property ModuleHasExecEnv { precondition { any mod : Module } postcondition { env : ExecEnv env <--trace-- mod } }
+property FieldHasField { precondition { any mod : Module any f : Field direct l : fields -- mod.f } postcondition { e_f : Field e_f <--trace-- f } }
+property OperationHasOperation { precondition { any mod : Module any op : Operation direct l : ops -- mod.op } postcondition { e_op : Operation e_op <--trace-- op } }
+property ParameterHasParameter { precondition { any op : Operation any p : Parameter direct l : params -- op.p } postcondition { e_p : Parameter e_p <--trace-- p } }
+property LetVariableHasLocalVariable { precondition { any op : Operation any v : LetVariable direct l : letvars -- op.v } postcondition { e_l : LocalVariable e_l <--trace-- v } }
+property IteratorHasLocalVariable { precondition { any op : Operation any it : Iterator direct l : iters -- op.it } postcondition { e_l : LocalVariable e_l <--trace-- it } }
+
+property FieldOwnedByTracedExecEnv {
+    precondition { any mod : Module any f : Field direct l : fields -- mod.f }
+    postcondition { env : ExecEnv env <--trace-- mod e_f : Field e_f <--trace-- f outL : e_fields -- env.e_f }
+}
+
+property OperationOwnedByTracedExecEnv {
+    precondition { any mod : Module any op : Operation direct l : ops -- mod.op }
+    postcondition { env : ExecEnv env <--trace-- mod e_op : Operation e_op <--trace-- op outL : e_ops -- env.e_op }
+}
+
+property ParameterOwnedByTracedOperation {
+    precondition { any op : Operation any p : Parameter direct l : params -- op.p }
+    postcondition { e_op : Operation e_op <--trace-- op e_p : Parameter e_p <--trace-- p outL : e_params -- e_op.e_p }
+}
+
+property LetVariableOwnedByTracedOperation {
+    precondition { any op : Operation any v : LetVariable direct l : letvars -- op.v }
+    postcondition { e_op : Operation e_op <--trace-- op e_l : LocalVariable e_l <--trace-- v outL : e_locals -- e_op.e_l }
+}
+
+property IteratorOwnedByTracedOperation {
+    precondition { any op : Operation any it : Iterator direct l : iters -- op.it }
+    postcondition { e_op : Operation e_op <--trace-- op e_l : LocalVariable e_l <--trace-- it outL : e_locals -- e_op.e_l }
+}
+
+property NavigationCallHasGet {
+    precondition { any op : Operation any c : NavigationCall where c.isStatic == false && c.isSuper == false direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : Get i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property StaticNavigationCallHasGetStatic {
+    precondition { any op : Operation any c : NavigationCall where c.isStatic == true direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : GetStatic i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property SuperNavigationCallHasInvokeSuper {
+    precondition { any op : Operation any c : NavigationCall where c.isSuper == true direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : InvokeSuper i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property OperationCallHasInvoke {
+    precondition { any op : Operation any c : OperationCall where c.isStatic == false && c.isSuper == false direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : Invoke i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property StaticOperationCallHasInvokeStatic {
+    precondition { any op : Operation any c : OperationCall where c.isStatic == true direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : InvokeStatic i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property SuperOperationCallHasInvokeSuper {
+    precondition { any op : Operation any c : OperationCall where c.isSuper == true direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : InvokeSuper i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+// Boundary property: currently exceeds tractability budget.
+// Precondition strengthening (adding operand witnesses) was attempted but increased K from 1575 to 1890.
+// Kept as-is; reports UNKNOWN under the 70s per-property timeout.
+property BuiltInNotHasInvoke {
+    precondition { any op : Operation any c : BuiltInCall where c.opName == "not" direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : Invoke i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+// Boundary property: same situation as BuiltInNotHasInvoke.
+property BuiltInBinaryHasInvoke {
+    precondition { any op : Operation any c : BuiltInCall where c.opName == "and" || c.opName == "or" || c.opName == "=" || c.opName == "<" || c.opName == ">" direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : Invoke i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property BuiltInUndefinedHasIsnull {
+    precondition { any op : Operation any c : BuiltInCall where c.opName == "oclIsUndefined" direct owns : exprs -- op.c }
+    postcondition { e_op : Operation e_op <--trace-- op i : Isnull i <--trace-- c outL : e_instrs -- e_op.i }
+}
+
+property LetExpHasStore {
+    precondition { any op : Operation any e : LetExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : Store i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property VariableExpHasLoad {
+    precondition { any op : Operation any e : VariableExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : Load i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property SelfExpHasLoad {
+    precondition { any op : Operation any e : SelfExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : Load i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property ThisModuleExpHasLoad {
+    precondition { any op : Operation any e : ThisModuleExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : Load i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property IteratorExpHasIterate {
+    precondition { any op : Operation any e : IteratorExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : Iterate i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property StringExpHasPush {
+    precondition { any op : Operation any e : StringExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : Push i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property IntegerExpHasPushInt {
+    precondition { any op : Operation any e : IntegerExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : PushInt i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property BooleanTrueHasPushT {
+    precondition { any op : Operation any e : BooleanExp where e.valBool == true direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : PushT i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property BooleanFalseHasPushF {
+    precondition { any op : Operation any e : BooleanExp where e.valBool == false direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : PushF i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property SequenceExpHasPushSeq {
+    precondition { any op : Operation any e : SequenceExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : PushSeq i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property SetExpHasPushSet {
+    precondition { any op : Operation any e : SetExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : PushSet i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property UndefinedExpHasPushUndef {
+    precondition { any op : Operation any e : OclUndefinedExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : PushUndef i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property IfExpHasIfInstr {
+    precondition { any op : Operation any e : IfExp direct owns : exprs -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op i : IfInstr i <--trace-- e outL : e_instrs -- e_op.i }
+}
+
+property OperationWithBodyHasTracedTargetOperation {
+    precondition { any op : Operation any e : Expr direct b : body -- op.e }
+    postcondition { e_op : Operation e_op <--trace-- op }
+}
+
+property ParameterTracedToLocalVariable_ShouldFail { precondition { any op : Operation any p : Parameter direct l : params -- op.p } postcondition { e_l : LocalVariable e_l <--trace-- p } }
+property FieldTracedToOperation_ShouldFail { precondition { any mod : Module any f : Field direct l : fields -- mod.f } postcondition { e_op : Operation e_op <--trace-- f } }
+property VariableExpHasPushInt_ShouldFail { precondition { any op : Operation any e : VariableExp direct owns : exprs -- op.e } postcondition { i : PushInt i <--trace-- e } }
+property BuiltInNotHasGet_ShouldFail { precondition { any op : Operation any c : BuiltInCall where c.opName == "not" direct owns : exprs -- op.c } postcondition { i : Get i <--trace-- c } }
+property IfExpHasPushSeq_ShouldFail { precondition { any op : Operation any e : IfExp direct owns : exprs -- op.e } postcondition { i : PushSeq i <--trace-- e } }

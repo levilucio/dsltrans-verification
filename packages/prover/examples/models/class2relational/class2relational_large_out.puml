@@ -1,0 +1,138 @@
+@startuml
+left to right direction
+hide methods
+skinparam classAttributeIconSize 0
+title class2relational_large_out.xmi
+
+package "Pkg1" as Package2Schema_schema_44 {
+  class "C\n[AbstractClass2TableWithDiscriminator_tbl_91]" as AbstractClass2TableWithDiscriminator_tbl_91 {
+      discrim: discrim
+  }
+  class "C\n[AbstractClass2TableWithDiscriminator_tbl_93]" as AbstractClass2TableWithDiscriminator_tbl_93 {
+      discrim: discrim
+  }
+  class "C\n[Class2Table_tbl_11]" as Class2Table_tbl_11 {
+    + id: int
+      a: T1
+      fk: ref
+  }
+  class "D\n[Class2Table_tbl_14]" as Class2Table_tbl_14 {
+    + id: int
+      id: T2
+  }
+  class "T1\n[Class2Table_tbl_17]" as Class2Table_tbl_17 {
+    + id: int
+      val: ref
+  }
+  class "D\n[Class2Table_tbl_2]" as Class2Table_tbl_2 {
+    + id: int
+      a: varchar
+      id: T2
+  }
+  class "T2\n[Class2Table_tbl_20]" as Class2Table_tbl_20 {
+    + id: int
+  }
+  class "T1\n[Class2Table_tbl_23]" as Class2Table_tbl_23 {
+    + id: int
+      val: ref
+      fk: ref
+  }
+  class "T2\n[Class2Table_tbl_26]" as Class2Table_tbl_26 {
+    + id: int
+      ref: T1
+      fk: ref
+  }
+  class "C\n[Class2Table_tbl_29]" as Class2Table_tbl_29 {
+    + id: int
+      a: T2
+  }
+  class "D\n[Class2Table_tbl_32]" as Class2Table_tbl_32 {
+    + id: int
+      fk: ref
+  }
+  class "T1\n[Class2Table_tbl_35]" as Class2Table_tbl_35 {
+    + id: int
+      val: T1
+  }
+  class "T2\n[Class2Table_tbl_38]" as Class2Table_tbl_38 {
+    + id: int
+      ref: T2
+  }
+  class "D\n[Class2Table_tbl_41]" as Class2Table_tbl_41 {
+    + id: int
+      a: varchar
+      id: T1
+  }
+  class "T1\n[Class2Table_tbl_5]" as Class2Table_tbl_5 {
+    + id: int
+  }
+  class "T2\n[Class2Table_tbl_8]" as Class2Table_tbl_8 {
+    + id: int
+      ref: ref
+  }
+  class "A2\n[ManyToManyAssoc2JunctionTable_junctionTbl_77]" as ManyToManyAssoc2JunctionTable_junctionTbl_77 {
+    + fk1: ref
+    + fk2: ref
+  }
+  class "A1\n[ManyToManyAssoc2JunctionTable_junctionTbl_83]" as ManyToManyAssoc2JunctionTable_junctionTbl_83 {
+    + fk1: ref
+    + fk2: ref
+  }
+  class "val\n[MultiAttribute2Table_attrTbl_59]" as MultiAttribute2Table_attrTbl_59 {
+      fk: ref
+      val: varchar
+  }
+  class "ref\n[MultiAttribute2Table_attrTbl_62]" as MultiAttribute2Table_attrTbl_62 {
+      fk: ref
+      val: varchar
+  }
+  class "id\n[MultiAttribute2Table_attrTbl_65]" as MultiAttribute2Table_attrTbl_65 {
+      fk: ref
+      val: varchar
+  }
+}
+Class2Table_tbl_11 --> Class2Table_tbl_20 : FK fk
+Class2Table_tbl_11 --> Class2Table_tbl_26 : FK fk
+Class2Table_tbl_11 --> Class2Table_tbl_38 : FK fk
+Class2Table_tbl_11 --> Class2Table_tbl_8 : FK fk
+Class2Table_tbl_17 --> Class2Table_tbl_20 : FK fk
+Class2Table_tbl_17 --> Class2Table_tbl_26 : FK fk
+Class2Table_tbl_17 --> Class2Table_tbl_38 : FK fk
+Class2Table_tbl_17 --> Class2Table_tbl_8 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_20 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_26 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_38 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_8 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_14 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_2 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_32 : FK fk
+Class2Table_tbl_23 --> Class2Table_tbl_41 : FK fk
+Class2Table_tbl_26 --> AbstractClass2TableWithDiscriminator_tbl_91 : FK fk
+Class2Table_tbl_26 --> AbstractClass2TableWithDiscriminator_tbl_93 : FK fk
+Class2Table_tbl_26 --> Class2Table_tbl_11 : FK fk
+Class2Table_tbl_26 --> Class2Table_tbl_29 : FK fk
+Class2Table_tbl_32 --> Class2Table_tbl_17 : FK fk
+Class2Table_tbl_32 --> Class2Table_tbl_23 : FK fk
+Class2Table_tbl_32 --> Class2Table_tbl_35 : FK fk
+Class2Table_tbl_32 --> Class2Table_tbl_5 : FK fk
+Class2Table_tbl_8 --> AbstractClass2TableWithDiscriminator_tbl_91 : FK fk
+Class2Table_tbl_8 --> AbstractClass2TableWithDiscriminator_tbl_93 : FK fk
+Class2Table_tbl_8 --> Class2Table_tbl_11 : FK fk
+Class2Table_tbl_8 --> Class2Table_tbl_29 : FK fk
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> Class2Table_tbl_20 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> Class2Table_tbl_26 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> Class2Table_tbl_38 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> Class2Table_tbl_8 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> AbstractClass2TableWithDiscriminator_tbl_91 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> AbstractClass2TableWithDiscriminator_tbl_93 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> Class2Table_tbl_11 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_77 --> Class2Table_tbl_29 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_14 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_2 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_32 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_41 : FK fk1
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_17 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_23 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_35 : FK fk2
+ManyToManyAssoc2JunctionTable_junctionTbl_83 --> Class2Table_tbl_5 : FK fk2
+@enduml

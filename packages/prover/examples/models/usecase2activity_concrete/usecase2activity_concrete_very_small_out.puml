@@ -1,0 +1,5 @@
+@startuml
+title RetailCheckout — usecase2activity_concrete_very_small_out.xmi
+(*) --> "[Node2Node_tn_2] BrowseCatalog · actor=Customer · goal=Find relevant items quickly"
+"[Node2Node_tn_2] BrowseCatalog · actor=Customer · goal=Find relevant items quickly" --> (*)
+@enduml

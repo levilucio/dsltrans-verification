@@ -1,0 +1,198 @@
+[
+  {
+    "id": "PackageHasPackageDeclaration",
+    "name": "PackageHasPackageDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PackagedClassHasCompilationUnitAndDeclaration",
+    "name": "PackagedClassHasCompilationUnitAndDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PackagedInterfaceHasCompilationUnitAndDeclaration",
+    "name": "PackagedInterfaceHasCompilationUnitAndDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PackagedEnumerationHasCompilationUnitAndDeclaration",
+    "name": "PackagedEnumerationHasCompilationUnitAndDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OwnedPropertyHasOwnedField",
+    "name": "OwnedPropertyHasOwnedField",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyTypeHasFieldTypeReference",
+    "name": "PropertyTypeHasFieldTypeReference",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MultiValuedPropertyHasArrayFieldType",
+    "name": "MultiValuedPropertyHasArrayFieldType",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "StaticPropertyHasField",
+    "name": "StaticPropertyHasField",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ReadOnlyPropertyHasField",
+    "name": "ReadOnlyPropertyHasField",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassOperationHasOwnedMethod",
+    "name": "ClassOperationHasOwnedMethod",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InterfaceOperationHasOwnedMethod",
+    "name": "InterfaceOperationHasOwnedMethod",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationParameterHasOwnedParameter",
+    "name": "OperationParameterHasOwnedParameter",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationReturnTypeHasReference",
+    "name": "OperationReturnTypeHasReference",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EnumerationLiteralHasOwnedEnumConstant",
+    "name": "EnumerationLiteralHasOwnedEnumConstant",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassHasConstructor",
+    "name": "ClassHasConstructor",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyHasConstructorParameter",
+    "name": "PropertyHasConstructorParameter",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyHasGetter",
+    "name": "PropertyHasGetter",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "WritablePropertyHasSetter",
+    "name": "WritablePropertyHasSetter",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MultiValuedPropertyHasAddRemoveHelpers",
+    "name": "MultiValuedPropertyHasAddRemoveHelpers",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "GeneralizationHasExtendsReference",
+    "name": "GeneralizationHasExtendsReference",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InterfaceRealizationHasImplementsReference",
+    "name": "InterfaceRealizationHasImplementsReference",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassCommentHasJavadoc",
+    "name": "ClassCommentHasJavadoc",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "DependencyYieldsImport",
+    "name": "DependencyYieldsImport",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyTypeUsedHasImport",
+    "name": "PropertyTypeUsedHasImport",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassHasObjectMethods",
+    "name": "ClassHasObjectMethods",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InterfaceMappedToClassDeclaration_ShouldFail",
+    "name": "InterfaceMappedToClassDeclaration_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassMappedToInterfaceDeclaration_ShouldFail",
+    "name": "ClassMappedToInterfaceDeclaration_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyMappedToJavadoc_ShouldFail",
+    "name": "PropertyMappedToJavadoc_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  }
+]

@@ -1,0 +1,57 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_medium_input.xmi
+Objects: 10 | Links: 17 | Traces: 0
+
+Use case model context:
+  System: RetailCheckout
+  Domain: Retail
+  Release: 4
+
+Use cases:
+- Use case: BrowseCatalog
+  ID: n0
+  Primary actor: Customer
+  Goal: Find relevant items quickly
+  Priority: 4
+  Complexity: 2
+
+- Use case: CreateOrder
+  ID: n1
+  Primary actor: Customer
+  Goal: Create a persistent order record
+  Priority: 8
+  Complexity: 4
+  Includes:
+    - [include] AuthenticateUser (priority=8, rationale='Shared authentication requirement')
+    - [include] SubmitPayment (priority=9, rationale='Payment requires prior validation')
+    - [extend] NotifyCustomer (priority=6, rationale='Notification follows order submission')
+
+- Use case: AuthenticateUser
+  ID: n2
+  Primary actor: System
+  Goal: Authenticate the user before checkout
+  Priority: 8
+  Complexity: 2
+  Included by:
+    - [include] CreateOrder
+    - [dependsOn] SubmitPayment
+
+- Use case: SubmitPayment
+  ID: n3
+  Primary actor: Customer
+  Goal: Collect payment securely
+  Priority: 9
+  Complexity: 3
+  Includes:
+    - [dependsOn] AuthenticateUser (priority=7, rationale='Audit trail requires persistent record')
+  Included by:
+    - [include] CreateOrder
+
+- Use case: NotifyCustomer
+  ID: n4
+  Primary actor: System
+  Goal: Send customer notification
+  Priority: 6
+  Complexity: 2
+  Included by:
+    - [extend] CreateOrder
+

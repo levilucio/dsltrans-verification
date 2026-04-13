@@ -1,0 +1,102 @@
+// =============================================================================
+// Ecore2JSONSchema Fragment (ATL-Zoo inspired)
+// Rules: 5
+// =============================================================================
+
+metamodel EcoreLike {
+    class Model { }
+    class EPackage { }
+    class EClass { isAbstract: Bool }
+    class EAttribute { name: String isMany: Bool }
+    class EReference { name: String }
+    class EDataType { name: String }
+    containment assoc root: Model[1] -- EPackage[1]
+    containment assoc classes: EPackage[1] -- EClass[0..*]
+    containment assoc datatypes: EPackage[1] -- EDataType[0..*]
+    containment assoc attrs: EClass[1] -- EAttribute[0..*]
+    containment assoc refs: EClass[1] -- EReference[0..*]
+}
+
+metamodel JSONSchema {
+    class SchemaDoc { }
+    class JObject { isAbstract: Bool }
+    class JProperty { name: String isArray: Bool }
+    class JRef { name: String }
+    class JPrimitive { name: String }
+    class JUnused { }
+    containment assoc objects: SchemaDoc[1] -- JObject[0..*]
+    containment assoc props: JObject[1] -- JProperty[0..*]
+    containment assoc refs: JObject[1] -- JRef[0..*]
+    containment assoc primitives: SchemaDoc[1] -- JPrimitive[0..*]
+}
+
+transformation Ecore2JSONSchema_concrete : EcoreLike -> JSONSchema {
+    layer L1 {
+        rule ModelPackage2Schema {
+            match {
+                any m : Model
+                any p : EPackage
+                direct r : root -- m.p
+            }
+            apply { s : SchemaDoc }
+        }
+    }
+    layer L2 {
+        rule Class2Object {
+            match { any c : EClass }
+            apply { o : JObject { isAbstract = c.isAbstract } }
+        }
+        rule DataType2Primitive {
+            match { any d : EDataType }
+            apply { p : JPrimitive { name = d.name } }
+        }
+    }
+    layer L3 {
+        rule Attribute2Property {
+            match {
+                any c : EClass
+                any a : EAttribute
+                direct own : attrs -- c.a
+            }
+            apply {
+                o : JObject { isAbstract = c.isAbstract }
+                p : JProperty { name = a.name, isArray = a.isMany }
+            }
+        }
+        rule Reference2Ref {
+            match {
+                any c : EClass
+                any r : EReference
+                direct own : refs -- c.r
+            }
+            apply {
+                o : JObject { isAbstract = c.isAbstract }
+                jr : JRef { name = r.name }
+            }
+        }
+    }
+}
+
+// 15 expected HOLDS
+property ModelHasSchema { precondition { any m : Model } postcondition { s : SchemaDoc s <--trace-- m } }
+property PackageHasSchema { precondition { any p : EPackage } postcondition { s : SchemaDoc s <--trace-- p } }
+property ClassHasObject { precondition { any c : EClass } postcondition { o : JObject o <--trace-- c } }
+property DataTypeHasPrimitive { precondition { any d : EDataType } postcondition { p : JPrimitive p <--trace-- d } }
+property AttributeHasProperty { precondition { any c : EClass any a : EAttribute direct own : attrs -- c.a } postcondition { p : JProperty p <--trace-- a } }
+property ReferenceHasRef { precondition { any c : EClass any r : EReference direct own : refs -- c.r } postcondition { jr : JRef jr <--trace-- r } }
+property ManyAttributeMapped { precondition { any c : EClass any a : EAttribute where a.isMany == true direct own : attrs -- c.a } postcondition { p : JProperty p <--trace-- a } }
+property SingleAttributeMapped { precondition { any c : EClass any a : EAttribute where a.isMany == false direct own : attrs -- c.a } postcondition { p : JProperty p <--trace-- a } }
+property AbstractClassMapped { precondition { any c : EClass where c.isAbstract == true } postcondition { o : JObject o <--trace-- c } }
+property ConcreteClassMapped { precondition { any c : EClass where c.isAbstract == false } postcondition { o : JObject o <--trace-- c } }
+property ClassWithAttributeHasObject { precondition { any c : EClass any a : EAttribute direct own : attrs -- c.a } postcondition { o : JObject o <--trace-- c } }
+property ClassWithReferenceHasObject { precondition { any c : EClass any r : EReference direct own : refs -- c.r } postcondition { o : JObject o <--trace-- c } }
+property AttrInClassHasPropertyAndObject { precondition { any c : EClass any a : EAttribute direct own : attrs -- c.a } postcondition { o : JObject p : JProperty o <--trace-- c p <--trace-- a } }
+property RefInClassHasRefAndObject { precondition { any c : EClass any r : EReference direct own : refs -- c.r } postcondition { o : JObject jr : JRef o <--trace-- c jr <--trace-- r } }
+property DatatypeInPackageHasPrimitive { precondition { any p : EPackage any d : EDataType direct od : datatypes -- p.d } postcondition { jp : JPrimitive jp <--trace-- d } }
+
+// 5 expected VIOLATED
+property ClassHasPrimitive_ShouldFail { precondition { any c : EClass } postcondition { p : JPrimitive p <--trace-- c } }
+property DataTypeHasObject_ShouldFail { precondition { any d : EDataType } postcondition { o : JObject o <--trace-- d } }
+property AttributeHasRef_ShouldFail { precondition { any c : EClass any a : EAttribute direct own : attrs -- c.a } postcondition { jr : JRef jr <--trace-- a } }
+property ReferenceHasProperty_ShouldFail { precondition { any c : EClass any r : EReference direct own : refs -- c.r } postcondition { p : JProperty p <--trace-- r } }
+property PackageHasUnused_ShouldFail { precondition { any p : EPackage } postcondition { u : JUnused u <--trace-- p } }

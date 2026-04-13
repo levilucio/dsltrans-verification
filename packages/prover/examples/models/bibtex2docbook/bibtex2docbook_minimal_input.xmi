@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="BibTeX:Model"/>
+  <objects xmi:id="bib1" xsi:type="BibTeX:BibFile"/>
+  <objects xmi:id="art1" xsi:type="BibTeX:Article" key="k1" year="2022"/>
+  <objects xmi:id="auth1" xsi:type="BibTeX:Author" name="a1"/>
+  <objects xmi:id="kw1" xsi:type="BibTeX:Keyword" text="kw1"/>
+
+  <links xsi:type="BibTeX:root" source="model1" target="bib1"/>
+  <links xsi:type="BibTeX:entries" source="bib1" target="art1"/>
+  <links xsi:type="BibTeX:authors" source="art1" target="auth1"/>
+  <links xsi:type="BibTeX:keywords" source="art1" target="kw1"/>
+</model>

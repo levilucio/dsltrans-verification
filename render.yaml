@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: dsltrans-verification
+    runtime: docker
+    plan: free
+    autoDeploy: true

@@ -1,0 +1,21 @@
+EMFTVM model: c:\Users\Levi\CascadeProjects\symbolic-execution\dsltrans-prover\examples\models\oclcompiler\oclcompiler_medium_out.xmi
+Objects: 11 | Links: 10 | Traces: 25
+Models: 1 | ExecEnvs: 1 | Operations: 1 | Instrs: 6
+- root: Model2Model_outM_1 -> Module2ExecEnv_env_2
+
+ExecEnvs:
+- ExecEnv(Module2ExecEnv_env_2) name='MainModule'
+  fields:
+    - Field(Field2Field_e_f_3) isStatic='false', name='status'
+  operations:
+    - Operation(Operation2Operation_e_op_4) isStatic='false', name='resolveStatus'
+      locals:
+        - LocalVariable(LetVariable2LocalVariable_e_l_5) name='tmp'
+      instr_count: 6
+      instructions:
+        - Invoke(BuiltInBinary2Invoke_i_7) opName='='
+        - Store(LetExp2Store_i_8) varName='tmp'
+        - Get(NavigationCall2Get_i_6) propName='status'
+        - Load(SelfExp2Load_i_10) varName='self'
+        - Push(StringExp2Push_i_11) val='active'
+        - Load(VariableExp2Load_i_9) varName='tmp'

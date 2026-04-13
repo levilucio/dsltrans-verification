@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="def1" xsi:type="BPMN:Definitions"/>
+  <objects xmi:id="proc1" xsi:type="BPMN:Process"/>
+  <links xsi:type="BPMN:processes" source="def1" target="proc1"/>
+
+  <objects xmi:id="start1" xsi:type="BPMN:StartEvent"/>
+  <objects xmi:id="task1" xsi:type="BPMN:Task"/>
+  <objects xmi:id="end1" xsi:type="BPMN:EndEvent"/>
+  <links xsi:type="BPMN:flowNodes" source="proc1" target="start1"/>
+  <links xsi:type="BPMN:flowNodes" source="proc1" target="task1"/>
+  <links xsi:type="BPMN:flowNodes" source="proc1" target="end1"/>
+
+  <objects xmi:id="sf1" xsi:type="BPMN:SequenceFlow"/>
+  <objects xmi:id="sf2" xsi:type="BPMN:SequenceFlow"/>
+  <links xsi:type="BPMN:sequenceFlows" source="proc1" target="sf1"/>
+  <links xsi:type="BPMN:sequenceFlows" source="proc1" target="sf2"/>
+  <links xsi:type="BPMN:sourceRef" source="sf1" target="start1"/>
+  <links xsi:type="BPMN:targetRef" source="sf1" target="task1"/>
+  <links xsi:type="BPMN:sourceRef" source="sf2" target="task1"/>
+  <links xsi:type="BPMN:targetRef" source="sf2" target="end1"/>
+</model>

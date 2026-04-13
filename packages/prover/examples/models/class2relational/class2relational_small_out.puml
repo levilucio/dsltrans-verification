@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+hide methods
+skinparam classAttributeIconSize 0
+title class2relational_small_out.xmi
+
+package "Pkg1" as Package2Schema_schema_8 {
+  class "C\n[Class2Table_tbl_2]" as Class2Table_tbl_2 {
+    + id: int
+      id: T1
+  }
+  class "D\n[Class2Table_tbl_5]" as Class2Table_tbl_5 {
+    + id: int
+      ref: ref
+      val: T2
+      fk: ref
+  }
+}
+Class2Table_tbl_5 --> Class2Table_tbl_2 : FK fk
+Class2Table_tbl_5 --> Class2Table_tbl_2 : FK fk
+@enduml

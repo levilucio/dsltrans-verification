@@ -1,0 +1,300 @@
+// =============================================================================
+// Persons transformation - F-LNR fragment variant (persons_concrete)
+// =============================================================================
+// Same semantics as Persons but in F-LNR x G-BPP:
+// - No indirect links: Layer 3 "BuildCommunity" expanded into four direct-link
+//   rules (one per role: father, mother, son, daughter).
+// - Finite attributes only: Member has no unbounded String (removed name).
+// - Root containment: every element is transitively contained by a root (Model).
+//   Only well-formed input models are accepted (one Model -> one Households -> Family/Member).
+// Use this to prove properties with the cutoff theorem.
+
+// Every element is transitively contained by a root (Model). Well-formed input: single root -> Households -> (Family, Member).
+metamodel Household {
+    enum MemberRole { Father, Mother, Son, Daughter }
+    class Model { }
+    class Households { }
+    class Family { }
+    class Member {
+        isActive: Bool
+        roleTag: String
+        role: MemberRole
+    }
+    containment assoc root: Model[1] -- Households[1]
+    containment assoc have: Households[1] -- Family[0..*]
+    containment assoc members: Households[1] -- Member[0..*]
+    assoc father: Family[0..*] -- Member[0..1]
+    assoc mother: Family[0..*] -- Member[0..1]
+    assoc son: Family[0..*] -- Member[0..*]
+    assoc daughter: Family[0..*] -- Member[0..*]
+}
+
+// Every element is transitively contained by a root (Model). Well-formed output: single root -> Community -> Person.
+metamodel Community {
+    abstract class Person { }
+    class Man extends Person { }
+    class Woman extends Person { }
+    class Model { }
+    class Community { }
+    containment assoc root: Model[1] -- Community[0..*]
+    containment assoc has: Community[1] -- Person[0..*]
+}
+
+// Transformation requires well-formed input: one Model containing one Households (root containment chain).
+transformation Persons_concrete : Household -> Community {
+
+    layer TopLevel {
+        rule ModelAndCommunity {
+            match {
+                any modelIn : Model
+                any h : Households
+                direct rootLink : root -- modelIn.h
+            }
+            apply {
+                modelOut : Model
+                c : Community
+                rootLinkOut : root -- modelOut.c
+            }
+        }
+    }
+
+    layer FamilyMembersToGender {
+        rule FatherToMan {
+            match {
+                any f : Family
+                any m : Member
+                direct fatherLink : father -- f.m
+            }
+            apply { man : Man }
+        }
+        rule SonToMan {
+            match {
+                any f : Family
+                any m : Member
+                direct sonLink : son -- f.m
+            }
+            apply { man : Man }
+        }
+        rule MotherToWoman {
+            match {
+                any f : Family
+                any m : Member
+                direct motherLink : mother -- f.m
+            }
+            apply { woman : Woman }
+        }
+        rule DaughterToWoman {
+            match {
+                any f : Family
+                any m : Member
+                direct daughterLink : daughter -- f.m
+            }
+            apply { woman : Woman }
+        }
+    }
+
+    layer BuildCommunityOfPersons {
+        rule BuildCommunityFather {
+            match {
+                any modelIn : Model
+                any h : Households
+                any f : Family
+                any m : Member
+                direct rootLink : root -- modelIn.h
+                direct haveLink : have -- h.f
+                direct fatherLink : father -- f.m
+            }
+            apply {
+                c : Community
+                man : Man
+                hasLink : has -- c.man
+            }
+            backward {
+                c <--trace-- h
+                man <--trace-- m
+            }
+        }
+        rule BuildCommunityMother {
+            match {
+                any modelIn : Model
+                any h : Households
+                any f : Family
+                any m : Member
+                direct rootLink : root -- modelIn.h
+                direct haveLink : have -- h.f
+                direct motherLink : mother -- f.m
+            }
+            apply {
+                c : Community
+                woman : Woman
+                hasLink : has -- c.woman
+            }
+            backward {
+                c <--trace-- h
+                woman <--trace-- m
+            }
+        }
+        rule BuildCommunitySon {
+            match {
+                any modelIn : Model
+                any h : Households
+                any f : Family
+                any m : Member
+                direct rootLink : root -- modelIn.h
+                direct haveLink : have -- h.f
+                direct sonLink : son -- f.m
+            }
+            apply {
+                c : Community
+                man : Man
+                hasLink : has -- c.man
+            }
+            backward {
+                c <--trace-- h
+                man <--trace-- m
+            }
+        }
+        rule BuildCommunityDaughter {
+            match {
+                any modelIn : Model
+                any h : Households
+                any f : Family
+                any m : Member
+                direct rootLink : root -- modelIn.h
+                direct haveLink : have -- h.f
+                direct daughterLink : daughter -- f.m
+            }
+            apply {
+                c : Community
+                woman : Woman
+                hasLink : has -- c.woman
+            }
+            backward {
+                c <--trace-- h
+                woman <--trace-- m
+            }
+        }
+    }
+}
+
+// Containment: root Model->Households yields root Model->Community and trace Households->Community
+property ModelRootToCommunity {
+    precondition {
+        any modelIn : Model
+        any h : Households
+        direct rootLink : root -- modelIn.h
+    }
+    postcondition {
+        modelOut : Model
+        c : Community
+        rootLinkOut : root -- modelOut.c
+        c <--trace-- h
+    }
+}
+
+// Containment: Model->Households->Family (root+have) yields Model->Community under root with trace h->c
+property HouseholdsWithFamilyYieldsCommunityUnderRoot {
+    precondition {
+        any modelIn : Model
+        any h : Households
+        any f : Family
+        direct rootLink : root -- modelIn.h
+        direct haveLink : have -- h.f
+    }
+    postcondition {
+        modelOut : Model
+        c : Community
+        rootLinkOut : root -- modelOut.c
+        c <--trace-- h
+    }
+}
+
+property FatherBecomesMan {
+    precondition {
+        any f : Family
+        any m : Member
+        direct fatherLink : father -- f.m
+    }
+    postcondition {
+        man : Man
+        man <--trace-- m
+    }
+}
+
+property MotherBecomesWoman {
+    precondition {
+        any f : Family
+        any m : Member
+        direct motherLink : mother -- f.m
+    }
+    postcondition {
+        woman : Woman
+        woman <--trace-- m
+    }
+}
+
+// Son role maps to Man (should HOLD)
+property SonBecomesMan {
+    precondition {
+        any f : Family
+        any m : Member
+        direct sonLink : son -- f.m
+    }
+    postcondition {
+        man : Man
+        man <--trace-- m
+    }
+}
+
+// A single Member cannot be both Man and Woman in the target (should VIOLATE)
+property MemberBecomesBothManAndWoman {
+    precondition {
+        any f : Family
+        any m : Member
+    }
+    postcondition {
+        man : Man
+        woman : Woman
+        man <--trace-- m
+        woman <--trace-- m
+    }
+}
+
+// Attribute-aware: active fathers still map to Man
+property ActiveFatherBecomesMan {
+    precondition {
+        any f : Family
+        any m : Member where m.isActive == true
+        direct fatherLink : father -- f.m
+    }
+    postcondition {
+        man : Man
+        man <--trace-- m
+    }
+}
+
+// Attribute-aware: role tag filter with finite string vocabulary
+property TaggedMotherBecomesWoman {
+    precondition {
+        any f : Family
+        any m : Member where m.roleTag == "Mother"
+        direct motherLink : mother -- f.m
+    }
+    postcondition {
+        woman : Woman
+        woman <--trace-- m
+    }
+}
+
+// Attribute-aware: enum role filter
+property EnumSonBecomesMan {
+    precondition {
+        any f : Family
+        any m : Member where m.role == "Son"
+        direct sonLink : son -- f.m
+    }
+    postcondition {
+        man : Man
+        man <--trace-- m
+    }
+}

@@ -1,0 +1,19 @@
+UML model: dsltrans-prover/examples/models/uml2java/uml2java_very_small_input.xmi
+Objects: 5 | Links: 5 | Traces: 0
+Packages: 1 | Classifiers: 2
+
+Models:
+- Model(m1) name='RetailModel'
+  rootPackage: Package(pkg_domain) name='domain'
+
+Packages:
+- Package(pkg_domain) name='domain'
+  packagedElement: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='1'
+  packagedElement: PrimitiveType(prim_string) name='String'
+
+Classifiers:
+- Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='1'
+  property: Property(prop_name) defaultValue='', isDerived='false', isOrdered='false', isReadOnly='false', isStatic='false', isUnique='true', lower='1', name='name', upper='1', visibility='private'
+    type: PrimitiveType(prim_string) name='String'
+- PrimitiveType(prim_string) name='String'
+

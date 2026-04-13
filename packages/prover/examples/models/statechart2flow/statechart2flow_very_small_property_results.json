@@ -1,0 +1,156 @@
+[
+  {
+    "id": "ModelMaps",
+    "name": "ModelMaps",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NodeContextStillMapsModel",
+    "name": "NodeContextStillMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EdgeContextStillMapsModel",
+    "name": "EdgeContextStillMapsModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "OutgoingNodeContextMapsModel",
+    "name": "OutgoingNodeContextMapsModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IncomingNodeContextMapsModel",
+    "name": "IncomingNodeContextMapsModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "SourceAndTargetNodeContextMapsModel",
+    "name": "SourceAndTargetNodeContextMapsModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "AnyNodeInModelMapsModel",
+    "name": "AnyNodeInModelMapsModel",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AnyEdgeInModelMapsModel",
+    "name": "AnyEdgeInModelMapsModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "NodeAndEdgeTogetherMapModel",
+    "name": "NodeAndEdgeTogetherMapModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "RichContextStillMapsModel",
+    "name": "RichContextStillMapsModel",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "NodeMapsToTwoTargetSteps_ShouldFail",
+    "name": "NodeMapsToTwoTargetSteps_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "NodeMapsToTargetModel_ShouldFail",
+    "name": "NodeMapsToTargetModel_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EdgeMapsToTargetNode_ShouldFail",
+    "name": "EdgeMapsToTargetNode_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "EdgeMapsToTargetModel_ShouldFail",
+    "name": "EdgeMapsToTargetModel_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ModelMapsToTwoTargetModels_ShouldFail",
+    "name": "ModelMapsToTwoTargetModels_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "TriggerMapsToTwoTargetEdges_ShouldFail",
+    "name": "TriggerMapsToTwoTargetEdges_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "OutgoingNodeMapsToTargetModel_ShouldFail",
+    "name": "OutgoingNodeMapsToTargetModel_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "IncomingNodeMapsToTargetModel_ShouldFail",
+    "name": "IncomingNodeMapsToTargetModel_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ConnectedEdgeMapsToTargetNode_ShouldFail",
+    "name": "ConnectedEdgeMapsToTargetNode_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ConnectedEdgeMapsToTargetModel_ShouldFail",
+    "name": "ConnectedEdgeMapsToTargetModel_ShouldFail",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  }
+]

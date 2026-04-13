@@ -1,0 +1,9 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_small_out.xmi
+Objects: 4 | Links: 5 | Traces: 9
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1) domain='Retail', release='3', workflowName='RetailCheckout'
+    action: Action(Node2Node_tn_2) actor='Customer', complexity='3', name='SubmitPayment', priority='9', summary='Collect payment securely'
+    action: Action(Node2Node_tn_3) actor='System', complexity='2', name='AuthenticateUser', priority='8', summary='Authenticate the user before checkout'
+    flow: Flow(Edge2Edge_te_4) Node2Node_tn_2 --> Node2Node_tn_3 priority='9', rationale='Shared authentication requirement', relationKind='include'
+

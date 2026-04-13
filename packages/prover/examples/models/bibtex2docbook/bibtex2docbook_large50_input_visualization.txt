@@ -1,0 +1,307 @@
+BibTeX model: dsltrans-prover/examples/models/bibtex2docbook/bibtex2docbook_large50_input.xmi
+Objects: 133 | Links: 237
+Models: 1 | BibFiles: 1 | Entries: 50
+- root: model1 -> bib1
+- entries: bib1 -> ref01, ref02, ref03, ref04, ref05, ref06, ref07, ref08, ref09, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref20, ref21, ref22, ref23, ref24, ref25, ref26, ref27, ref28, ref29, ref30, ref31, ref32, ref33, ref34, ref35, ref36, ref37, ref38, ref39, ref40, ref41, ref42, ref43, ref44, ref45, ref46, ref47, ref48, ref49, ref50
+
+Entry details:
+- Article(ref37) key='adrienchantre2006' year=2006
+    title: Implementation of a test language for co-opn: User guide and graphical user interface
+    journal: Bachelor Thesis, Universite de Geneve
+    authors: Adrien Chantre
+    keywords: testing, co_opn
+    cites: wolfgangreisig1991, gwbrams1983
+- Article(ref22) key='alexanderpretschne2004' year=2004
+    title: Model-based testing for real
+    journal: STTT
+    authors: Alexander Pretschner, Oscar Slotosch, Ernst Aiglstorfer, Stefan Kriebel
+    keywords: testing, model_based_testing
+    cites: arievandeursen2000, cbjones1986
+- InProceedings(ref39) key='alexanderpretschne2004' year=2004
+    title: Methodological issues in model-based testing
+    booktitle: Model-Based Testing of Reactive Systems
+    authors: Alexander Pretschner, Jan Philipps
+    keywords: testing, model_based_testing
+    cites: (none)
+- Article(ref16) key='arievandeursen2000' year=2000
+    title: Domain-specific languages: An annotated bibliography
+    journal: SIGPLAN Notices
+    authors: Arie van Deursen, Paul Klint, Joost Visser
+    keywords: software_engineering
+    cites: bertrandmeyer1988, objectmanagementgr2005
+- InProceedings(ref12) key='bertrandmeyer1988' year=1988
+    title: Eiffel: A language and environment for software engineering
+    booktitle: Journal of Systems and Software
+    authors: Bertrand Meyer
+    keywords: software_engineering
+    cites: (none)
+- Book(ref47) key='brunolegeard2001' year=2001
+    title: Generation of functional test sequences from b formal specifications
+    publisher: ASE
+    authors: Bruno Legeard, Fabien Peureux
+    keywords: testing, formal_methods
+    cites: (none)
+- Article(ref31) key='brunomarre1989' year=1989
+    title: Generation automatique de jeux de tests, une solution: Specifications algebriques et programmation logique
+    journal: SPLT
+    authors: Bruno Marre
+    keywords: testing, formal_methods
+    cites: alexanderpretschne2004, johnbgoodenough1975
+- InProceedings(ref30) key='brunomarre1991' year=1991
+    title: Une methode et un outil d'assistance a la selection de jeux de tests a partir de specifications algebriques
+    booktitle: PhD thesis, Universite de Paris-Sud
+    authors: Bruno Marre
+    keywords: testing, formal_methods
+    cites: (none)
+- Book(ref17) key='cbjones1986' year=1986
+    title: Systematic software development using VDM
+    publisher: Prentice Hall
+    authors: C B Jones
+    keywords: software_engineering
+    cites: (none)
+- Article(ref04) key='cecileperaire1998' year=1998
+    title: Formal testing of object-oriented software: from the method to the tool
+    journal: PhD thesis, EPFL
+    authors: Cecile Peraire
+    keywords: testing, formal_methods
+    cites: stephanebarbey1997
+- InProceedings(ref45) key='cecileperaire1998' year=1998
+    title: Test selection for object-oriented software based on formal specifications
+    booktitle: PROCOMET
+    authors: Cecile Peraire, Stephane Barbey, Didier Buchs
+    keywords: testing, formal_methods
+    cites: (none)
+- InProceedings(ref06) key='davidhuerzeler2004' year=2004
+    title: Flexible subtyping relations for component-oriented formalisms and their verification
+    booktitle: PhD thesis, EPFL
+    authors: David Huerzeler
+    keywords: formal_methods
+    cites: (none)
+- Book(ref20) key='dharel2000' year=2000
+    title: Modeling languages: Syntax, semantics and all that stuff
+    publisher: Modeling Languages
+    authors: D. Harel, B. Rumpe
+    keywords: model_based_testing
+    cites: (none)
+- Article(ref19) key='edsgerwdijkstra1988' year=1988
+    title: On the cruelty of really teaching computing science
+    journal: Circulated privately
+    authors: Edsger W. Dijkstra
+    keywords: software_engineering
+    cites: ivarjacobson1999, objectmanagementgr2003
+- Book(ref11) key='ewdijkstra1972' year=1972
+    title: Notes on structured programming
+    publisher: Structured Programming
+    authors: E. W. Dijkstra
+    keywords: software_engineering
+    cites: (none)
+- Article(ref10) key='frederickpbrooks1987' year=1987
+    title: No silver bullet - essence and accidents of software engineering
+    journal: IEEE Computer
+    authors: Frederick P. Brooks
+    keywords: software_engineering
+    cites: gordonemoore2000, frederickpbrooksjr1975
+- InProceedings(ref09) key='frederickpbrooksjr1975' year=1975
+    title: The mythical man-month - Essays on Software-Engineering
+    booktitle: Addison Wesley
+    authors: Frederick P. Brooks Jr.
+    keywords: software_engineering
+    cites: (none)
+- InProceedings(ref03) key='gbernot1991' year=1991
+    title: Software testing based on formal specifications: a theory and a tool
+    booktitle: IEEE Software Engineering Journal
+    authors: G. Bernot, M.-C. Gaudel, B. Marre
+    keywords: testing, formal_methods
+    cites: (none)
+- InProceedings(ref33) key='gdplotkin1981' year=1981
+    title: A Structural Approach to Operational Semantics
+    booktitle: Technical Report DAIMI FN-19, University of Aarhus
+    authors: G. D. Plotkin
+    keywords: software_engineering
+    cites: (none)
+- InProceedings(ref24) key='gillesbernot1991' year=1991
+    title: Testing against formal specifications: A theoretical view
+    booktitle: TAPSOFT
+    authors: Gilles Bernot
+    keywords: testing, formal_methods
+    cites: (none)
+- InProceedings(ref21) key='glenfordjmyers1979' year=1979
+    title: The Art of Software Testing
+    booktitle: John Wiley and Sons
+    authors: Glenford J. Myers
+    keywords: testing
+    cites: (none)
+- Book(ref08) key='gordonemoore2000' year=2000
+    title: Cramming more components onto integrated circuits
+    publisher: Readings in computer architecture
+    authors: Gordon E. Moore
+    keywords: software_engineering
+    cites: (none)
+- Book(ref44) key='gregorylestiennes2002' year=2002
+    title: Testing processes from formal specifications with inputs, outputs and data types
+    publisher: ISSRE
+    authors: Gregory Lestiennes, Marie-Claude Gaudel
+    keywords: testing, formal_methods
+    cites: (none)
+- InProceedings(ref27) key='gwbrams1983' year=1983
+    title: Reseaux de Petri: theorie et pratique - Tome 1
+    booktitle: Masson
+    authors: G.W. Brams
+    keywords: petri_nets
+    cites: (none)
+- Article(ref28) key='gwbrams1983' year=1983
+    title: Reseaux de Petri: theorie et pratique - Tome 2
+    journal: Masson
+    authors: G.W. Brams
+    keywords: petri_nets
+    cites: dharel2000, glenfordjmyers1979
+- Article(ref25) key='hartmutehrig1985' year=1985
+    title: Fundamentals of Algebraic Specification I
+    journal: Springer
+    authors: Hartmut Ehrig, B. Mahr
+    keywords: formal_methods
+    cites: jrabrial1996, edsgerwdijkstra1988
+- Book(ref14) key='ivarjacobson1999' year=1999
+    title: The Unified Software Development Process
+    publisher: Addison Wesley
+    authors: Ivar Jacobson, Grady Booch, James Rumbaugh
+    keywords: software_engineering
+    cites: (none)
+- Article(ref49) key='jantretmans1994' year=1994
+    title: A formal approach to conformance testing
+    journal: Protocol Test Systems VI
+    authors: Jan Tretmans
+    keywords: testing, formal_methods
+    cites: yledru2001, matthewhennessy1985
+- Article(ref43) key='jantretmans1999' year=1999
+    title: Testing concurrent systems: A formal approach
+    journal: CONCUR
+    authors: Jan Tretmans
+    keywords: testing, formal_methods
+    cites: brunomarre1991, brunomarre1989
+- Book(ref29) key='jeanmarieproth1998' year=1998
+    title: Petri nets: a tool for design and management of manufacturing systems
+    publisher: Quality and Reliability Engineering International
+    authors: Jean-Marie Proth, Xiaolan Xie
+    keywords: petri_nets
+    cites: (none)
+- Book(ref23) key='johnbgoodenough1975' year=1975
+    title: Toward a theory of test data selection
+    publisher: Proceedings of the International Conference on Reliable Software
+    authors: John B. Goodenough, Susan L. Gerhart
+    keywords: testing
+    cites: (none)
+- InProceedings(ref18) key='jrabrial1996' year=1996
+    title: The B-book: assigning programs to meanings
+    booktitle: Cambridge University Press
+    authors: J.-R. Abrial
+    keywords: software_engineering
+    cites: (none)
+- Book(ref41) key='marieclaudegaudel1995' year=1995
+    title: Testing can be formal, too
+    publisher: TAPSOFT
+    authors: Marie-Claude Gaudel
+    keywords: testing, formal_methods
+    cites: (none)
+- Article(ref40) key='markutting2006' year=2006
+    title: A taxonomy of model-based testing
+    journal: Model-based testing survey
+    authors: Mark Utting, Alexander Pretschner, Bruno Legeard
+    keywords: testing, model_based_testing
+    cites: gwbrams1983, jeanmarieproth1998
+- Book(ref02) key='mathieubuffo1997' year=1997
+    title: Contextual Coordination: a coordination model for distributed object systems
+    publisher: PhD thesis, Universite de Geneve
+    authors: Mathieu Buffo
+    keywords: model_based_testing
+    cites: (none)
+- Book(ref32) key='mathieubuffo1997' year=1997
+    title: Contextual Coordination: a Coordination Model for Distributed Object Systems
+    publisher: PhD thesis, University of Geneva
+    authors: Mathieu Buffo
+    keywords: model_based_testing
+    cites: (none)
+- Book(ref35) key='matthewhennessy1985' year=1985
+    title: Algebraic laws for nondeterminism and concurrency
+    publisher: J. ACM
+    authors: Matthew Hennessy, Robin Milner
+    keywords: concurrency
+    cites: (none)
+- Book(ref50) key='mclatin1996' year=1996
+    title: Manuel d'utilisation de TVEDA V3
+    publisher: France Telecom
+    authors: M. Clatin
+    keywords: software_engineering
+    cites: (none)
+- InProceedings(ref15) key='objectmanagementgr2003' year=2003
+    title: MDA guide version 1.0.1
+    booktitle: Technical report, OMG
+    authors: Object Management Group
+    keywords: software_engineering
+    cites: (none)
+- Article(ref13) key='objectmanagementgr2005' year=2005
+    title: UML 2.0 superstructure specification
+    journal: Technical report, OMG
+    authors: Object Management Group members
+    keywords: formal_methods
+    cites: frederickpbrooks1987, ewdijkstra1972
+- Article(ref01) key='olivierbiberstein1997' year=1997
+    title: CO-OPN/2: An Object-Oriented Formalism for the Specification of Concurrent Systems
+    journal: PhD thesis, University of Geneva
+    authors: Olivier Biberstein
+    keywords: formal_methods, concurrency
+    cites: mathieubuffo1997, gbernot1991
+- InProceedings(ref42) key='rmburstall1977' year=1977
+    title: A transformation system for developing recursive programs
+    booktitle: J. ACM
+    authors: R. M. Burstall, John Darlington
+    keywords: software_engineering
+    cites: (none)
+- Book(ref38) key='sergiocoelho2006' year=2006
+    title: Implementation of a test language for co-opn: Syntactic and static semantics verifications
+    publisher: Bachelor Thesis, Universite de Geneve
+    authors: Sergio Coelho
+    keywords: testing, co_opn
+    cites: (none)
+- Article(ref07) key='smvgroup2007' year=2007
+    title: CoopnBuilder
+    journal: SMV Group
+    authors: Smv Group
+    keywords: co_opn
+    cites: davidhuerzeler2004
+- InProceedings(ref36) key='stanislavchachkov2004' year=2004
+    title: Generation of Object-Oriented programs from CO-OPN Specifications
+    booktitle: PhD thesis, EPFL
+    authors: Stanislav Chachkov
+    keywords: formal_methods, co_opn
+    cites: (none)
+- Book(ref05) key='stephanebarbey1997' year=1997
+    title: Test Selection for Specification-Based Unit Testing of Object-Oriented Software Based on Formal Specifications
+    publisher: PhD thesis, EPFL
+    authors: Stephane Barbey
+    keywords: testing, formal_methods
+    cites: (none)
+- Book(ref26) key='wolfgangreisig1991' year=1991
+    title: Petri nets and algebraic specifications
+    publisher: Theoretical Computer Science
+    authors: Wolfgang Reisig
+    keywords: petri_nets, formal_methods
+    cites: (none)
+- Article(ref34) key='yledru2001' year=2001
+    title: Test purposes: Adapting the notion of specification to testing
+    journal: ASE
+    authors: Y. Ledru, L. du Bousquet, P. Bontron, O. Maury, C. Oriat, M.-L. Potet
+    keywords: testing, formal_methods
+    cites: gillesbernot1991, hartmutehrig1985
+- InProceedings(ref48) key='yurigurevich2000' year=2000
+    title: Abstract State Machines, Theory and Applications
+    booktitle: LNCS 1912, Springer
+    authors: Yuri Gurevich, Philipp W. Kutter, Martin Odersky, Lothar Thiele
+    keywords: software_engineering
+    cites: (none)
+- Article(ref46) key='yvesledru2004' year=2004
+    title: Filtering tobias combinatorial test suites
+    journal: FASE
+    authors: Yves Ledru, Lydie du Bousquet, Olivier Maury, Pierre Bontron
+    keywords: testing
+    cites: mathieubuffo1997, gdplotkin1981

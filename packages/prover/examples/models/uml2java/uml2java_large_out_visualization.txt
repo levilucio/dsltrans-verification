@@ -1,0 +1,122 @@
+﻿// File: CustomerService.java
+package service;
+
+import CustomerRepository;
+
+public class CustomerService implements CustomerRepository {
+    private static final Integer total;
+
+    /**
+     * Service entry point.
+     */
+    public CustomerService(Integer total) {
+    }
+
+    public Integer calculateTotal() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+
+    private static Integer total() {
+    }
+}
+
+// File: EntityBase.java
+package domain;
+
+public abstract class EntityBase {
+    public EntityBase() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: Order.java
+package domain;
+
+import OrderItem;
+import OrderStatus;
+
+public class Order extends EntityBase {
+    private OrderItem[] items;
+
+    private OrderItem items;
+
+    private OrderStatus status;
+
+    public Order(OrderItem items, OrderStatus status) {
+    }
+
+    private void add(OrderItem items) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    private OrderItem items() {
+    }
+
+    private void items(OrderItem items) {
+    }
+
+    private void remove(OrderItem items) {
+    }
+
+    private OrderStatus status() {
+    }
+
+    private void status(OrderStatus status) {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: OrderItem.java
+package domain;
+
+public class OrderItem {
+    public OrderItem() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: OrderStatus.java
+package domain;
+
+public enum OrderStatus {
+    COMPLETE, NEW, PROCESSING;
+}
+
+// File: CustomerRepository.java
+package infra;
+
+public interface CustomerRepository {
+    Order save(Order order);
+}
+

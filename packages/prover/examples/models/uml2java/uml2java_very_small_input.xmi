@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="m1" xsi:type="UMLConcrete:Model" name="RetailModel"/>
+  <objects xmi:id="pkg_domain" xsi:type="UMLConcrete:Package" name="domain"/>
+  <objects xmi:id="cls_customer" xsi:type="UMLConcrete:Class" name="Customer" isAbstract="false" isFinal="false" priority="1" layerTag="Domain" kind="Entity"/>
+  <objects xmi:id="prop_name" xsi:type="UMLConcrete:Property" name="name" visibility="private" isStatic="false" isReadOnly="false" isDerived="false" isOrdered="false" isUnique="true" lower="1" upper="1" defaultValue=""/>
+  <objects xmi:id="prim_string" xsi:type="UMLConcrete:PrimitiveType" name="String"/>
+
+  <links xsi:type="UMLConcrete:rootPackages" source="m1" target="pkg_domain"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="cls_customer"/>
+  <links xsi:type="UMLConcrete:packagedElement" source="pkg_domain" target="prim_string"/>
+  <links xsi:type="UMLConcrete:ownedAttribute" source="cls_customer" target="prop_name"/>
+  <links xsi:type="UMLConcrete:type" source="prop_name" target="prim_string"/>
+</model>

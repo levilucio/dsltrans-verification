@@ -1,0 +1,25 @@
+﻿// File: Customer.java
+package domain;
+
+public class Customer {
+    private String name;
+
+    public Customer(String name) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    private String name() {
+    }
+
+    private void name(String name) {
+    }
+
+    public String toString() {
+    }
+}
+

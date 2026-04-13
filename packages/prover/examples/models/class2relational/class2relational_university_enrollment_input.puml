@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+hide empty members
+skinparam classAttributeIconSize 0
+title class2relational_university_enrollment_input.xmi
+
+package "UniversityEnrollment" as pkg_uni {
+  class "Integer\n[dt_int]" as dt_int <<DataType>>
+  class "String\n[dt_str]" as dt_str <<DataType>>
+  abstract class "Person\n[cls_person]" as cls_person
+  class "Student\n[cls_student]" as cls_student
+  class "Instructor\n[cls_instructor]" as cls_instructor
+  class "Course\n[cls_course]" as cls_course
+  class "Enrollment\n[cls_enrollment]" as cls_enrollment
+  class "Department\n[cls_department]" as cls_department
+}
+cls_student --|> cls_person
+cls_instructor --|> cls_person
+cls_course "*" --> "1" cls_instructor : as_course_instructor
+cls_department "1" --> "*" cls_course : as_dept_course
+cls_student "1" --> "1" cls_instructor : as_student_advisor
+cls_student "*" --> "*" cls_course : as_student_course
+@enduml

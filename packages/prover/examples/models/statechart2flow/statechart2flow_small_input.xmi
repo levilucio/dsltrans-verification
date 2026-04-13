@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="Statechart:StatechartModel" />
+  <objects xmi:id="s0" xsi:type="Statechart:State" />
+  <objects xmi:id="s1" xsi:type="Statechart:State" />
+  <objects xmi:id="t0" xsi:type="Statechart:Trigger" />
+
+  <links xsi:type="Statechart:nodes" source="sm" target="s0" />
+  <links xsi:type="Statechart:nodes" source="sm" target="s1" />
+  <links xsi:type="Statechart:edges" source="sm" target="t0" />
+  <links xsi:type="Statechart:src" source="t0" target="s0" />
+  <links xsi:type="Statechart:dst" source="t0" target="s1" />
+</model>

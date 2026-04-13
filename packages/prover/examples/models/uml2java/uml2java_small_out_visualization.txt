@@ -1,0 +1,25 @@
+﻿// File: Customer.java
+package domain;
+
+public class Customer {
+    private final Integer id;
+
+    public Customer(Integer id) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public Customer findById(Integer id) {
+    }
+
+    public int hashCode() {
+    }
+
+    private Integer id() {
+    }
+
+    public String toString() {
+    }
+}
+

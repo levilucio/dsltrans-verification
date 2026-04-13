@@ -1,0 +1,184 @@
+[
+  {
+    "id": "PackageBecomesSchema",
+    "name": "PackageBecomesSchema",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassMapsToTable",
+    "name": "ClassMapsToTable",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "TableHasPrimaryKey",
+    "name": "TableHasPrimaryKey",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AttributeBecomesColumn",
+    "name": "AttributeBecomesColumn",
+    "status": "holds",
+    "checked_pre_matches": 13,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SingleValuedAttributeWithDataTypeBecomesColumn",
+    "name": "SingleValuedAttributeWithDataTypeBecomesColumn",
+    "status": "holds",
+    "checked_pre_matches": 8,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassTypedAttributeBecomesFKColumn",
+    "name": "ClassTypedAttributeBecomesFKColumn",
+    "status": "holds",
+    "checked_pre_matches": 4,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MultiValuedAttributeCreatesTable",
+    "name": "MultiValuedAttributeCreatesTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InheritanceFlattened",
+    "name": "InheritanceFlattened",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InheritanceHasDiscriminator",
+    "name": "InheritanceHasDiscriminator",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AbstractClassHasDiscriminatorTable",
+    "name": "AbstractClassHasDiscriminatorTable",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SchemaHasTable",
+    "name": "SchemaHasTable",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SourceOneTargetManyCreatesFKOnTargetTable",
+    "name": "SourceOneTargetManyCreatesFKOnTargetTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SourceManyTargetOneCreatesFKOnSourceTable",
+    "name": "SourceManyTargetOneCreatesFKOnSourceTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ManyToManyCreatesJunctionTable",
+    "name": "ManyToManyCreatesJunctionTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OneToOneCreatesFKWithUnique",
+    "name": "OneToOneCreatesFKWithUnique",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "TablesExist",
+    "name": "TablesExist",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_ConcreteClassGetsTable",
+    "name": "Diag_ConcreteClassGetsTable",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_AbstractGeneralizedClassGetsTable",
+    "name": "Diag_AbstractGeneralizedClassGetsTable",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_DataTypeBecomesTable_ShouldFail",
+    "name": "Diag_DataTypeBecomesTable_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_DataTypeExistsSchemaExists",
+    "name": "Diag_DataTypeExistsSchemaExists",
+    "status": "holds",
+    "checked_pre_matches": 10,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_SingleAttrWithDataType",
+    "name": "Diag_SingleAttrWithDataType",
+    "status": "holds",
+    "checked_pre_matches": 8,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_MultiValuedAttrCreatesSeparateTable",
+    "name": "Diag_MultiValuedAttrCreatesSeparateTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_ConcreteClassTableHasPK",
+    "name": "Diag_ConcreteClassTableHasPK",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_MultiValuedAttributeTracedToAuxTable",
+    "name": "Diag_MultiValuedAttributeTracedToAuxTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PKTracedFromClass",
+    "name": "PKTracedFromClass",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "Diag_ManyToManyHasJunctionTable",
+    "name": "Diag_ManyToManyHasJunctionTable",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  }
+]

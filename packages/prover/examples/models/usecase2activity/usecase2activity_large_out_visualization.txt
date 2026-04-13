@@ -1,0 +1,37 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_large_out.xmi
+Objects: 32 | Links: 65 | Traces: 97
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1)
+    action: Action(Node2Node_tn_10)
+    action: Action(Node2Node_tn_11)
+    action: Action(Node2Node_tn_12)
+    action: Action(Node2Node_tn_13)
+    action: Action(Node2Node_tn_14)
+    action: Action(Node2Node_tn_15)
+    action: Action(Node2Node_tn_2)
+    action: Action(Node2Node_tn_3)
+    action: Action(Node2Node_tn_4)
+    action: Action(Node2Node_tn_5)
+    action: Action(Node2Node_tn_6)
+    action: Action(Node2Node_tn_7)
+    action: Action(Node2Node_tn_8)
+    action: Action(Node2Node_tn_9)
+    flow: Flow(Edge2Edge_te_16) Node2Node_tn_2 --> Node2Node_tn_3
+    flow: Flow(Edge2Edge_te_17) Node2Node_tn_3 --> Node2Node_tn_8
+    flow: Flow(Edge2Edge_te_18) Node2Node_tn_4 --> Node2Node_tn_5
+    flow: Flow(Edge2Edge_te_19) Node2Node_tn_5 --> Node2Node_tn_6
+    flow: Flow(Edge2Edge_te_20) Node2Node_tn_6 --> Node2Node_tn_7
+    flow: Flow(Edge2Edge_te_21) Node2Node_tn_2 --> Node2Node_tn_8
+    flow: Flow(Edge2Edge_te_22) Node2Node_tn_9 --> Node2Node_tn_11
+    flow: Flow(Edge2Edge_te_23) Node2Node_tn_12 --> Node2Node_tn_14
+    flow: Flow(Edge2Edge_te_24) Node2Node_tn_15 --> Node2Node_tn_5
+    flow: Flow(Edge2Edge_te_25) Node2Node_tn_8 --> Node2Node_tn_9
+    flow: Flow(Edge2Edge_te_26) Node2Node_tn_9 --> Node2Node_tn_10
+    flow: Flow(Edge2Edge_te_27) Node2Node_tn_10 --> Node2Node_tn_11
+    flow: Flow(Edge2Edge_te_28) Node2Node_tn_11 --> Node2Node_tn_12
+    flow: Flow(Edge2Edge_te_29) Node2Node_tn_12 --> Node2Node_tn_13
+    flow: Flow(Edge2Edge_te_30) Node2Node_tn_13 --> Node2Node_tn_14
+    flow: Flow(Edge2Edge_te_31) Node2Node_tn_14 --> Node2Node_tn_15
+    flow: Flow(Edge2Edge_te_32) Node2Node_tn_15 --> Node2Node_tn_4
+

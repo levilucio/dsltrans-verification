@@ -1,0 +1,48 @@
+UML model: dsltrans-prover/examples/models/uml2java/uml2java_medium_input.xmi
+Objects: 17 | Links: 23 | Traces: 0
+Packages: 2 | Classifiers: 6
+
+Models:
+- Model(m1) name='RetailModel'
+  rootPackage: Package(pkg_domain) name='domain'
+  rootPackage: Package(pkg_service) name='service'
+
+Packages:
+- Package(pkg_domain) name='domain'
+  packagedElement: Class(cls_entity) isAbstract='true', isFinal='false', kind='ValueObject', layerTag='Core', name='EntityBase', priority='1'
+  packagedElement: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='3'
+  packagedElement: PrimitiveType(prim_string) name='String'
+  packagedElement: PrimitiveType(prim_integer) name='Integer'
+- Package(pkg_service) name='service'
+  packagedElement: Interface(iface_repo) name='CustomerRepository'
+  packagedElement: Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='4'
+
+Classifiers:
+- Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='3'
+  comment: Comment(comment_customer) body='Aggregate root for customer data.'
+  property: Property(prop_customer_name) defaultValue='', isDerived='false', isOrdered='false', isReadOnly='false', isStatic='false', isUnique='true', lower='1', name='name', upper='1', visibility='private'
+    type: PrimitiveType(prim_string) name='String'
+- Class(cls_entity) isAbstract='true', isFinal='false', kind='ValueObject', layerTag='Core', name='EntityBase', priority='1'
+- Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='4'
+  operation: Operation(op_service_find) isAbstract='false', isQuery='true', isStatic='false', name='findById', visibility='public'
+    parameter: Parameter(param_service_id) direction='in', name='id'
+      paramType: PrimitiveType(prim_integer) name='Integer'
+    returnType: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='3'
+- Interface(iface_repo) name='CustomerRepository'
+  operation: Operation(op_repo_find) isAbstract='true', isQuery='true', isStatic='false', name='findById', visibility='public'
+    parameter: Parameter(param_repo_id) direction='in', name='id'
+      paramType: PrimitiveType(prim_integer) name='Integer'
+    returnType: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='3'
+- PrimitiveType(prim_integer) name='Integer'
+- PrimitiveType(prim_string) name='String'
+
+Generalizations:
+- Generalization(gen_customer) isSubstitutable='true'
+  general: Class(cls_entity) isAbstract='true', isFinal='false', kind='ValueObject', layerTag='Core', name='EntityBase', priority='1'
+  specific: Class(cls_customer) isAbstract='false', isFinal='false', kind='Entity', layerTag='Domain', name='Customer', priority='3'
+
+Interface Realizations:
+- InterfaceRealization(real_service)
+  contract: Interface(iface_repo) name='CustomerRepository'
+  implementingClass: Class(cls_service) isAbstract='false', isFinal='false', kind='Service', layerTag='Application', name='CustomerService', priority='4'
+

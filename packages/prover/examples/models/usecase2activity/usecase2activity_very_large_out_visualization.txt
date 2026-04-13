@@ -1,0 +1,79 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_very_large_out.xmi
+Objects: 74 | Links: 155 | Traces: 229
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1)
+    action: Action(Node2Node_tn_10)
+    action: Action(Node2Node_tn_11)
+    action: Action(Node2Node_tn_12)
+    action: Action(Node2Node_tn_13)
+    action: Action(Node2Node_tn_14)
+    action: Action(Node2Node_tn_15)
+    action: Action(Node2Node_tn_16)
+    action: Action(Node2Node_tn_17)
+    action: Action(Node2Node_tn_18)
+    action: Action(Node2Node_tn_19)
+    action: Action(Node2Node_tn_2)
+    action: Action(Node2Node_tn_20)
+    action: Action(Node2Node_tn_21)
+    action: Action(Node2Node_tn_22)
+    action: Action(Node2Node_tn_23)
+    action: Action(Node2Node_tn_24)
+    action: Action(Node2Node_tn_25)
+    action: Action(Node2Node_tn_26)
+    action: Action(Node2Node_tn_27)
+    action: Action(Node2Node_tn_28)
+    action: Action(Node2Node_tn_29)
+    action: Action(Node2Node_tn_3)
+    action: Action(Node2Node_tn_30)
+    action: Action(Node2Node_tn_31)
+    action: Action(Node2Node_tn_32)
+    action: Action(Node2Node_tn_33)
+    action: Action(Node2Node_tn_4)
+    action: Action(Node2Node_tn_5)
+    action: Action(Node2Node_tn_6)
+    action: Action(Node2Node_tn_7)
+    action: Action(Node2Node_tn_8)
+    action: Action(Node2Node_tn_9)
+    flow: Flow(Edge2Edge_te_34) Node2Node_tn_2 --> Node2Node_tn_3
+    flow: Flow(Edge2Edge_te_35) Node2Node_tn_3 --> Node2Node_tn_14
+    flow: Flow(Edge2Edge_te_36) Node2Node_tn_4 --> Node2Node_tn_5
+    flow: Flow(Edge2Edge_te_37) Node2Node_tn_5 --> Node2Node_tn_6
+    flow: Flow(Edge2Edge_te_38) Node2Node_tn_6 --> Node2Node_tn_7
+    flow: Flow(Edge2Edge_te_39) Node2Node_tn_7 --> Node2Node_tn_8
+    flow: Flow(Edge2Edge_te_40) Node2Node_tn_8 --> Node2Node_tn_9
+    flow: Flow(Edge2Edge_te_41) Node2Node_tn_9 --> Node2Node_tn_10
+    flow: Flow(Edge2Edge_te_42) Node2Node_tn_10 --> Node2Node_tn_11
+    flow: Flow(Edge2Edge_te_43) Node2Node_tn_11 --> Node2Node_tn_12
+    flow: Flow(Edge2Edge_te_44) Node2Node_tn_12 --> Node2Node_tn_13
+    flow: Flow(Edge2Edge_te_45) Node2Node_tn_13 --> Node2Node_tn_15
+    flow: Flow(Edge2Edge_te_46) Node2Node_tn_14 --> Node2Node_tn_25
+    flow: Flow(Edge2Edge_te_47) Node2Node_tn_15 --> Node2Node_tn_16
+    flow: Flow(Edge2Edge_te_48) Node2Node_tn_16 --> Node2Node_tn_17
+    flow: Flow(Edge2Edge_te_49) Node2Node_tn_17 --> Node2Node_tn_18
+    flow: Flow(Edge2Edge_te_50) Node2Node_tn_18 --> Node2Node_tn_19
+    flow: Flow(Edge2Edge_te_51) Node2Node_tn_19 --> Node2Node_tn_20
+    flow: Flow(Edge2Edge_te_52) Node2Node_tn_20 --> Node2Node_tn_21
+    flow: Flow(Edge2Edge_te_53) Node2Node_tn_21 --> Node2Node_tn_22
+    flow: Flow(Edge2Edge_te_54) Node2Node_tn_22 --> Node2Node_tn_23
+    flow: Flow(Edge2Edge_te_55) Node2Node_tn_23 --> Node2Node_tn_24
+    flow: Flow(Edge2Edge_te_56) Node2Node_tn_24 --> Node2Node_tn_26
+    flow: Flow(Edge2Edge_te_57) Node2Node_tn_25 --> Node2Node_tn_28
+    flow: Flow(Edge2Edge_te_58) Node2Node_tn_26 --> Node2Node_tn_27
+    flow: Flow(Edge2Edge_te_59) Node2Node_tn_2 --> Node2Node_tn_14
+    flow: Flow(Edge2Edge_te_60) Node2Node_tn_25 --> Node2Node_tn_29
+    flow: Flow(Edge2Edge_te_61) Node2Node_tn_30 --> Node2Node_tn_32
+    flow: Flow(Edge2Edge_te_62) Node2Node_tn_33 --> Node2Node_tn_5
+    flow: Flow(Edge2Edge_te_63) Node2Node_tn_6 --> Node2Node_tn_8
+    flow: Flow(Edge2Edge_te_64) Node2Node_tn_9 --> Node2Node_tn_11
+    flow: Flow(Edge2Edge_te_65) Node2Node_tn_12 --> Node2Node_tn_15
+    flow: Flow(Edge2Edge_te_66) Node2Node_tn_16 --> Node2Node_tn_18
+    flow: Flow(Edge2Edge_te_67) Node2Node_tn_19 --> Node2Node_tn_21
+    flow: Flow(Edge2Edge_te_68) Node2Node_tn_28 --> Node2Node_tn_29
+    flow: Flow(Edge2Edge_te_69) Node2Node_tn_22 --> Node2Node_tn_24
+    flow: Flow(Edge2Edge_te_70) Node2Node_tn_29 --> Node2Node_tn_30
+    flow: Flow(Edge2Edge_te_71) Node2Node_tn_30 --> Node2Node_tn_31
+    flow: Flow(Edge2Edge_te_72) Node2Node_tn_31 --> Node2Node_tn_32
+    flow: Flow(Edge2Edge_te_73) Node2Node_tn_32 --> Node2Node_tn_33
+    flow: Flow(Edge2Edge_te_74) Node2Node_tn_33 --> Node2Node_tn_4
+

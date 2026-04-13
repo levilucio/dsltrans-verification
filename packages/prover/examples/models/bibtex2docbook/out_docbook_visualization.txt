@@ -1,0 +1,19 @@
+DocBook model: dsltrans-prover/examples/models/bibtex2docbook/out.xmi
+Objects: 14 | Links: 13 | Traces: 28
+Documents: 1 | Bibliographies: 1 | DBEntries: 3
+- root: ModelBibFile2DocumentBibliography_d_1 -> ModelBibFile2DocumentBibliography_b_2
+- entries: ModelBibFile2DocumentBibliography_b_2 -> Article2DBArticle_da_3, Book2DBBook_db_4, InProc2DBInProc_dp_5
+
+Entry details:
+- DBArticle(Article2DBArticle_da_3) key='k1' year=2018
+    authors: a1, a2
+    subjects: kw1
+    citations: 2
+- DBBook(Book2DBBook_db_4) key='k2' year=2004
+    authors: a3
+    subjects: kw2
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_5) key='k3' year=2012
+    authors: a2
+    subjects: kw1
+    citations: 0

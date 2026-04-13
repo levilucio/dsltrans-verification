@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="UseCaseConcrete:UseCaseModel" systemName="RetailCheckout" domain="Retail" release="4" />
+  <objects xmi:id="n0" xsi:type="UseCaseConcrete:UseCaseNode" name="BrowseCatalog" actor="Customer" goal="Find relevant items quickly" priority="4" complexity="2" />
+  <objects xmi:id="n1" xsi:type="UseCaseConcrete:UseCaseNode" name="CreateOrder" actor="Customer" goal="Create a persistent order record" priority="8" complexity="4" />
+  <objects xmi:id="n2" xsi:type="UseCaseConcrete:UseCaseNode" name="AuthenticateUser" actor="System" goal="Authenticate the user before checkout" priority="8" complexity="2" />
+  <objects xmi:id="n3" xsi:type="UseCaseConcrete:UseCaseNode" name="SubmitPayment" actor="Customer" goal="Collect payment securely" priority="9" complexity="3" />
+  <objects xmi:id="n4" xsi:type="UseCaseConcrete:UseCaseNode" name="NotifyCustomer" actor="System" goal="Send customer notification" priority="6" complexity="2" />
+  <objects xmi:id="e0" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Shared authentication requirement" priority="8" />
+  <objects xmi:id="e1" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Payment requires prior validation" priority="9" />
+  <objects xmi:id="e2" xsi:type="UseCaseConcrete:Include" relationKind="extend" rationale="Notification follows order submission" priority="6" />
+  <objects xmi:id="e3" xsi:type="UseCaseConcrete:Include" relationKind="dependsOn" rationale="Audit trail requires persistent record" priority="7" />
+
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n0" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n1" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n2" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n3" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n4" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e0" />
+  <links xsi:type="UseCaseConcrete:src" source="e0" target="n1" />
+  <links xsi:type="UseCaseConcrete:dst" source="e0" target="n2" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e1" />
+  <links xsi:type="UseCaseConcrete:src" source="e1" target="n1" />
+  <links xsi:type="UseCaseConcrete:dst" source="e1" target="n3" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e2" />
+  <links xsi:type="UseCaseConcrete:src" source="e2" target="n1" />
+  <links xsi:type="UseCaseConcrete:dst" source="e2" target="n4" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e3" />
+  <links xsi:type="UseCaseConcrete:src" source="e3" target="n3" />
+  <links xsi:type="UseCaseConcrete:dst" source="e3" target="n2" />
+</model>

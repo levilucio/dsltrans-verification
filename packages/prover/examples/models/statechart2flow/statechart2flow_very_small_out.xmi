@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><objects xmi:id="Model2Model_tm_1" xsi:type="Flow:FlowModel" /><objects xmi:id="Node2Node_tn_2" xsi:type="Flow:Step" /><links xsi:type="Flow:nodes" source="Model2Model_tm_1" target="Node2Node_tn_2" /><traces source="s0" target="Node2Node_tn_2" /><traces source="sm" target="Model2Model_tm_1" /><traces source="sm" target="Node2Node_tn_2" /></model>

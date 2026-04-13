@@ -1,0 +1,9 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_small_out.xmi
+Objects: 4 | Links: 5 | Traces: 9
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1)
+    action: Action(Node2Node_tn_2)
+    action: Action(Node2Node_tn_3)
+    flow: Flow(Edge2Edge_te_4) Node2Node_tn_2 --> Node2Node_tn_3
+

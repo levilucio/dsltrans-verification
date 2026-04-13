@@ -1,0 +1,247 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_very_large_input.xmi
+Objects: 74 | Links: 155 | Traces: 0
+
+Use case model context:
+  System: sm
+
+Use cases:
+- Use case: U0
+  ID: n0
+  Includes:
+    - [include] U1
+    - [include] U2
+
+- Use case: U1
+  ID: n1
+  Includes:
+    - [include] U2
+  Included by:
+    - [include] U0
+
+- Use case: U2
+  ID: n2
+  Includes:
+    - [include] U3
+  Included by:
+    - [include] U1
+    - [include] U0
+
+- Use case: U3
+  ID: n3
+  Includes:
+    - [include] U4
+    - [include] U5
+  Included by:
+    - [include] U2
+
+- Use case: U4
+  ID: n4
+  Includes:
+    - [include] U5
+  Included by:
+    - [include] U3
+
+- Use case: U5
+  ID: n5
+  Includes:
+    - [include] U6
+  Included by:
+    - [include] U4
+    - [include] U3
+
+- Use case: U6
+  ID: n6
+  Includes:
+    - [include] U7
+    - [include] U8
+  Included by:
+    - [include] U5
+
+- Use case: U7
+  ID: n7
+  Includes:
+    - [include] U8
+  Included by:
+    - [include] U6
+
+- Use case: U8
+  ID: n8
+  Includes:
+    - [include] U9
+  Included by:
+    - [include] U7
+    - [include] U6
+
+- Use case: U9
+  ID: n9
+  Includes:
+    - [include] U10
+    - [include] U11
+  Included by:
+    - [include] U8
+
+- Use case: U10
+  ID: n10
+  Includes:
+    - [include] U11
+  Included by:
+    - [include] U9
+
+- Use case: U11
+  ID: n11
+  Includes:
+    - [include] U12
+  Included by:
+    - [include] U10
+    - [include] U9
+
+- Use case: U12
+  ID: n12
+  Includes:
+    - [include] U13
+    - [include] U14
+  Included by:
+    - [include] U11
+
+- Use case: U13
+  ID: n13
+  Includes:
+    - [include] U14
+  Included by:
+    - [include] U12
+
+- Use case: U14
+  ID: n14
+  Includes:
+    - [include] U15
+  Included by:
+    - [include] U13
+    - [include] U12
+
+- Use case: U15
+  ID: n15
+  Includes:
+    - [include] U16
+    - [include] U17
+  Included by:
+    - [include] U14
+
+- Use case: U16
+  ID: n16
+  Includes:
+    - [include] U17
+  Included by:
+    - [include] U15
+
+- Use case: U17
+  ID: n17
+  Includes:
+    - [include] U18
+  Included by:
+    - [include] U16
+    - [include] U15
+
+- Use case: U18
+  ID: n18
+  Includes:
+    - [include] U19
+    - [include] U20
+  Included by:
+    - [include] U17
+
+- Use case: U19
+  ID: n19
+  Includes:
+    - [include] U20
+  Included by:
+    - [include] U18
+
+- Use case: U20
+  ID: n20
+  Includes:
+    - [include] U21
+  Included by:
+    - [include] U19
+    - [include] U18
+
+- Use case: U21
+  ID: n21
+  Includes:
+    - [include] U22
+    - [include] U23
+  Included by:
+    - [include] U20
+
+- Use case: U22
+  ID: n22
+  Includes:
+    - [include] U23
+  Included by:
+    - [include] U21
+
+- Use case: U23
+  ID: n23
+  Includes:
+    - [include] U24
+  Included by:
+    - [include] U22
+    - [include] U21
+
+- Use case: U24
+  ID: n24
+  Includes:
+    - [include] U25
+    - [include] U26
+  Included by:
+    - [include] U23
+
+- Use case: U25
+  ID: n25
+  Includes:
+    - [include] U26
+  Included by:
+    - [include] U24
+
+- Use case: U26
+  ID: n26
+  Includes:
+    - [include] U27
+  Included by:
+    - [include] U25
+    - [include] U24
+
+- Use case: U27
+  ID: n27
+  Includes:
+    - [include] U28
+    - [include] U29
+  Included by:
+    - [include] U26
+
+- Use case: U28
+  ID: n28
+  Includes:
+    - [include] U29
+  Included by:
+    - [include] U27
+
+- Use case: U29
+  ID: n29
+  Includes:
+    - [include] U30
+  Included by:
+    - [include] U28
+    - [include] U27
+
+- Use case: U30
+  ID: n30
+  Includes:
+    - [include] U31
+  Included by:
+    - [include] U29
+
+- Use case: U31
+  ID: n31
+  Included by:
+    - [include] U30
+

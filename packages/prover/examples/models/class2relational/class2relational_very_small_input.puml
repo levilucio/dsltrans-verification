@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+hide empty members
+skinparam classAttributeIconSize 0
+title class2relational_very_small_input.xmi
+
+package "Pkg1" as pkg0 {
+  class "T1\n[dt_int]" as dt_int <<DataType>>
+  class "T2\n[dt_str]" as dt_str <<DataType>>
+  class "C\n[c0]" as c0
+}
+@enduml

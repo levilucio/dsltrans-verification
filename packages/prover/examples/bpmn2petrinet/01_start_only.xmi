@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="def1" xsi:type="BPMN:Definitions"/>
+  <objects xmi:id="proc1" xsi:type="BPMN:Process"/>
+  <objects xmi:id="start1" xsi:type="BPMN:StartEvent"/>
+
+  <links xsi:type="BPMN:processes" source="def1" target="proc1"/>
+  <links xsi:type="BPMN:flowNodes" source="proc1" target="start1"/>
+</model>

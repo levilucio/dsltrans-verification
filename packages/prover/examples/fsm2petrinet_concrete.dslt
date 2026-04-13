@@ -1,0 +1,105 @@
+
+metamodel FSM {
+    class StateMachine { name: String }
+    class State { name: String }
+    class Transition { name: String }
+    
+    assoc states : StateMachine[1] -- State[0..*]
+    assoc transitions : StateMachine[1] -- Transition[0..*]
+    assoc src : Transition[0..*] -- State[1]
+    assoc dst : Transition[0..*] -- State[1]
+}
+
+metamodel PetriNet {
+    class Net { name: String }
+    class Place { name: String }
+    class Transition { name: String }
+    class Arc { }
+    
+    assoc places : Net[1] -- Place[0..*]
+    assoc transitions : Net[1] -- Transition[0..*]
+    assoc arcs : Net[1] -- Arc[0..*]
+    assoc srcP : Arc[0..*] -- Place[0..1]
+    assoc dstT : Arc[0..*] -- Transition[0..1]
+    assoc srcT : Arc[0..*] -- Transition[0..1]
+    assoc dstP : Arc[0..*] -- Place[0..1]
+}
+
+transformation FSM2PetriNet : FSM -> PetriNet {
+    layer L1 {
+        rule SM2Net {
+            match {
+                any sm : StateMachine
+            }
+            apply {
+                n : Net { name = sm.name }
+            }
+        }
+    }
+    // Backward links only reuse traces from earlier layers.
+    layer L2 {
+        rule State2Place {
+            match {
+                any sm : StateMachine
+                any s : State
+                direct l : states -- sm.s
+            }
+            apply {
+                n : Net
+                p : Place { name = s.name }
+                outL : places -- n.p
+            }
+            backward {
+                n <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Trans2Trans {
+            match {
+                any sm : StateMachine
+                any t : Transition
+                any srcS : State
+                any dstS : State
+                direct l1 : transitions -- sm.t
+                direct l2 : src -- t.srcS
+                direct l3 : dst -- t.dstS
+            }
+            apply {
+                n : Net
+                srcP : Place
+                dstP : Place
+                pt : Transition { name = t.name }
+                a1 : Arc
+                a2 : Arc
+                
+                out1 : transitions -- n.pt
+                out2 : arcs -- n.a1
+                out3 : arcs -- n.a2
+                out4 : srcP -- a1.srcP
+                out5 : dstT -- a1.pt
+                out6 : srcT -- a2.pt
+                out7 : dstP -- a2.dstP
+            }
+            backward {
+                n <--trace-- sm
+                srcP <--trace-- srcS
+                dstP <--trace-- dstS
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property SMHasNet { precondition { any sm : StateMachine } postcondition { n : Net n <--trace-- sm } }
+property StateHasPlace { precondition { any sm : StateMachine any s : State direct l : states -- sm.s } postcondition { n : Net p : Place l2 : places -- n.p p <--trace-- s n <--trace-- sm } }
+property TransHasTrans { precondition { any sm : StateMachine any t : Transition any srcS : State any dstS : State direct l1 : transitions -- sm.t direct l2 : src -- t.srcS direct l3 : dst -- t.dstS } postcondition { pt : Transition pt <--trace-- t } }
+property TransHasTwoArcs { precondition { any sm : StateMachine any t : Transition any srcS : State any dstS : State direct l1 : transitions -- sm.t direct l2 : src -- t.srcS direct l3 : dst -- t.dstS } postcondition { a1 : Arc a2 : Arc a1 <--trace-- t a2 <--trace-- t } }
+property StateInSMHasPlaceInNet { precondition { any sm : StateMachine any s : State direct l : states -- sm.s } postcondition { p : Place p <--trace-- s } }
+
+// Expected to FAIL
+property SMHasTwoNets_ShouldFail { precondition { any sm : StateMachine } postcondition { n1 : Net n2 : Net n1 <--trace-- sm n2 <--trace-- sm } }
+property TransHasPlace_ShouldFail { precondition { any t : Transition } postcondition { p : Place p <--trace-- t } }
+property StateHasNet_ShouldFail { precondition { any s : State } postcondition { n : Net n <--trace-- s } }
+property TransHasThreeArcs_ShouldFail { precondition { any t : Transition } postcondition { a1 : Arc a2 : Arc a3 : Arc a1 <--trace-- t a2 <--trace-- t a3 <--trace-- t } }
+property StateHasTwoPlaces_ShouldFail { precondition { any sm : StateMachine any s : State direct l : states -- sm.s } postcondition { p1 : Place p2 : Place p1 <--trace-- s p2 <--trace-- s } }

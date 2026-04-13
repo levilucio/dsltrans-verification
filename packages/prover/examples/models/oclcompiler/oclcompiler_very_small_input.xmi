@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="OCLASTConcrete:Model"/>
+  <objects xmi:id="module1" xsi:type="OCLASTConcrete:Module" name="MainModule"/>
+  <objects xmi:id="field_age" xsi:type="OCLASTConcrete:Field" name="age" isStatic="false"/>
+  <objects xmi:id="op_getAge" xsi:type="OCLASTConcrete:Operation" name="getAge" isStatic="false"/>
+  <objects xmi:id="self1" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_age" xsi:type="OCLASTConcrete:NavigationCall" propName="age" isStatic="false" isSuper="false"/>
+
+  <links xsi:type="OCLASTConcrete:root" source="model1" target="module1"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_age"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_getAge"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_getAge" target="self1"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_getAge" target="nav_age"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_getAge" target="nav_age"/>
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_age" target="self1"/>
+</model>

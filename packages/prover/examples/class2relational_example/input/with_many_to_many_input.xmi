@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- Root containment: Model -> Package, Model -> Association -->
+  <objects xmi:id="model1" xsi:type="ClassDiagram:Model"/>
+  <objects xmi:id="pkg1" xsi:type="ClassDiagram:Package" name="Pkg1"/>
+  <links xsi:type="ClassDiagram:root" source="model1" target="pkg1"/>
+  <objects xmi:id="assn_nm" xsi:type="ClassDiagram:Association" name="A2"/>
+  <links xsi:type="ClassDiagram:rootAssociations" source="model1" target="assn_nm"/>
+  <!-- Two classes C and D in package -->
+  <objects xmi:id="cls_c" xsi:type="ClassDiagram:Class" name="C" isAbstract="false"/>
+  <objects xmi:id="cls_d" xsi:type="ClassDiagram:Class" name="D" isAbstract="false"/>
+  <objects xmi:id="dt_t1" xsi:type="ClassDiagram:DataType" name="T1"/>
+  <objects xmi:id="attr_c_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false"/>
+  <objects xmi:id="attr_d_val" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_c"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_d"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="dt_t1"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_c" target="attr_c_id"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_d" target="attr_d_val"/>
+  <links xsi:type="ClassDiagram:type" source="attr_c_id" target="dt_t1"/>
+  <links xsi:type="ClassDiagram:type" source="attr_d_val" target="dt_t1"/>
+  <!-- Association: two memberEnds, both upper > 1 for N:M -->
+  <objects xmi:id="end1" xsi:type="ClassDiagram:AssociationEnd" name="end1" isNavigable="true" lowerBound="0" upperBound="16"/>
+  <objects xmi:id="end2" xsi:type="ClassDiagram:AssociationEnd" name="end2" isNavigable="true" lowerBound="0" upperBound="16"/>
+  <links xsi:type="ClassDiagram:memberEnd" source="assn_nm" target="end1"/>
+  <links xsi:type="ClassDiagram:memberEnd" source="assn_nm" target="end2"/>
+  <links xsi:type="ClassDiagram:endType" source="end1" target="cls_c"/>
+  <links xsi:type="ClassDiagram:endType" source="end2" target="cls_d"/>
+  <!-- Derived view: one AssocBetween (C-D many-to-many) -->
+  <objects xmi:id="ab1" xsi:type="ClassDiagram:AssocBetween" srcLower="0" srcUpper="16" tgtLower="0" tgtUpper="16"/>
+  <links xsi:type="ClassDiagram:association" source="ab1" target="assn_nm"/>
+  <links xsi:type="ClassDiagram:sourceClass" source="ab1" target="cls_c"/>
+  <links xsi:type="ClassDiagram:targetClass" source="ab1" target="cls_d"/>
+</model>

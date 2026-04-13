@@ -1,0 +1,23 @@
+@startuml
+title RetailCheckout — usecase2activity_concrete_large_out.xmi
+(*) --> "[Node2Node_tn_2] CheckoutStep0 · actor=System · goal=Execute checkout step 0"
+"[Node2Node_tn_2] CheckoutStep0 · actor=System · goal=Execute checkout step 0" -->[include · p=3 · Step 0 enables step 1] "[Node2Node_tn_3] CheckoutStep1 · actor=Customer · goal=Execute checkout step 1"
+"[Node2Node_tn_3] CheckoutStep1 · actor=Customer · goal=Execute checkout step 1" -->[include · p=4 · Step 1 enables step 2] "[Node2Node_tn_8] CheckoutStep2 · actor=Customer · goal=Execute checkout step 2"
+"[Node2Node_tn_4] CheckoutStep10 · actor=Customer · goal=Execute checkout step 10" -->[include · p=5 · Step 10 enables step 11] "[Node2Node_tn_5] CheckoutStep11 · actor=Customer · goal=Execute checkout step 11"
+"[Node2Node_tn_5] CheckoutStep11 · actor=Customer · goal=Execute checkout step 11" -->[include · p=6 · Step 11 enables step 12] "[Node2Node_tn_6] CheckoutStep12 · actor=System · goal=Execute checkout step 12"
+"[Node2Node_tn_6] CheckoutStep12 · actor=System · goal=Execute checkout step 12" -->[include · p=7 · Step 12 enables step 13] "[Node2Node_tn_7] CheckoutStep13 · actor=Customer · goal=Execute checkout step 13"
+"[Node2Node_tn_2] CheckoutStep0 · actor=System · goal=Execute checkout step 0" -->[precedes · p=5 · Fast path from step 0 to 2] "[Node2Node_tn_8] CheckoutStep2 · actor=Customer · goal=Execute checkout step 2"
+"[Node2Node_tn_8] CheckoutStep2 · actor=Customer · goal=Execute checkout step 2" -->[precedes · p=7 · Fast path from step 2 to 4] "[Node2Node_tn_10] CheckoutStep4 · actor=Customer · goal=Execute checkout step 4"
+"[Node2Node_tn_10] CheckoutStep4 · actor=Customer · goal=Execute checkout step 4" -->[precedes · p=5 · Fast path from step 4 to 6] "[Node2Node_tn_12] CheckoutStep6 · actor=System · goal=Execute checkout step 6"
+"[Node2Node_tn_12] CheckoutStep6 · actor=System · goal=Execute checkout step 6" -->[precedes · p=7 · Fast path from step 6 to 8] "[Node2Node_tn_14] CheckoutStep8 · actor=Customer · goal=Execute checkout step 8"
+"[Node2Node_tn_14] CheckoutStep8 · actor=Customer · goal=Execute checkout step 8" -->[precedes · p=5 · Fast path from step 8 to 10] "[Node2Node_tn_4] CheckoutStep10 · actor=Customer · goal=Execute checkout step 10"
+"[Node2Node_tn_8] CheckoutStep2 · actor=Customer · goal=Execute checkout step 2" -->[include · p=5 · Step 2 enables step 3] "[Node2Node_tn_9] CheckoutStep3 · actor=System · goal=Execute checkout step 3"
+"[Node2Node_tn_9] CheckoutStep3 · actor=System · goal=Execute checkout step 3" -->[include · p=6 · Step 3 enables step 4] "[Node2Node_tn_10] CheckoutStep4 · actor=Customer · goal=Execute checkout step 4"
+"[Node2Node_tn_10] CheckoutStep4 · actor=Customer · goal=Execute checkout step 4" -->[include · p=7 · Step 4 enables step 5] "[Node2Node_tn_11] CheckoutStep5 · actor=Customer · goal=Execute checkout step 5"
+"[Node2Node_tn_11] CheckoutStep5 · actor=Customer · goal=Execute checkout step 5" -->[include · p=8 · Step 5 enables step 6] "[Node2Node_tn_12] CheckoutStep6 · actor=System · goal=Execute checkout step 6"
+"[Node2Node_tn_12] CheckoutStep6 · actor=System · goal=Execute checkout step 6" -->[include · p=9 · Step 6 enables step 7] "[Node2Node_tn_13] CheckoutStep7 · actor=Customer · goal=Execute checkout step 7"
+"[Node2Node_tn_13] CheckoutStep7 · actor=Customer · goal=Execute checkout step 7" -->[include · p=10 · Step 7 enables step 8] "[Node2Node_tn_14] CheckoutStep8 · actor=Customer · goal=Execute checkout step 8"
+"[Node2Node_tn_14] CheckoutStep8 · actor=Customer · goal=Execute checkout step 8" -->[include · p=3 · Step 8 enables step 9] "[Node2Node_tn_15] CheckoutStep9 · actor=System · goal=Execute checkout step 9"
+"[Node2Node_tn_15] CheckoutStep9 · actor=System · goal=Execute checkout step 9" -->[include · p=4 · Step 9 enables step 10] "[Node2Node_tn_4] CheckoutStep10 · actor=Customer · goal=Execute checkout step 10"
+"[Node2Node_tn_7] CheckoutStep13 · actor=Customer · goal=Execute checkout step 13" --> (*)
+@enduml

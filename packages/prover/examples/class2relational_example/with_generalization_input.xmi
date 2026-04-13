@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- Root containment: Model -> Package, Model -> Generalization -->
+  <objects xmi:id="model1" xsi:type="ClassDiagram:Model"/>
+  <objects xmi:id="pkg1" xsi:type="ClassDiagram:Package" name="Pkg1"/>
+  <links xsi:type="ClassDiagram:root" source="model1" target="pkg1"/>
+  <objects xmi:id="gen1" xsi:type="ClassDiagram:Generalization"/>
+  <links xsi:type="ClassDiagram:rootGeneralizations" source="model1" target="gen1"/>
+  <!-- Parent (abstract) and child (concrete) classes -->
+  <objects xmi:id="cls_parent" xsi:type="ClassDiagram:Class" name="Parent" isAbstract="true"/>
+  <objects xmi:id="cls_child" xsi:type="ClassDiagram:Class" name="Child" isAbstract="false"/>
+  <objects xmi:id="dt_t1" xsi:type="ClassDiagram:DataType" name="T1"/>
+  <objects xmi:id="attr_parent_id" xsi:type="ClassDiagram:Attribute" name="id" isMultivalued="false"/>
+  <objects xmi:id="attr_child_val" xsi:type="ClassDiagram:Attribute" name="val" isMultivalued="false"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_parent"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="cls_child"/>
+  <links xsi:type="ClassDiagram:packagedElement" source="pkg1" target="dt_t1"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_parent" target="attr_parent_id"/>
+  <links xsi:type="ClassDiagram:ownedAttribute" source="cls_child" target="attr_child_val"/>
+  <links xsi:type="ClassDiagram:type" source="attr_parent_id" target="dt_t1"/>
+  <links xsi:type="ClassDiagram:type" source="attr_child_val" target="dt_t1"/>
+  <!-- Generalization: general = parent, specific = child -->
+  <links xsi:type="ClassDiagram:general" source="gen1" target="cls_parent"/>
+  <links xsi:type="ClassDiagram:specific" source="gen1" target="cls_child"/>
+</model>

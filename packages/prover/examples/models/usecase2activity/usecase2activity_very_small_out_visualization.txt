@@ -1,0 +1,7 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_very_small_out.xmi
+Objects: 2 | Links: 1 | Traces: 3
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1)
+    action: Action(Node2Node_tn_2)
+

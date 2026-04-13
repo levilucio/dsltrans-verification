@@ -1,0 +1,54 @@
+[
+  {
+    "id": "FatherBecomesMan",
+    "name": "FatherBecomesMan",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MotherBecomesWoman",
+    "name": "MotherBecomesWoman",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "SonBecomesMan",
+    "name": "SonBecomesMan",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MemberBecomesBothManAndWoman",
+    "name": "MemberBecomesBothManAndWoman",
+    "status": "violated",
+    "checked_pre_matches": 48,
+    "violating_pre_match": {
+      "f": "family1",
+      "m": "daughter1"
+    }
+  },
+  {
+    "id": "ActiveFatherBecomesMan",
+    "name": "ActiveFatherBecomesMan",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "TaggedMotherBecomesWoman",
+    "name": "TaggedMotherBecomesWoman",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EnumSonBecomesMan",
+    "name": "EnumSonBecomesMan",
+    "status": "holds",
+    "checked_pre_matches": 5,
+    "violating_pre_match": null
+  }
+]

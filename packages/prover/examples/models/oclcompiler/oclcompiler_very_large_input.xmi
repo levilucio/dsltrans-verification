@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="OCLASTConcrete:Model"/>
+  <objects xmi:id="module1" xsi:type="OCLASTConcrete:Module" name="MainModule"/>
+
+  <objects xmi:id="field_age" xsi:type="OCLASTConcrete:Field" name="age" isStatic="false"/>
+  <objects xmi:id="field_status" xsi:type="OCLASTConcrete:Field" name="status" isStatic="false"/>
+  <objects xmi:id="field_name" xsi:type="OCLASTConcrete:Field" name="name" isStatic="false"/>
+  <objects xmi:id="field_value" xsi:type="OCLASTConcrete:Field" name="value" isStatic="true"/>
+
+  <objects xmi:id="op_helper" xsi:type="OCLASTConcrete:Operation" name="helper" isStatic="true"/>
+  <objects xmi:id="str_active" xsi:type="OCLASTConcrete:StringExp" val="active"/>
+
+  <objects xmi:id="op_isAdult" xsi:type="OCLASTConcrete:Operation" name="isAdult" isStatic="false"/>
+  <objects xmi:id="param_arg" xsi:type="OCLASTConcrete:Parameter" varName="arg"/>
+  <objects xmi:id="self_adult" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_age" xsi:type="OCLASTConcrete:NavigationCall" propName="age" isStatic="false" isSuper="false"/>
+  <objects xmi:id="int_18" xsi:type="OCLASTConcrete:IntegerExp" valInt="18"/>
+  <objects xmi:id="gt_call" xsi:type="OCLASTConcrete:BuiltInCall" opName=">"/>
+
+  <objects xmi:id="op_resolveStatus" xsi:type="OCLASTConcrete:Operation" name="resolveStatus" isStatic="false"/>
+  <objects xmi:id="let_tmp" xsi:type="OCLASTConcrete:LetVariable" varName="tmp"/>
+  <objects xmi:id="self_status" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_status" xsi:type="OCLASTConcrete:NavigationCall" propName="status" isStatic="false" isSuper="false"/>
+  <objects xmi:id="call_undef" xsi:type="OCLASTConcrete:BuiltInCall" opName="oclIsUndefined"/>
+  <objects xmi:id="if_status" xsi:type="OCLASTConcrete:IfExp"/>
+  <objects xmi:id="str_guest" xsi:type="OCLASTConcrete:StringExp" val="guest"/>
+  <objects xmi:id="this_module" xsi:type="OCLASTConcrete:ThisModuleExp"/>
+  <objects xmi:id="call_helper_static" xsi:type="OCLASTConcrete:OperationCall" opName="helper" isStatic="true" isSuper="false"/>
+  <objects xmi:id="let_status" xsi:type="OCLASTConcrete:LetExp"/>
+
+  <objects xmi:id="op_collectNames" xsi:type="OCLASTConcrete:Operation" name="collectNames" isStatic="false"/>
+  <objects xmi:id="iter_item" xsi:type="OCLASTConcrete:Iterator" varName="item"/>
+  <objects xmi:id="seq_names" xsi:type="OCLASTConcrete:SequenceExp"/>
+  <objects xmi:id="set_names" xsi:type="OCLASTConcrete:SetExp"/>
+  <objects xmi:id="elem1" xsi:type="OCLASTConcrete:CollectionElement"/>
+  <objects xmi:id="elem2" xsi:type="OCLASTConcrete:CollectionElement"/>
+  <objects xmi:id="elem3" xsi:type="OCLASTConcrete:CollectionElement"/>
+  <objects xmi:id="elem4" xsi:type="OCLASTConcrete:CollectionElement"/>
+  <objects xmi:id="str_adult2" xsi:type="OCLASTConcrete:StringExp" val="adult"/>
+  <objects xmi:id="str_minor" xsi:type="OCLASTConcrete:StringExp" val="minor"/>
+  <objects xmi:id="var_item" xsi:type="OCLASTConcrete:VariableExp" varName="item"/>
+  <objects xmi:id="iter_exp" xsi:type="OCLASTConcrete:IteratorExp" iterName="item"/>
+
+  <objects xmi:id="op_superDemo" xsi:type="OCLASTConcrete:Operation" name="superDemo" isStatic="false"/>
+  <objects xmi:id="self_super" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_super_name" xsi:type="OCLASTConcrete:NavigationCall" propName="name" isStatic="false" isSuper="true"/>
+
+  <objects xmi:id="op_callDemo" xsi:type="OCLASTConcrete:Operation" name="callDemo" isStatic="false"/>
+  <objects xmi:id="self_call" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="this_module_call" xsi:type="OCLASTConcrete:ThisModuleExp"/>
+  <objects xmi:id="call_resolve" xsi:type="OCLASTConcrete:OperationCall" opName="resolveStatus" isStatic="false" isSuper="false"/>
+  <objects xmi:id="var_arg" xsi:type="OCLASTConcrete:VariableExp" varName="arg"/>
+  <objects xmi:id="nav_static_value" xsi:type="OCLASTConcrete:NavigationCall" propName="value" isStatic="true" isSuper="false"/>
+  <objects xmi:id="call_super_helper" xsi:type="OCLASTConcrete:OperationCall" opName="helper" isStatic="false" isSuper="true"/>
+  <objects xmi:id="call_not" xsi:type="OCLASTConcrete:BuiltInCall" opName="not"/>
+  <objects xmi:id="bool_true" xsi:type="OCLASTConcrete:BooleanExp" valBool="true"/>
+  <objects xmi:id="undef_exp" xsi:type="OCLASTConcrete:OclUndefinedExp"/>
+  <objects xmi:id="call_eq" xsi:type="OCLASTConcrete:BuiltInCall" opName="="/>
+  <objects xmi:id="call_or" xsi:type="OCLASTConcrete:BuiltInCall" opName="or"/>
+
+  <links xsi:type="OCLASTConcrete:root" source="model1" target="module1"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_age"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_status"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_name"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_value"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_helper"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_isAdult"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_resolveStatus"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_collectNames"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_superDemo"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_callDemo"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_helper" target="str_active"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_helper" target="str_active"/>
+
+  <links xsi:type="OCLASTConcrete:params" source="op_isAdult" target="param_arg"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="self_adult"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="nav_age"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="int_18"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_isAdult" target="gt_call"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_isAdult" target="gt_call"/>
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_age" target="self_adult"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="gt_call" target="nav_age"/>
+  <links xsi:type="OCLASTConcrete:bi_right" source="gt_call" target="int_18"/>
+
+  <links xsi:type="OCLASTConcrete:letvars" source="op_resolveStatus" target="let_tmp"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="self_status"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="call_undef"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="if_status"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="str_guest"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="this_module"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="call_helper_static"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_resolveStatus" target="let_status"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_resolveStatus" target="let_status"/>
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_status" target="self_status"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="call_undef" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:if_cond" source="if_status" target="call_undef"/>
+  <links xsi:type="OCLASTConcrete:if_then" source="if_status" target="str_guest"/>
+  <links xsi:type="OCLASTConcrete:if_else" source="if_status" target="call_helper_static"/>
+  <links xsi:type="OCLASTConcrete:op_src" source="call_helper_static" target="this_module"/>
+  <links xsi:type="OCLASTConcrete:let_var" source="let_status" target="let_tmp"/>
+  <links xsi:type="OCLASTConcrete:let_init" source="let_status" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:let_in" source="let_status" target="if_status"/>
+
+  <links xsi:type="OCLASTConcrete:iters" source="op_collectNames" target="iter_item"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="seq_names"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="set_names"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="str_adult2"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="str_minor"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="var_item"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="iter_exp"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_collectNames" target="iter_exp"/>
+  <links xsi:type="OCLASTConcrete:seq_elems" source="seq_names" target="elem1"/>
+  <links xsi:type="OCLASTConcrete:seq_elems" source="seq_names" target="elem2"/>
+  <links xsi:type="OCLASTConcrete:set_elems" source="set_names" target="elem3"/>
+  <links xsi:type="OCLASTConcrete:set_elems" source="set_names" target="elem4"/>
+  <links xsi:type="OCLASTConcrete:elem_expr" source="elem1" target="str_adult2"/>
+  <links xsi:type="OCLASTConcrete:elem_expr" source="elem2" target="str_minor"/>
+  <links xsi:type="OCLASTConcrete:elem_expr" source="elem3" target="str_active"/>
+  <links xsi:type="OCLASTConcrete:elem_expr" source="elem4" target="str_guest"/>
+  <links xsi:type="OCLASTConcrete:iter_var" source="iter_exp" target="iter_item"/>
+  <links xsi:type="OCLASTConcrete:iter_source" source="iter_exp" target="seq_names"/>
+  <links xsi:type="OCLASTConcrete:iter_body" source="iter_exp" target="var_item"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_superDemo" target="self_super"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_superDemo" target="nav_super_name"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_superDemo" target="nav_super_name"/>
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_super_name" target="self_super"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="self_call"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="this_module_call"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="call_resolve"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="var_arg"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="nav_static_value"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="call_super_helper"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="call_not"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="bool_true"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="undef_exp"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="call_eq"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_callDemo" target="call_or"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_callDemo" target="call_or"/>
+  <links xsi:type="OCLASTConcrete:op_src" source="call_resolve" target="self_call"/>
+  <links xsi:type="OCLASTConcrete:op_arg" source="call_resolve" target="var_arg"/>
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_static_value" target="this_module_call"/>
+  <links xsi:type="OCLASTConcrete:op_src" source="call_super_helper" target="self_call"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="call_not" target="bool_true"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="call_eq" target="nav_static_value"/>
+  <links xsi:type="OCLASTConcrete:bi_right" source="call_eq" target="undef_exp"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="call_or" target="call_not"/>
+  <links xsi:type="OCLASTConcrete:bi_right" source="call_or" target="call_eq"/>
+</model>

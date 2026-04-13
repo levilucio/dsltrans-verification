@@ -1,0 +1,12 @@
+@startuml
+title RetailCheckout — usecase2activity_concrete_medium_out.xmi
+(*) --> "[Node2Node_tn_2] BrowseCatalog · actor=Customer · goal=Find relevant items quickly"
+(*) --> "[Node2Node_tn_3] CreateOrder · actor=Customer · goal=Create a persistent order record"
+"[Node2Node_tn_5] SubmitPayment · actor=Customer · goal=Collect payment securely" -->[dependsOn · p=7 · Audit trail requires persistent record] "[Node2Node_tn_4] AuthenticateUser · actor=System · goal=Authenticate the user before checkout"
+"[Node2Node_tn_3] CreateOrder · actor=Customer · goal=Create a persistent order record" -->[include · p=8 · Shared authentication requirement] "[Node2Node_tn_4] AuthenticateUser · actor=System · goal=Authenticate the user before checkout"
+"[Node2Node_tn_3] CreateOrder · actor=Customer · goal=Create a persistent order record" -->[include · p=9 · Payment requires prior validation] "[Node2Node_tn_5] SubmitPayment · actor=Customer · goal=Collect payment securely"
+"[Node2Node_tn_3] CreateOrder · actor=Customer · goal=Create a persistent order record" -->[extend · p=6 · Notification follows order submission] "[Node2Node_tn_6] NotifyCustomer · actor=System · goal=Send customer notification"
+"[Node2Node_tn_2] BrowseCatalog · actor=Customer · goal=Find relevant items quickly" --> (*)
+"[Node2Node_tn_4] AuthenticateUser · actor=System · goal=Authenticate the user before checkout" --> (*)
+"[Node2Node_tn_6] NotifyCustomer · actor=System · goal=Send customer notification" --> (*)
+@enduml

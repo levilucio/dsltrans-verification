@@ -1,0 +1,369 @@
+
+metamodel Family {
+    class FamilyModel { }
+    class Member { }
+    class Kinship { }
+
+    containment assoc nodes : FamilyModel[1] -- Member[0..*]
+    containment assoc edges : FamilyModel[1] -- Kinship[0..*]
+    assoc src : Kinship[0..*] -- Member[1]
+    assoc dst : Kinship[0..*] -- Member[1]
+}
+
+metamodel SocialNetwork {
+    class SocialModel { }
+    class Person { }
+    class Connection { }
+
+    containment assoc nodes : SocialModel[1] -- Person[0..*]
+    containment assoc edges : SocialModel[1] -- Connection[0..*]
+    assoc src : Connection[0..*] -- Person[1]
+    assoc dst : Connection[0..*] -- Person[1]
+}
+
+transformation Family2SocialNetwork : Family -> SocialNetwork {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : FamilyModel
+            }
+            apply {
+                tm : SocialModel
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : FamilyModel
+                any sn : Member
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : SocialModel
+                tn : Person
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : FamilyModel
+                any se : Kinship
+                any sn1 : Member
+                any sn2 : Member
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : SocialModel
+                tn1 : Person
+                tn2 : Person
+                te : Connection
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : FamilyModel
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any se : Kinship
+        any sn1 : Member
+        any sn2 : Member
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        any se : Kinship
+        any sn2 : Member
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        any se : Kinship
+        any sn2 : Member
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any sn1 : Member
+        any sn2 : Member
+        any se : Kinship
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any se : Kinship
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        any se : Kinship
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : FamilyModel
+        any sn1 : Member
+        any sn2 : Member
+        any se : Kinship
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Connection
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any se : Kinship
+        any sn1 : Member
+        any sn2 : Member
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Person
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any se : Kinship
+        any sn1 : Member
+        any sn2 : Member
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+    }
+    postcondition {
+        tn : Person
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+    }
+    postcondition {
+        te : Connection
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        any se : Kinship
+        any sn2 : Member
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : Connection
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any sn : Member
+        any se : Kinship
+        any sn2 : Member
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any se : Kinship
+        any sn1 : Member
+        any sn2 : Member
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Person
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FamilyModel
+        any se : Kinship
+        any sn1 : Member
+        any sn2 : Member
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : SocialModel
+        tm <--trace-- se
+    }
+}

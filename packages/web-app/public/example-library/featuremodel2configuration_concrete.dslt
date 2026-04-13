@@ -1,0 +1,369 @@
+
+metamodel FeatureModel {
+    class FeatureRoot { }
+    class Feature { }
+    class Requires { }
+
+    containment assoc nodes : FeatureRoot[1] -- Feature[0..*]
+    containment assoc edges : FeatureRoot[1] -- Requires[0..*]
+    assoc src : Requires[0..*] -- Feature[1]
+    assoc dst : Requires[0..*] -- Feature[1]
+}
+
+metamodel Configuration {
+    class ConfigRoot { }
+    class Option { }
+    class Constraint { }
+
+    containment assoc nodes : ConfigRoot[1] -- Option[0..*]
+    containment assoc edges : ConfigRoot[1] -- Constraint[0..*]
+    assoc src : Constraint[0..*] -- Option[1]
+    assoc dst : Constraint[0..*] -- Option[1]
+}
+
+transformation FeatureModel2Configuration : FeatureModel -> Configuration {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : FeatureRoot
+            }
+            apply {
+                tm : ConfigRoot
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : FeatureRoot
+                any sn : Feature
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : ConfigRoot
+                tn : Option
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : FeatureRoot
+                any se : Requires
+                any sn1 : Feature
+                any sn2 : Feature
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : ConfigRoot
+                tn1 : Option
+                tn2 : Option
+                te : Constraint
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : FeatureRoot
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any se : Requires
+        any sn1 : Feature
+        any sn2 : Feature
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        any se : Requires
+        any sn2 : Feature
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        any se : Requires
+        any sn2 : Feature
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn1 : Feature
+        any sn2 : Feature
+        any se : Requires
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any se : Requires
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        any se : Requires
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : FeatureRoot
+        any sn1 : Feature
+        any sn2 : Feature
+        any se : Requires
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Constraint
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any se : Requires
+        any sn1 : Feature
+        any sn2 : Feature
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Option
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any se : Requires
+        any sn1 : Feature
+        any sn2 : Feature
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+    }
+    postcondition {
+        tn : Option
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+    }
+    postcondition {
+        te : Constraint
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        any se : Requires
+        any sn2 : Feature
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : Constraint
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any sn : Feature
+        any se : Requires
+        any sn2 : Feature
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any se : Requires
+        any sn1 : Feature
+        any sn2 : Feature
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Option
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : FeatureRoot
+        any se : Requires
+        any sn1 : Feature
+        any sn2 : Feature
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : ConfigRoot
+        tm <--trace-- se
+    }
+}

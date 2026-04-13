@@ -1,0 +1,116 @@
+// =============================================================================
+// SimplePDL2TINA Fragment (ATL-Zoo inspired)
+// Rules: 6
+// =============================================================================
+
+metamodel SimplePDL {
+    class Model { }
+    class Process { }
+    class WorkDefinition { isComposite: Bool }
+    class WorkSequence { }
+    class Resource { }
+    containment assoc root: Model[1] -- Process[1]
+    containment assoc works: Process[1] -- WorkDefinition[0..*]
+    containment assoc resources: Process[1] -- Resource[0..*]
+    containment assoc sequences: Process[1] -- WorkSequence[0..*]
+    assoc predecessor: WorkSequence[0..*] -- WorkDefinition[1]
+    assoc successor: WorkSequence[0..*] -- WorkDefinition[1]
+}
+
+metamodel TINA {
+    class Net { }
+    class Place { }
+    class Transition { isComposite: Bool }
+    class Arc { }
+    class ResourcePlace { }
+    class TinaUnused { }
+    containment assoc places: Net[1] -- Place[0..*]
+    containment assoc trans: Net[1] -- Transition[0..*]
+    containment assoc arcs: Net[1] -- Arc[0..*]
+    containment assoc resources: Net[1] -- ResourcePlace[0..*]
+}
+
+transformation SimplePDL2TINA_concrete : SimplePDL -> TINA {
+    layer L1 {
+        rule ModelProcess2Net {
+            match {
+                any m : Model
+                any p : Process
+                direct r : root -- m.p
+            }
+            apply { n : Net }
+        }
+    }
+    layer L2 {
+        rule Work2Transition {
+            match { any w : WorkDefinition }
+            apply { t : Transition { isComposite = w.isComposite } }
+        }
+        rule Resource2ResourcePlace {
+            match { any r : Resource }
+            apply { rp : ResourcePlace }
+        }
+    }
+    layer L3 {
+        rule Work2PrePlace {
+            match { any w : WorkDefinition }
+            apply { p : Place }
+        }
+        rule Work2PostPlace {
+            match { any w : WorkDefinition }
+            apply { p : Place }
+        }
+        rule Sequence2Arc {
+            match {
+                any s : WorkSequence
+                any pre : WorkDefinition
+                any suc : WorkDefinition
+                direct p : predecessor -- s.pre
+                direct n : successor -- s.suc
+            }
+            apply {
+                a : Arc
+                t1 : Transition { isComposite = pre.isComposite }
+                t2 : Transition { isComposite = suc.isComposite }
+            }
+        }
+    }
+}
+
+// 15 expected HOLDS
+property ModelHasNet { precondition { any m : Model } postcondition { n : Net n <--trace-- m } }
+property ProcessHasNet { precondition { any p : Process } postcondition { n : Net n <--trace-- p } }
+property WorkHasTransition { precondition { any w : WorkDefinition } postcondition { t : Transition t <--trace-- w } }
+property ResourceHasResourcePlace { precondition { any r : Resource } postcondition { rp : ResourcePlace rp <--trace-- r } }
+property WorkHasPrePlace { precondition { any w : WorkDefinition } postcondition { p : Place p <--trace-- w } }
+property WorkHasPostPlace { precondition { any w : WorkDefinition } postcondition { p : Place p <--trace-- w } }
+property SequenceHasArc { precondition { any s : WorkSequence any pre : WorkDefinition any suc : WorkDefinition direct p : predecessor -- s.pre direct n : successor -- s.suc } postcondition { a : Arc a <--trace-- s } }
+property SequenceLinksPreWorkTransition { precondition { any s : WorkSequence any pre : WorkDefinition any suc : WorkDefinition direct p : predecessor -- s.pre direct n : successor -- s.suc } postcondition { t : Transition t <--trace-- pre } }
+property SequenceLinksSucWorkTransition { precondition { any s : WorkSequence any pre : WorkDefinition any suc : WorkDefinition direct p : predecessor -- s.pre direct n : successor -- s.suc } postcondition { t : Transition t <--trace-- suc } }
+property CompositeWorkTransition { precondition { any w : WorkDefinition where w.isComposite == true } postcondition { t : Transition t <--trace-- w } }
+property AtomicWorkTransition { precondition { any w : WorkDefinition where w.isComposite == false } postcondition { t : Transition t <--trace-- w } }
+property ProcessWorkImpliesPlace { precondition { any p : Process any w : WorkDefinition direct ow : works -- p.w } postcondition { pl : Place pl <--trace-- w } }
+property ProcessWorkImpliesTransition { precondition { any p : Process any w : WorkDefinition direct ow : works -- p.w } postcondition { t : Transition t <--trace-- w } }
+property ProcessResourceImpliesResourcePlace { precondition { any p : Process any r : Resource direct rlink : resources -- p.r } postcondition { rp : ResourcePlace rp <--trace-- r } }
+property ProcessSequenceImpliesArc {
+    precondition {
+        any p : Process
+        any s : WorkSequence
+        any pre : WorkDefinition
+        any suc : WorkDefinition
+        direct os : sequences -- p.s
+        direct p1 : predecessor -- s.pre
+        direct s1 : successor -- s.suc
+    }
+    postcondition {
+        a : Arc
+        a <--trace-- s
+    }
+}
+
+// 5 expected VIOLATED
+property WorkHasResourcePlace_ShouldFail { precondition { any w : WorkDefinition } postcondition { rp : ResourcePlace rp <--trace-- w } }
+property ResourceHasTransition_ShouldFail { precondition { any r : Resource } postcondition { t : Transition t <--trace-- r } }
+property SequenceHasResourcePlace_ShouldFail { precondition { any s : WorkSequence } postcondition { rp : ResourcePlace rp <--trace-- s } }
+property ProcessHasUnused_ShouldFail { precondition { any p : Process } postcondition { u : TinaUnused u <--trace-- p } }
+property WorkHasUnused_ShouldFail { precondition { any w : WorkDefinition } postcondition { u : TinaUnused u <--trace-- w } }

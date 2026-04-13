@@ -1,0 +1,6 @@
+@startuml
+title statechart2flow_very_small_input.xmi
+state "s0" as s_s0
+[*] --> s_s0
+s_s0 --> [*]
+@enduml

@@ -1,0 +1,27 @@
+OCL AST model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_medium_input.xmi
+Objects: 11 | Links: 17
+Models: 1 | Modules: 1 | Operations: 1 | Exprs: 6
+- root: model1 -> module1
+
+Modules:
+- Module(module1) name='MainModule'
+  fields:
+    - Field(field_status) isStatic='false', name='status'
+  operations:
+    - Operation(op_resolveStatus) isStatic='false', name='resolveStatus'
+      letvars:
+        - LetVariable(let_tmp) varName='tmp'
+      expr_count: 6
+      body:
+        - LetExp(let_exp)
+          let_var: LetVariable(let_tmp) varName='tmp'
+          let_init:
+            - NavigationCall(nav_status) isStatic='false', isSuper='false', propName='status'
+              nav_src:
+                - SelfExp(self1)
+          let_in:
+            - BuiltInCall(eq_call) opName='='
+              bi_left:
+                - VariableExp(var_tmp) varName='tmp'
+              bi_right:
+                - StringExp(str_active) val='active'

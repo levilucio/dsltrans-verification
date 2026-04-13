@@ -1,0 +1,377 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_very_large_input.xmi
+Objects: 74 | Links: 155 | Traces: 0
+
+Use case model context:
+  System: RetailCheckout
+  Domain: Retail
+  Release: 4
+
+Use cases:
+- Use case: OrderFlowStep0
+  ID: n0
+  Primary actor: SupportAgent
+  Goal: Handle order flow step 0
+  Priority: 1
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep1 (priority=1, rationale='Order flow dependency 0->1')
+    - [dependsOn] OrderFlowStep3 (priority=2, rationale='Cross-step dependency 0->3')
+
+- Use case: OrderFlowStep1
+  ID: n1
+  Primary actor: Customer
+  Goal: Handle order flow step 1
+  Priority: 2
+  Complexity: 2
+  Includes:
+    - [include] OrderFlowStep2 (priority=2, rationale='Order flow dependency 1->2')
+  Included by:
+    - [include] OrderFlowStep0
+
+- Use case: OrderFlowStep2
+  ID: n2
+  Primary actor: Customer
+  Goal: Handle order flow step 2
+  Priority: 3
+  Complexity: 3
+  Includes:
+    - [include] OrderFlowStep3 (priority=3, rationale='Order flow dependency 2->3')
+  Included by:
+    - [include] OrderFlowStep1
+
+- Use case: OrderFlowStep3
+  ID: n3
+  Primary actor: System
+  Goal: Handle order flow step 3
+  Priority: 4
+  Complexity: 4
+  Includes:
+    - [include] OrderFlowStep4 (priority=4, rationale='Order flow dependency 3->4')
+    - [dependsOn] OrderFlowStep6 (priority=5, rationale='Cross-step dependency 3->6')
+  Included by:
+    - [include] OrderFlowStep2
+    - [dependsOn] OrderFlowStep0
+
+- Use case: OrderFlowStep4
+  ID: n4
+  Primary actor: System
+  Goal: Handle order flow step 4
+  Priority: 5
+  Complexity: 5
+  Includes:
+    - [include] OrderFlowStep5 (priority=5, rationale='Order flow dependency 4->5')
+  Included by:
+    - [include] OrderFlowStep3
+
+- Use case: OrderFlowStep5
+  ID: n5
+  Primary actor: Customer
+  Goal: Handle order flow step 5
+  Priority: 6
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep6 (priority=6, rationale='Order flow dependency 5->6')
+  Included by:
+    - [include] OrderFlowStep4
+
+- Use case: OrderFlowStep6
+  ID: n6
+  Primary actor: Customer
+  Goal: Handle order flow step 6
+  Priority: 7
+  Complexity: 2
+  Includes:
+    - [include] OrderFlowStep7 (priority=7, rationale='Order flow dependency 6->7')
+    - [dependsOn] OrderFlowStep9 (priority=8, rationale='Cross-step dependency 6->9')
+  Included by:
+    - [include] OrderFlowStep5
+    - [dependsOn] OrderFlowStep3
+
+- Use case: OrderFlowStep7
+  ID: n7
+  Primary actor: SupportAgent
+  Goal: Handle order flow step 7
+  Priority: 8
+  Complexity: 3
+  Includes:
+    - [include] OrderFlowStep8 (priority=8, rationale='Order flow dependency 7->8')
+  Included by:
+    - [include] OrderFlowStep6
+
+- Use case: OrderFlowStep8
+  ID: n8
+  Primary actor: System
+  Goal: Handle order flow step 8
+  Priority: 9
+  Complexity: 4
+  Includes:
+    - [include] OrderFlowStep9 (priority=9, rationale='Order flow dependency 8->9')
+  Included by:
+    - [include] OrderFlowStep7
+
+- Use case: OrderFlowStep9
+  ID: n9
+  Primary actor: Customer
+  Goal: Handle order flow step 9
+  Priority: 10
+  Complexity: 5
+  Includes:
+    - [include] OrderFlowStep10 (priority=10, rationale='Order flow dependency 9->10')
+    - [dependsOn] OrderFlowStep12 (priority=3, rationale='Cross-step dependency 9->12')
+  Included by:
+    - [include] OrderFlowStep8
+    - [dependsOn] OrderFlowStep6
+
+- Use case: OrderFlowStep10
+  ID: n10
+  Primary actor: Customer
+  Goal: Handle order flow step 10
+  Priority: 1
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep11 (priority=1, rationale='Order flow dependency 10->11')
+  Included by:
+    - [include] OrderFlowStep9
+
+- Use case: OrderFlowStep11
+  ID: n11
+  Primary actor: System
+  Goal: Handle order flow step 11
+  Priority: 2
+  Complexity: 2
+  Includes:
+    - [include] OrderFlowStep12 (priority=2, rationale='Order flow dependency 11->12')
+  Included by:
+    - [include] OrderFlowStep10
+
+- Use case: OrderFlowStep12
+  ID: n12
+  Primary actor: System
+  Goal: Handle order flow step 12
+  Priority: 3
+  Complexity: 3
+  Includes:
+    - [include] OrderFlowStep13 (priority=3, rationale='Order flow dependency 12->13')
+    - [dependsOn] OrderFlowStep15 (priority=6, rationale='Cross-step dependency 12->15')
+  Included by:
+    - [include] OrderFlowStep11
+    - [dependsOn] OrderFlowStep9
+
+- Use case: OrderFlowStep13
+  ID: n13
+  Primary actor: Customer
+  Goal: Handle order flow step 13
+  Priority: 4
+  Complexity: 4
+  Includes:
+    - [include] OrderFlowStep14 (priority=4, rationale='Order flow dependency 13->14')
+  Included by:
+    - [include] OrderFlowStep12
+
+- Use case: OrderFlowStep14
+  ID: n14
+  Primary actor: Customer
+  Goal: Handle order flow step 14
+  Priority: 5
+  Complexity: 5
+  Includes:
+    - [include] OrderFlowStep15 (priority=5, rationale='Order flow dependency 14->15')
+  Included by:
+    - [include] OrderFlowStep13
+
+- Use case: OrderFlowStep15
+  ID: n15
+  Primary actor: System
+  Goal: Handle order flow step 15
+  Priority: 6
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep16 (priority=6, rationale='Order flow dependency 15->16')
+    - [dependsOn] OrderFlowStep18 (priority=9, rationale='Cross-step dependency 15->18')
+  Included by:
+    - [include] OrderFlowStep14
+    - [dependsOn] OrderFlowStep12
+
+- Use case: OrderFlowStep16
+  ID: n16
+  Primary actor: System
+  Goal: Handle order flow step 16
+  Priority: 7
+  Complexity: 2
+  Includes:
+    - [include] OrderFlowStep17 (priority=7, rationale='Order flow dependency 16->17')
+  Included by:
+    - [include] OrderFlowStep15
+
+- Use case: OrderFlowStep17
+  ID: n17
+  Primary actor: Customer
+  Goal: Handle order flow step 17
+  Priority: 8
+  Complexity: 3
+  Includes:
+    - [include] OrderFlowStep18 (priority=8, rationale='Order flow dependency 17->18')
+  Included by:
+    - [include] OrderFlowStep16
+
+- Use case: OrderFlowStep18
+  ID: n18
+  Primary actor: Customer
+  Goal: Handle order flow step 18
+  Priority: 9
+  Complexity: 4
+  Includes:
+    - [include] OrderFlowStep19 (priority=9, rationale='Order flow dependency 18->19')
+    - [dependsOn] OrderFlowStep21 (priority=4, rationale='Cross-step dependency 18->21')
+  Included by:
+    - [include] OrderFlowStep17
+    - [dependsOn] OrderFlowStep15
+
+- Use case: OrderFlowStep19
+  ID: n19
+  Primary actor: System
+  Goal: Handle order flow step 19
+  Priority: 10
+  Complexity: 5
+  Includes:
+    - [include] OrderFlowStep20 (priority=10, rationale='Order flow dependency 19->20')
+  Included by:
+    - [include] OrderFlowStep18
+
+- Use case: OrderFlowStep20
+  ID: n20
+  Primary actor: System
+  Goal: Handle order flow step 20
+  Priority: 1
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep21 (priority=1, rationale='Order flow dependency 20->21')
+  Included by:
+    - [include] OrderFlowStep19
+
+- Use case: OrderFlowStep21
+  ID: n21
+  Primary actor: Customer
+  Goal: Handle order flow step 21
+  Priority: 2
+  Complexity: 2
+  Includes:
+    - [include] OrderFlowStep22 (priority=2, rationale='Order flow dependency 21->22')
+    - [dependsOn] OrderFlowStep24 (priority=7, rationale='Cross-step dependency 21->24')
+  Included by:
+    - [include] OrderFlowStep20
+    - [dependsOn] OrderFlowStep18
+
+- Use case: OrderFlowStep22
+  ID: n22
+  Primary actor: Customer
+  Goal: Handle order flow step 22
+  Priority: 3
+  Complexity: 3
+  Includes:
+    - [include] OrderFlowStep23 (priority=3, rationale='Order flow dependency 22->23')
+  Included by:
+    - [include] OrderFlowStep21
+
+- Use case: OrderFlowStep23
+  ID: n23
+  Primary actor: System
+  Goal: Handle order flow step 23
+  Priority: 4
+  Complexity: 4
+  Includes:
+    - [include] OrderFlowStep24 (priority=4, rationale='Order flow dependency 23->24')
+  Included by:
+    - [include] OrderFlowStep22
+
+- Use case: OrderFlowStep24
+  ID: n24
+  Primary actor: System
+  Goal: Handle order flow step 24
+  Priority: 5
+  Complexity: 5
+  Includes:
+    - [include] OrderFlowStep25 (priority=5, rationale='Order flow dependency 24->25')
+    - [dependsOn] OrderFlowStep27 (priority=2, rationale='Cross-step dependency 24->27')
+  Included by:
+    - [include] OrderFlowStep23
+    - [dependsOn] OrderFlowStep21
+
+- Use case: OrderFlowStep25
+  ID: n25
+  Primary actor: Customer
+  Goal: Handle order flow step 25
+  Priority: 6
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep26 (priority=6, rationale='Order flow dependency 25->26')
+  Included by:
+    - [include] OrderFlowStep24
+
+- Use case: OrderFlowStep26
+  ID: n26
+  Primary actor: Customer
+  Goal: Handle order flow step 26
+  Priority: 7
+  Complexity: 2
+  Includes:
+    - [include] OrderFlowStep27 (priority=7, rationale='Order flow dependency 26->27')
+  Included by:
+    - [include] OrderFlowStep25
+
+- Use case: OrderFlowStep27
+  ID: n27
+  Primary actor: System
+  Goal: Handle order flow step 27
+  Priority: 8
+  Complexity: 3
+  Includes:
+    - [include] OrderFlowStep28 (priority=8, rationale='Order flow dependency 27->28')
+    - [dependsOn] OrderFlowStep30 (priority=5, rationale='Cross-step dependency 27->30')
+  Included by:
+    - [include] OrderFlowStep26
+    - [dependsOn] OrderFlowStep24
+
+- Use case: OrderFlowStep28
+  ID: n28
+  Primary actor: SupportAgent
+  Goal: Handle order flow step 28
+  Priority: 9
+  Complexity: 4
+  Includes:
+    - [include] OrderFlowStep29 (priority=9, rationale='Order flow dependency 28->29')
+  Included by:
+    - [include] OrderFlowStep27
+
+- Use case: OrderFlowStep29
+  ID: n29
+  Primary actor: Customer
+  Goal: Handle order flow step 29
+  Priority: 10
+  Complexity: 5
+  Includes:
+    - [include] OrderFlowStep30 (priority=10, rationale='Order flow dependency 29->30')
+  Included by:
+    - [include] OrderFlowStep28
+
+- Use case: OrderFlowStep30
+  ID: n30
+  Primary actor: Customer
+  Goal: Handle order flow step 30
+  Priority: 1
+  Complexity: 1
+  Includes:
+    - [include] OrderFlowStep31 (priority=1, rationale='Order flow dependency 30->31')
+  Included by:
+    - [include] OrderFlowStep29
+    - [dependsOn] OrderFlowStep27
+
+- Use case: OrderFlowStep31
+  ID: n31
+  Primary actor: System
+  Goal: Handle order flow step 31
+  Priority: 2
+  Complexity: 2
+  Included by:
+    - [include] OrderFlowStep30
+

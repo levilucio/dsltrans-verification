@@ -1,0 +1,307 @@
+DocBook model: dsltrans-prover/examples/models/bibtex2docbook/bibtex2docbook_large50_out.xmi
+Objects: 238 | Links: 237 | Traces: 476
+Documents: 1 | Bibliographies: 1 | DBEntries: 50
+- root: ModelBibFile2DocumentBibliography_d_1 -> ModelBibFile2DocumentBibliography_b_2
+- entries: ModelBibFile2DocumentBibliography_b_2 -> Article2DBArticle_da_10, Article2DBArticle_da_11, Article2DBArticle_da_12, Article2DBArticle_da_13, Article2DBArticle_da_14, Article2DBArticle_da_15, Article2DBArticle_da_16, Article2DBArticle_da_17, Article2DBArticle_da_18, Article2DBArticle_da_19, Article2DBArticle_da_3, Article2DBArticle_da_4, Article2DBArticle_da_5, Article2DBArticle_da_6, Article2DBArticle_da_7, Article2DBArticle_da_8, Article2DBArticle_da_9, Book2DBBook_db_20, Book2DBBook_db_21, Book2DBBook_db_22, Book2DBBook_db_23, Book2DBBook_db_24, Book2DBBook_db_25, Book2DBBook_db_26, Book2DBBook_db_27, Book2DBBook_db_28, Book2DBBook_db_29, Book2DBBook_db_30, Book2DBBook_db_31, Book2DBBook_db_32, Book2DBBook_db_33, Book2DBBook_db_34, Book2DBBook_db_35, Book2DBBook_db_36, InProc2DBInProc_dp_37, InProc2DBInProc_dp_38, InProc2DBInProc_dp_39, InProc2DBInProc_dp_40, InProc2DBInProc_dp_41, InProc2DBInProc_dp_42, InProc2DBInProc_dp_43, InProc2DBInProc_dp_44, InProc2DBInProc_dp_45, InProc2DBInProc_dp_46, InProc2DBInProc_dp_47, InProc2DBInProc_dp_48, InProc2DBInProc_dp_49, InProc2DBInProc_dp_50, InProc2DBInProc_dp_51, InProc2DBInProc_dp_52
+
+Entry details:
+- DBArticle(Article2DBArticle_da_15) key='adrienchantre2006' year=2006
+    title: Implementation of a test language for co-opn: User guide and graphical user interface
+    journal: Bachelor Thesis, Universite de Geneve
+    authors: Adrien Chantre
+    subjects: co_opn, testing
+    citations: 2
+- DBArticle(Article2DBArticle_da_10) key='alexanderpretschne2004' year=2004
+    title: Model-based testing for real
+    journal: STTT
+    authors: Alexander Pretschner, Oscar Slotosch, Ernst Aiglstorfer, Stefan Kriebel
+    subjects: model_based_testing, testing
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_49) key='alexanderpretschne2004' year=2004
+    title: Methodological issues in model-based testing
+    booktitle: Model-Based Testing of Reactive Systems
+    authors: Alexander Pretschner, Jan Philipps
+    subjects: model_based_testing, testing
+    citations: 0
+- DBArticle(Article2DBArticle_da_8) key='arievandeursen2000' year=2000
+    title: Domain-specific languages: An annotated bibliography
+    journal: SIGPLAN Notices
+    authors: Arie van Deursen, Paul Klint, Joost Visser
+    subjects: software_engineering
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_40) key='bertrandmeyer1988' year=1988
+    title: Eiffel: A language and environment for software engineering
+    booktitle: Journal of Systems and Software
+    authors: Bertrand Meyer
+    subjects: software_engineering
+    citations: 0
+- DBBook(Book2DBBook_db_35) key='brunolegeard2001' year=2001
+    title: Generation of functional test sequences from b formal specifications
+    publisher: ASE
+    authors: Bruno Legeard, Fabien Peureux
+    subjects: formal_methods, testing
+    citations: 0
+- DBArticle(Article2DBArticle_da_13) key='brunomarre1989' year=1989
+    title: Generation automatique de jeux de tests, une solution: Specifications algebriques et programmation logique
+    journal: SPLT
+    authors: Bruno Marre
+    subjects: formal_methods, testing
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_46) key='brunomarre1991' year=1991
+    title: Une methode et un outil d'assistance a la selection de jeux de tests a partir de specifications algebriques
+    booktitle: PhD thesis, Universite de Paris-Sud
+    authors: Bruno Marre
+    subjects: formal_methods, testing
+    citations: 0
+- DBBook(Book2DBBook_db_25) key='cbjones1986' year=1986
+    title: Systematic software development using VDM
+    publisher: Prentice Hall
+    authors: C B Jones
+    subjects: software_engineering
+    citations: 0
+- DBArticle(Article2DBArticle_da_4) key='cecileperaire1998' year=1998
+    title: Formal testing of object-oriented software: from the method to the tool
+    journal: PhD thesis, EPFL
+    authors: Cecile Peraire
+    subjects: formal_methods, testing
+    citations: 1
+- DBInProceedings(InProc2DBInProc_dp_51) key='cecileperaire1998' year=1998
+    title: Test selection for object-oriented software based on formal specifications
+    booktitle: PROCOMET
+    authors: Cecile Peraire, Stephane Barbey, Didier Buchs
+    subjects: formal_methods, testing
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_38) key='davidhuerzeler2004' year=2004
+    title: Flexible subtyping relations for component-oriented formalisms and their verification
+    booktitle: PhD thesis, EPFL
+    authors: David Huerzeler
+    subjects: formal_methods
+    citations: 0
+- DBBook(Book2DBBook_db_26) key='dharel2000' year=2000
+    title: Modeling languages: Syntax, semantics and all that stuff
+    publisher: Modeling Languages
+    authors: D. Harel, B. Rumpe
+    subjects: model_based_testing
+    citations: 0
+- DBArticle(Article2DBArticle_da_9) key='edsgerwdijkstra1988' year=1988
+    title: On the cruelty of really teaching computing science
+    journal: Circulated privately
+    authors: Edsger W. Dijkstra
+    subjects: software_engineering
+    citations: 2
+- DBBook(Book2DBBook_db_23) key='ewdijkstra1972' year=1972
+    title: Notes on structured programming
+    publisher: Structured Programming
+    authors: E. W. Dijkstra
+    subjects: software_engineering
+    citations: 0
+- DBArticle(Article2DBArticle_da_6) key='frederickpbrooks1987' year=1987
+    title: No silver bullet - essence and accidents of software engineering
+    journal: IEEE Computer
+    authors: Frederick P. Brooks
+    subjects: software_engineering
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_39) key='frederickpbrooksjr1975' year=1975
+    title: The mythical man-month - Essays on Software-Engineering
+    booktitle: Addison Wesley
+    authors: Frederick P. Brooks Jr.
+    subjects: software_engineering
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_37) key='gbernot1991' year=1991
+    title: Software testing based on formal specifications: a theory and a tool
+    booktitle: IEEE Software Engineering Journal
+    authors: G. Bernot, M.-C. Gaudel, B. Marre
+    subjects: formal_methods, testing
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_47) key='gdplotkin1981' year=1981
+    title: A Structural Approach to Operational Semantics
+    booktitle: Technical Report DAIMI FN-19, University of Aarhus
+    authors: G. D. Plotkin
+    subjects: software_engineering
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_44) key='gillesbernot1991' year=1991
+    title: Testing against formal specifications: A theoretical view
+    booktitle: TAPSOFT
+    authors: Gilles Bernot
+    subjects: formal_methods, testing
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_43) key='glenfordjmyers1979' year=1979
+    title: The Art of Software Testing
+    booktitle: John Wiley and Sons
+    authors: Glenford J. Myers
+    subjects: testing
+    citations: 0
+- DBBook(Book2DBBook_db_22) key='gordonemoore2000' year=2000
+    title: Cramming more components onto integrated circuits
+    publisher: Readings in computer architecture
+    authors: Gordon E. Moore
+    subjects: software_engineering
+    citations: 0
+- DBBook(Book2DBBook_db_34) key='gregorylestiennes2002' year=2002
+    title: Testing processes from formal specifications with inputs, outputs and data types
+    publisher: ISSRE
+    authors: Marie-Claude Gaudel, Gregory Lestiennes
+    subjects: formal_methods, testing
+    citations: 0
+- DBArticle(Article2DBArticle_da_12) key='gwbrams1983' year=1983
+    title: Reseaux de Petri: theorie et pratique - Tome 2
+    journal: Masson
+    authors: G.W. Brams
+    subjects: petri_nets
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_45) key='gwbrams1983' year=1983
+    title: Reseaux de Petri: theorie et pratique - Tome 1
+    booktitle: Masson
+    authors: G.W. Brams
+    subjects: petri_nets
+    citations: 0
+- DBArticle(Article2DBArticle_da_11) key='hartmutehrig1985' year=1985
+    title: Fundamentals of Algebraic Specification I
+    journal: Springer
+    authors: Hartmut Ehrig, B. Mahr
+    subjects: formal_methods
+    citations: 2
+- DBBook(Book2DBBook_db_24) key='ivarjacobson1999' year=1999
+    title: The Unified Software Development Process
+    publisher: Addison Wesley
+    authors: Ivar Jacobson, Grady Booch, James Rumbaugh
+    subjects: software_engineering
+    citations: 0
+- DBArticle(Article2DBArticle_da_19) key='jantretmans1994' year=1994
+    title: A formal approach to conformance testing
+    journal: Protocol Test Systems VI
+    authors: Jan Tretmans
+    subjects: formal_methods, testing
+    citations: 2
+- DBArticle(Article2DBArticle_da_17) key='jantretmans1999' year=1999
+    title: Testing concurrent systems: A formal approach
+    journal: CONCUR
+    authors: Jan Tretmans
+    subjects: formal_methods, testing
+    citations: 2
+- DBBook(Book2DBBook_db_29) key='jeanmarieproth1998' year=1998
+    title: Petri nets: a tool for design and management of manufacturing systems
+    publisher: Quality and Reliability Engineering International
+    authors: Xiaolan Xie, Jean-Marie Proth
+    subjects: petri_nets
+    citations: 0
+- DBBook(Book2DBBook_db_27) key='johnbgoodenough1975' year=1975
+    title: Toward a theory of test data selection
+    publisher: Proceedings of the International Conference on Reliable Software
+    authors: John B. Goodenough, Susan L. Gerhart
+    subjects: testing
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_42) key='jrabrial1996' year=1996
+    title: The B-book: assigning programs to meanings
+    booktitle: Cambridge University Press
+    authors: J.-R. Abrial
+    subjects: software_engineering
+    citations: 0
+- DBBook(Book2DBBook_db_33) key='marieclaudegaudel1995' year=1995
+    title: Testing can be formal, too
+    publisher: TAPSOFT
+    authors: Marie-Claude Gaudel
+    subjects: formal_methods, testing
+    citations: 0
+- DBArticle(Article2DBArticle_da_16) key='markutting2006' year=2006
+    title: A taxonomy of model-based testing
+    journal: Model-based testing survey
+    authors: Alexander Pretschner, Mark Utting, Bruno Legeard
+    subjects: model_based_testing, testing
+    citations: 2
+- DBBook(Book2DBBook_db_20) key='mathieubuffo1997' year=1997
+    title: Contextual Coordination: a coordination model for distributed object systems
+    publisher: PhD thesis, Universite de Geneve
+    authors: Mathieu Buffo
+    subjects: model_based_testing
+    citations: 0
+- DBBook(Book2DBBook_db_30) key='mathieubuffo1997' year=1997
+    title: Contextual Coordination: a Coordination Model for Distributed Object Systems
+    publisher: PhD thesis, University of Geneva
+    authors: Mathieu Buffo
+    subjects: model_based_testing
+    citations: 0
+- DBBook(Book2DBBook_db_31) key='matthewhennessy1985' year=1985
+    title: Algebraic laws for nondeterminism and concurrency
+    publisher: J. ACM
+    authors: Matthew Hennessy, Robin Milner
+    subjects: concurrency
+    citations: 0
+- DBBook(Book2DBBook_db_36) key='mclatin1996' year=1996
+    title: Manuel d'utilisation de TVEDA V3
+    publisher: France Telecom
+    authors: M. Clatin
+    subjects: software_engineering
+    citations: 0
+- DBInProceedings(InProc2DBInProc_dp_41) key='objectmanagementgr2003' year=2003
+    title: MDA guide version 1.0.1
+    booktitle: Technical report, OMG
+    authors: Object Management Group
+    subjects: software_engineering
+    citations: 0
+- DBArticle(Article2DBArticle_da_7) key='objectmanagementgr2005' year=2005
+    title: UML 2.0 superstructure specification
+    journal: Technical report, OMG
+    authors: Object Management Group members
+    subjects: formal_methods
+    citations: 2
+- DBArticle(Article2DBArticle_da_3) key='olivierbiberstein1997' year=1997
+    title: CO-OPN/2: An Object-Oriented Formalism for the Specification of Concurrent Systems
+    journal: PhD thesis, University of Geneva
+    authors: Olivier Biberstein
+    subjects: concurrency, formal_methods
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_50) key='rmburstall1977' year=1977
+    title: A transformation system for developing recursive programs
+    booktitle: J. ACM
+    authors: R. M. Burstall, John Darlington
+    subjects: software_engineering
+    citations: 0
+- DBBook(Book2DBBook_db_32) key='sergiocoelho2006' year=2006
+    title: Implementation of a test language for co-opn: Syntactic and static semantics verifications
+    publisher: Bachelor Thesis, Universite de Geneve
+    authors: Sergio Coelho
+    subjects: co_opn, testing
+    citations: 0
+- DBArticle(Article2DBArticle_da_5) key='smvgroup2007' year=2007
+    title: CoopnBuilder
+    journal: SMV Group
+    authors: Smv Group
+    subjects: co_opn
+    citations: 1
+- DBInProceedings(InProc2DBInProc_dp_48) key='stanislavchachkov2004' year=2004
+    title: Generation of Object-Oriented programs from CO-OPN Specifications
+    booktitle: PhD thesis, EPFL
+    authors: Stanislav Chachkov
+    subjects: co_opn, formal_methods
+    citations: 0
+- DBBook(Book2DBBook_db_21) key='stephanebarbey1997' year=1997
+    title: Test Selection for Specification-Based Unit Testing of Object-Oriented Software Based on Formal Specifications
+    publisher: PhD thesis, EPFL
+    authors: Stephane Barbey
+    subjects: formal_methods, testing
+    citations: 0
+- DBBook(Book2DBBook_db_28) key='wolfgangreisig1991' year=1991
+    title: Petri nets and algebraic specifications
+    publisher: Theoretical Computer Science
+    authors: Wolfgang Reisig
+    subjects: formal_methods, petri_nets
+    citations: 0
+- DBArticle(Article2DBArticle_da_14) key='yledru2001' year=2001
+    title: Test purposes: Adapting the notion of specification to testing
+    journal: ASE
+    authors: Y. Ledru, L. du Bousquet, P. Bontron, O. Maury, C. Oriat, M.-L. Potet
+    subjects: formal_methods, testing
+    citations: 2
+- DBInProceedings(InProc2DBInProc_dp_52) key='yurigurevich2000' year=2000
+    title: Abstract State Machines, Theory and Applications
+    booktitle: LNCS 1912, Springer
+    authors: Yuri Gurevich, Philipp W. Kutter, Martin Odersky, Lothar Thiele
+    subjects: software_engineering
+    citations: 0
+- DBArticle(Article2DBArticle_da_18) key='yvesledru2004' year=2004
+    title: Filtering tobias combinatorial test suites
+    journal: FASE
+    authors: Yves Ledru, Lydie du Bousquet, Olivier Maury, Pierre Bontron
+    subjects: testing
+    citations: 2

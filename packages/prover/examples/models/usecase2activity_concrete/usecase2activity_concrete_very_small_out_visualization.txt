@@ -1,0 +1,7 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_very_small_out.xmi
+Objects: 2 | Links: 1 | Traces: 3
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1) domain='Retail', release='3', workflowName='RetailCheckout'
+    action: Action(Node2Node_tn_2) actor='Customer', complexity='2', name='BrowseCatalog', priority='4', summary='Find relevant items quickly'
+

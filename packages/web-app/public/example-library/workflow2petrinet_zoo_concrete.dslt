@@ -1,0 +1,369 @@
+
+metamodel Workflow {
+    class WorkflowModel { }
+    class Task { }
+    class Transition { }
+
+    containment assoc nodes : WorkflowModel[1] -- Task[0..*]
+    containment assoc edges : WorkflowModel[1] -- Transition[0..*]
+    assoc src : Transition[0..*] -- Task[1]
+    assoc dst : Transition[0..*] -- Task[1]
+}
+
+metamodel PetriNet {
+    class Net { }
+    class Place { }
+    class Arc { }
+
+    containment assoc nodes : Net[1] -- Place[0..*]
+    containment assoc edges : Net[1] -- Arc[0..*]
+    assoc src : Arc[0..*] -- Place[1]
+    assoc dst : Arc[0..*] -- Place[1]
+}
+
+transformation Workflow2PetriNetZoo : Workflow -> PetriNet {
+    layer L1 {
+        rule Model2Model {
+            match {
+                any sm : WorkflowModel
+            }
+            apply {
+                tm : Net
+            }
+        }
+    }
+    layer L2 {
+        rule Node2Node {
+            match {
+                any sm : WorkflowModel
+                any sn : Task
+                direct l1 : nodes -- sm.sn
+            }
+            apply {
+                tm : Net
+                tn : Place
+                l2 : nodes -- tm.tn
+            }
+            backward {
+                tm <--trace-- sm
+            }
+        }
+    }
+    layer L3 {
+        rule Edge2Edge {
+            match {
+                any sm : WorkflowModel
+                any se : Transition
+                any sn1 : Task
+                any sn2 : Task
+                direct eL : edges -- sm.se
+                direct sL : src -- se.sn1
+                direct dL : dst -- se.sn2
+            }
+            apply {
+                tm : Net
+                tn1 : Place
+                tn2 : Place
+                te : Arc
+                o1 : edges -- tm.te
+                o2 : src -- te.tn1
+                o3 : dst -- te.tn2
+            }
+            backward {
+                tm <--trace-- sm
+                tn1 <--trace-- sn1
+                tn2 <--trace-- sn2
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition {
+        any sm : WorkflowModel
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property NodeContextStillMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property EdgeContextStillMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any se : Transition
+        any sn1 : Task
+        any sn2 : Task
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property OutgoingNodeContextMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        any se : Transition
+        any sn2 : Task
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property IncomingNodeContextMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        any se : Transition
+        any sn2 : Task
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property SourceAndTargetNodeContextMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn1 : Task
+        any sn2 : Task
+        any se : Transition
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property AnyNodeInModelMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property AnyEdgeInModelMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any se : Transition
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property NodeAndEdgeTogetherMapModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        any se : Transition
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+property RichContextStillMapsModel {
+    precondition {
+        any sm : WorkflowModel
+        any sn1 : Task
+        any sn2 : Task
+        any se : Transition
+        direct l1 : nodes -- sm.sn1
+        direct l2 : nodes -- sm.sn2
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sm
+    }
+}
+
+// Expected to FAIL
+property NodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        te : Arc
+        te <--trace-- sn
+    }
+}
+
+property NodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        direct l1 : nodes -- sm.sn
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sn
+    }
+}
+
+property EdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any se : Transition
+        any sn1 : Task
+        any sn2 : Task
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Place
+        tn <--trace-- se
+    }
+}
+
+property EdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any se : Transition
+        any sn1 : Task
+        any sn2 : Task
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- se
+    }
+}
+
+property ModelMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+    }
+    postcondition {
+        tn : Place
+        tn <--trace-- sm
+    }
+}
+
+property ModelMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+    }
+    postcondition {
+        te : Arc
+        te <--trace-- sm
+    }
+}
+
+property OutgoingNodeMapsToTargetEdge_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        any se : Transition
+        any sn2 : Task
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        te : Arc
+        te <--trace-- sn
+    }
+}
+
+property IncomingNodeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any sn : Task
+        any se : Transition
+        any sn2 : Task
+        direct l1 : nodes -- sm.sn
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn2
+        direct dL : dst -- se.sn
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- sn
+    }
+}
+
+property ConnectedEdgeMapsToTargetNode_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any se : Transition
+        any sn1 : Task
+        any sn2 : Task
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tn : Place
+        tn <--trace-- se
+    }
+}
+
+property ConnectedEdgeMapsToTargetModel_ShouldFail {
+    precondition {
+        any sm : WorkflowModel
+        any se : Transition
+        any sn1 : Task
+        any sn2 : Task
+        direct eL : edges -- sm.se
+        direct sL : src -- se.sn1
+        direct dL : dst -- se.sn2
+    }
+    postcondition {
+        tm : Net
+        tm <--trace-- se
+    }
+}

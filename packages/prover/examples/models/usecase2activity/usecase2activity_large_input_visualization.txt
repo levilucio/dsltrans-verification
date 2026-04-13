@@ -1,0 +1,109 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_large_input.xmi
+Objects: 32 | Links: 65 | Traces: 0
+
+Use case model context:
+  System: sm
+
+Use cases:
+- Use case: U0
+  ID: n0
+  Includes:
+    - [include] U1
+    - [include] U2
+
+- Use case: U1
+  ID: n1
+  Includes:
+    - [include] U2
+  Included by:
+    - [include] U0
+
+- Use case: U2
+  ID: n2
+  Includes:
+    - [include] U3
+  Included by:
+    - [include] U1
+    - [include] U0
+
+- Use case: U3
+  ID: n3
+  Includes:
+    - [include] U4
+    - [include] U5
+  Included by:
+    - [include] U2
+
+- Use case: U4
+  ID: n4
+  Includes:
+    - [include] U5
+  Included by:
+    - [include] U3
+
+- Use case: U5
+  ID: n5
+  Includes:
+    - [include] U6
+  Included by:
+    - [include] U4
+    - [include] U3
+
+- Use case: U6
+  ID: n6
+  Includes:
+    - [include] U7
+    - [include] U8
+  Included by:
+    - [include] U5
+
+- Use case: U7
+  ID: n7
+  Includes:
+    - [include] U8
+  Included by:
+    - [include] U6
+
+- Use case: U8
+  ID: n8
+  Includes:
+    - [include] U9
+  Included by:
+    - [include] U7
+    - [include] U6
+
+- Use case: U9
+  ID: n9
+  Includes:
+    - [include] U10
+    - [include] U11
+  Included by:
+    - [include] U8
+
+- Use case: U10
+  ID: n10
+  Includes:
+    - [include] U11
+  Included by:
+    - [include] U9
+
+- Use case: U11
+  ID: n11
+  Includes:
+    - [include] U12
+  Included by:
+    - [include] U10
+    - [include] U9
+
+- Use case: U12
+  ID: n12
+  Includes:
+    - [include] U13
+  Included by:
+    - [include] U11
+
+- Use case: U13
+  ID: n13
+  Included by:
+    - [include] U12
+

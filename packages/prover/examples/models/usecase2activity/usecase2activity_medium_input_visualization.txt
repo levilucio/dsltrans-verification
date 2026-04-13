@@ -1,0 +1,37 @@
+UseCase model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_medium_input.xmi
+Objects: 10 | Links: 17 | Traces: 0
+
+Use case model context:
+  System: sm
+
+Use cases:
+- Use case: N0
+  ID: n0
+  Includes:
+    - [include] N1
+
+- Use case: N1
+  ID: n1
+  Includes:
+    - [include] N2
+  Included by:
+    - [include] N0
+
+- Use case: N2
+  ID: n2
+  Includes:
+    - [include] N3
+    - [include] N4
+  Included by:
+    - [include] N1
+
+- Use case: N3
+  ID: n3
+  Included by:
+    - [include] N2
+
+- Use case: N4
+  ID: n4
+  Included by:
+    - [include] N2
+

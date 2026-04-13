@@ -1,0 +1,205 @@
+[
+  {
+    "id": "PackageHasPackageDeclaration",
+    "name": "PackageHasPackageDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PackagedClassHasCompilationUnitAndDeclaration",
+    "name": "PackagedClassHasCompilationUnitAndDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PackagedInterfaceHasCompilationUnitAndDeclaration",
+    "name": "PackagedInterfaceHasCompilationUnitAndDeclaration",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PackagedEnumerationHasCompilationUnitAndDeclaration",
+    "name": "PackagedEnumerationHasCompilationUnitAndDeclaration",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "OwnedPropertyHasOwnedField",
+    "name": "OwnedPropertyHasOwnedField",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyTypeHasFieldTypeReference",
+    "name": "PropertyTypeHasFieldTypeReference",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MultiValuedPropertyHasArrayFieldType",
+    "name": "MultiValuedPropertyHasArrayFieldType",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "StaticPropertyHasField",
+    "name": "StaticPropertyHasField",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ReadOnlyPropertyHasField",
+    "name": "ReadOnlyPropertyHasField",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ClassOperationHasOwnedMethod",
+    "name": "ClassOperationHasOwnedMethod",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InterfaceOperationHasOwnedMethod",
+    "name": "InterfaceOperationHasOwnedMethod",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationParameterHasOwnedParameter",
+    "name": "OperationParameterHasOwnedParameter",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OperationReturnTypeHasReference",
+    "name": "OperationReturnTypeHasReference",
+    "status": "holds",
+    "checked_pre_matches": 2,
+    "violating_pre_match": null
+  },
+  {
+    "id": "EnumerationLiteralHasOwnedEnumConstant",
+    "name": "EnumerationLiteralHasOwnedEnumConstant",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "ClassHasConstructor",
+    "name": "ClassHasConstructor",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyHasConstructorParameter",
+    "name": "PropertyHasConstructorParameter",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyHasGetter",
+    "name": "PropertyHasGetter",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "WritablePropertyHasSetter",
+    "name": "WritablePropertyHasSetter",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "MultiValuedPropertyHasAddRemoveHelpers",
+    "name": "MultiValuedPropertyHasAddRemoveHelpers",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "GeneralizationHasExtendsReference",
+    "name": "GeneralizationHasExtendsReference",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InterfaceRealizationHasImplementsReference",
+    "name": "InterfaceRealizationHasImplementsReference",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassCommentHasJavadoc",
+    "name": "ClassCommentHasJavadoc",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "DependencyYieldsImport",
+    "name": "DependencyYieldsImport",
+    "status": "precondition_never_matched",
+    "checked_pre_matches": 0,
+    "violating_pre_match": null,
+    "message": "precondition pattern never found in input model"
+  },
+  {
+    "id": "PropertyTypeUsedHasImport",
+    "name": "PropertyTypeUsedHasImport",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassHasObjectMethods",
+    "name": "ClassHasObjectMethods",
+    "status": "holds",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InterfaceMappedToClassDeclaration_ShouldFail",
+    "name": "InterfaceMappedToClassDeclaration_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ClassMappedToInterfaceDeclaration_ShouldFail",
+    "name": "ClassMappedToInterfaceDeclaration_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 3,
+    "violating_pre_match": null
+  },
+  {
+    "id": "PropertyMappedToJavadoc_ShouldFail",
+    "name": "PropertyMappedToJavadoc_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  }
+]

@@ -1,0 +1,904 @@
+// =============================================================================
+// Class2Relational Transformation - Canonical Fragment (class2relational_concrete)
+// =============================================================================
+// Replicates class2relational.dslt semantics with finite attribute domains (F-LNR R5).
+// - Source/target: attributes added with bounded String / Int where they refine mapping.
+// - Attribute bindings copy names/types; backward traces aligned with original (Package2Schema trace added).
+// - Association-to-FK semantics: derived source class AssocBetween (association + sourceClass + targetClass + bounds)
+//   keeps same semantics with ≤4 match elements. For every Association with two memberEnds and their endTypes,
+//   the source is assumed to contain an AssocBetween instance (derived view).
+// - Root containment: every element is transitively contained by a root (Model). Only well-formed input models
+//   are accepted (Model -> Package/Association/Generalization; Package -> Classifier; etc.).
+// - Provable fragment target: keep every rule at <= 4 match elements (R2 bound 4).
+//
+// Based on: class2relational.dslt (ATL Zoo Class2Relational)
+
+// =============================================================================
+// Source Metamodel: Class Diagram (finite attributes for R5)
+// Every element is transitively contained by root (Model). Well-formed input required.
+// =============================================================================
+
+metamodel ClassDiagram {
+    class Model { }
+    class Package { name: String{"", "Pkg1", "Pkg2", "Root"} }
+    class Classifier { name: String{"", "C", "D", "T1", "T2"} }
+    class Class extends Classifier { isAbstract: Bool }
+    class DataType extends Classifier { }
+    class Attribute {
+        name: String{"", "a", "id", "val", "ref"}
+        isMultivalued: Bool
+    }
+    class Operation { name: String{"", "op"} }
+    class Association { name: String{"", "A1", "A2"} }
+    class AssociationEnd {
+        name: String{"", "end1", "end2"}
+        isNavigable: Bool
+        lowerBound: Int[0..2]
+        upperBound: Int[0..16]
+    }
+    // Derived view: one instance per (Association, sourceClass, targetClass) from memberEnds + endTypes; bounds from ends.
+    class AssocBetween {
+        srcLower: Int[0..2]
+        srcUpper: Int[0..16]
+        tgtLower: Int[0..2]
+        tgtUpper: Int[0..16]
+    }
+    class Generalization { }
+
+    containment assoc root: Model[1] -- Package[0..*]
+    containment assoc rootAssociations: Model[1] -- Association[0..*]
+    containment assoc rootGeneralizations: Model[1] -- Generalization[0..*]
+    containment assoc packagedElement: Package[1] -- Classifier[0..*]
+    assoc association: AssocBetween[0..*] -- Association[1]
+    assoc sourceClass: AssocBetween[0..*] -- Class[1]
+    assoc targetClass: AssocBetween[0..*] -- Class[1]
+    containment assoc ownedAttribute: Class[1] -- Attribute[0..*]
+    containment assoc ownedOperation: Class[1] -- Operation[0..*]
+    assoc type: Attribute[0..*] -- Classifier[1]
+    assoc general: Generalization[0..*] -- Class[1]
+    assoc specific: Generalization[0..*] -- Class[1]
+    containment assoc memberEnd: Association[1] -- AssociationEnd[2]
+    assoc endType: AssociationEnd[0..*] -- Class[1]
+}
+
+// =============================================================================
+// Target Metamodel: Relational DB (finite attributes for R5)
+// Every element is transitively contained by root (Model). Well-formed output.
+// =============================================================================
+
+metamodel RelationalDB {
+    class Model { }
+    class Schema { name: String{"", "Pkg1", "Pkg2", "Root"} }
+    class Table { name: String{"", "C", "T1", "T2", "J"} }
+    class Column {
+        name: String{"", "a", "id", "val", "col", "fk", "fk1", "fk2", "fk_src", "fk_tgt", "fk_uq", "discrim"}
+        type: String{"", "int", "varchar", "ref", "discrim"}
+    }
+    class PrimaryKey { name: String{"", "pk"} }
+    class ForeignKey {
+        name: String{"", "fk", "fk1", "fk2", "fk_src", "fk_tgt", "fk_uq"}
+        referencedTable: String{"", "C", "T1", "T2"}
+    }
+    class UniqueConstraint { name: String{"", "uq"} }
+    class NotNullConstraint { name: String{"", "nn"} }
+
+    containment assoc root: Model[1] -- Schema[0..*]
+    containment assoc tables: Schema[1] -- Table[0..*]
+    containment assoc columns: Table[1] -- Column[0..*]
+    containment assoc primaryKey: Table[1] -- PrimaryKey[0..1]
+    containment assoc foreignKeys: Table[1] -- ForeignKey[0..*]
+    containment assoc uniqueConstraints: Table[1] -- UniqueConstraint[0..*]
+    containment assoc keyColumns: PrimaryKey[1] -- Column[0..*]
+    containment assoc fkColumns: ForeignKey[1] -- Column[0..*]
+    containment assoc uqColumns: UniqueConstraint[1] -- Column[0..*]
+}
+
+// =============================================================================
+// Transformation: Class2Relational_frag_canonical (same layers and rules as original)
+// Requires well-formed input: one Model as root with packages/associations/generalizations under it.
+// Output: one Model as root with all Schema under it.
+// =============================================================================
+
+transformation Class2Relational_frag_canonical : ClassDiagram -> RelationalDB {
+
+    layer CreateTablesFromClasses {
+
+        rule CreateRoot {
+            match {
+                any modelIn : Model
+            }
+            apply {
+                modelOut : Model
+            }
+        }
+
+        rule Class2Table {
+            match {
+                any cls : Class where cls.isAbstract == false
+            }
+            apply {
+                tbl : Table { name = cls.name }
+                pk : PrimaryKey { name = "pk" }
+                idCol : Column { name = "id", type = "int" }
+                pkLink : primaryKey -- tbl.pk
+                colLink : columns -- tbl.idCol
+                keyColLink : keyColumns -- pk.idCol
+            }
+        }
+    }
+
+    // Keep backward-link reuse stratified: modelOut is created in previous layer (CreateRoot).
+    layer CreateSchemasFromPackages {
+        rule Package2Schema {
+            match {
+                any modelIn : Model
+                any pkg : Package
+                direct rootLink : root -- modelIn.pkg
+            }
+            apply {
+                modelOut : Model
+                schema : Schema { name = pkg.name }
+                schemasLink : root -- modelOut.schema
+            }
+            backward {
+                modelOut <--trace-- modelIn
+            }
+        }
+    }
+
+    layer CreateColumnsFromAttributes {
+
+        // Links each table (from a class in a package) to the schema (from that package).
+        // Requires well-formed input: package under root. Backward links valid from previous layer.
+        rule LinkTableToSchema {
+            match {
+                any modelIn : Model
+                any pkg : Package
+                any cls : Class where cls.isAbstract == false
+                direct rootLink : root -- modelIn.pkg
+                direct pe : packagedElement -- pkg.cls
+            }
+            apply {
+                schema : Schema { name = pkg.name }
+                tbl : Table { name = cls.name }
+                tablesLink : tables -- schema.tbl
+            }
+            backward {
+                schema <--trace-- pkg
+                tbl <--trace-- cls
+            }
+        }
+
+        // Keep abstract-class table creation early so structural properties do not
+        // depend on deep-layer CEGAR confirmations.
+        rule AbstractClass2TableWithDiscriminator {
+            match {
+                any pkg : Package
+                any cls : Class where cls.isAbstract == true
+                direct pe : packagedElement -- pkg.cls
+            }
+            apply {
+                schema : Schema { name = pkg.name }
+                tbl : Table { name = cls.name }
+                discrimCol : Column { name = "discrim", type = "discrim" }
+                tablesLink : tables -- schema.tbl
+                colLink : columns -- tbl.discrimCol
+            }
+        }
+
+        rule SingleAttribute2Column {
+            match {
+                any cls : Class
+                any attr : Attribute
+                any dt : DataType
+                direct ownsAttr : ownedAttribute -- cls.attr
+                direct attrType : type -- attr.dt
+            }
+            apply {
+                tbl : Table { name = cls.name }
+                col : Column { name = attr.name, type = dt.name }
+                colLink : columns -- tbl.col
+            }
+            backward {
+                tbl <--trace-- cls
+            }
+        }
+
+        rule ClassAttribute2FKColumn {
+            match {
+                any cls : Class
+                any attr : Attribute
+                any targetCls : Class
+                direct ownsAttr : ownedAttribute -- cls.attr
+                direct attrType : type -- attr.targetCls
+            }
+            apply {
+                tbl : Table { name = cls.name }
+                fkCol : Column { name = attr.name, type = "ref" }
+                fk : ForeignKey { name = "fk", referencedTable = targetCls.name }
+                fkLink : foreignKeys -- tbl.fk
+                fkColLink : fkColumns -- fk.fkCol
+                colLink : columns -- tbl.fkCol
+            }
+            backward {
+                tbl <--trace-- cls
+            }
+        }
+
+        rule MultiAttribute2Table {
+            match {
+                any modelIn : Model
+                any pkg : Package
+                any cls : Class
+                any attr : Attribute where attr.isMultivalued == true
+                direct rootLink : root -- modelIn.pkg
+                direct pe : packagedElement -- pkg.cls
+                direct ownsAttr : ownedAttribute -- cls.attr
+            }
+            apply {
+                schema : Schema { name = pkg.name }
+                ownerTbl : Table { name = cls.name }
+                attrTbl : Table { name = attr.name }
+                fkCol : Column { name = "fk", type = "ref" }
+                valCol : Column { name = "val", type = "varchar" }
+                tablesLink : tables -- schema.attrTbl
+                colLink1 : columns -- attrTbl.fkCol
+                colLink2 : columns -- attrTbl.valCol
+            }
+            backward {
+                schema <--trace-- pkg
+                ownerTbl <--trace-- cls
+            }
+        }
+
+        // Create association-owned FK artifacts one layer before the attachment rules,
+        // so later backward-link attachment remains inside the minimal fragment.
+        rule SourceOneTargetManyAssoc2FKCore {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                fkCol : Column { name = "fk_src", type = "ref" }
+                fk : ForeignKey { name = "fk_src", referencedTable = srcCls.name }
+                fkColLink : fkColumns -- fk.fkCol
+            }
+            guard { ab.srcUpper <= 1 && ab.tgtUpper > 1 }
+        }
+
+        rule SourceManyTargetOneAssoc2FKCore {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                fkCol : Column { name = "fk_tgt", type = "ref" }
+                fk : ForeignKey { name = "fk_tgt", referencedTable = tgtCls.name }
+                fkColLink : fkColumns -- fk.fkCol
+            }
+            guard { ab.srcUpper > 1 && ab.tgtUpper <= 1 }
+        }
+
+        rule OneToOneAssoc2FKCore {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                fkCol : Column { name = "fk_uq", type = "ref" }
+                fk : ForeignKey { name = "fk_uq", referencedTable = tgtCls.name }
+                uniq : UniqueConstraint { name = "uq" }
+                fkColLink : fkColumns -- fk.fkCol
+                uqColLink : uqColumns -- uniq.fkCol
+            }
+            guard { ab.srcUpper <= 1 && ab.tgtUpper <= 1 }
+        }
+    }
+
+    // Association-to-FK and junction-table attachment rules.
+    layer CreateAssociationStructures {
+        // N:M → junction table (both ends upper > 1).
+        // Creates junction table and FKs; no backward links so elements are created and traces established implicitly.
+        rule ManyToManyAssoc2JunctionTable {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                junctionTbl : Table { name = assn.name }
+                srcFkCol : Column { name = "fk1", type = "ref" }
+                tgtFkCol : Column { name = "fk2", type = "ref" }
+                srcFk : ForeignKey { name = "fk1", referencedTable = srcCls.name }
+                tgtFk : ForeignKey { name = "fk2", referencedTable = tgtCls.name }
+                pk : PrimaryKey { name = "pk" }
+                pkLink : primaryKey -- junctionTbl.pk
+                keyColLink1 : keyColumns -- pk.srcFkCol
+                keyColLink2 : keyColumns -- pk.tgtFkCol
+                fkLink1 : foreignKeys -- junctionTbl.srcFk
+                fkLink2 : foreignKeys -- junctionTbl.tgtFk
+                srcFkColLink : fkColumns -- srcFk.srcFkCol
+                tgtFkColLink : fkColumns -- tgtFk.tgtFkCol
+                colLink1 : columns -- junctionTbl.srcFkCol
+                colLink2 : columns -- junctionTbl.tgtFkCol
+            }
+            guard { ab.srcUpper > 1 && ab.tgtUpper > 1 }
+        }
+
+    }
+
+    // Keep backward-link reuse stratified: junctionTbl is created in previous layer.
+    layer LinkAssociationTablesToSchemas {
+        // Attach the 1:N FK artifacts to the many-side table.
+        rule LinkSourceOneTargetManyFKToTable {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                tgtTbl : Table { name = tgtCls.name }
+                fkCol : Column { name = "fk_src", type = "ref" }
+                fk : ForeignKey { name = "fk_src", referencedTable = srcCls.name }
+                fkLink : foreignKeys -- tgtTbl.fk
+                colLink : columns -- tgtTbl.fkCol
+            }
+            backward {
+                tgtTbl <--trace-- tgtCls
+                fkCol <--trace-- assn
+                fk <--trace-- assn
+            }
+            guard { ab.srcUpper <= 1 && ab.tgtUpper > 1 }
+        }
+
+        // Attach the N:1 FK artifacts to the source-side table.
+        rule LinkSourceManyTargetOneFKToTable {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                srcTbl : Table { name = srcCls.name }
+                fkCol : Column { name = "fk_tgt", type = "ref" }
+                fk : ForeignKey { name = "fk_tgt", referencedTable = tgtCls.name }
+                fkLink : foreignKeys -- srcTbl.fk
+                colLink : columns -- srcTbl.fkCol
+            }
+            backward {
+                srcTbl <--trace-- srcCls
+                fkCol <--trace-- assn
+                fk <--trace-- assn
+            }
+            guard { ab.srcUpper > 1 && ab.tgtUpper <= 1 }
+        }
+
+        // Attach the 1:1 FK/unique artifacts to the source-side table.
+        rule LinkOneToOneFKToTable {
+            match {
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                any tgtCls : Class
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+                direct tgtRef : targetClass -- ab.tgtCls
+            }
+            apply {
+                srcTbl : Table { name = srcCls.name }
+                fkCol : Column { name = "fk_uq", type = "ref" }
+                fk : ForeignKey { name = "fk_uq", referencedTable = tgtCls.name }
+                uniq : UniqueConstraint { name = "uq" }
+                fkLink : foreignKeys -- srcTbl.fk
+                uqLink : uniqueConstraints -- srcTbl.uniq
+                colLink : columns -- srcTbl.fkCol
+            }
+            backward {
+                srcTbl <--trace-- srcCls
+                fkCol <--trace-- assn
+                fk <--trace-- assn
+                uniq <--trace-- assn
+            }
+            guard { ab.srcUpper <= 1 && ab.tgtUpper <= 1 }
+        }
+
+        // Step 2: attach junction table to schema via traces (<=4 match elements).
+        rule LinkJunctionTableToSchema {
+            match {
+                any pkg : Package
+                any ab : AssocBetween
+                any assn : Association
+                any srcCls : Class
+                direct pe : packagedElement -- pkg.srcCls
+                direct assocRef : association -- ab.assn
+                direct srcRef : sourceClass -- ab.srcCls
+            }
+            apply {
+                schema : Schema { name = pkg.name }
+                junctionTbl : Table { name = assn.name }
+                tablesLink : tables -- schema.junctionTbl
+            }
+            backward {
+                schema <--trace-- pkg
+                junctionTbl <--trace-- assn
+            }
+            guard { ab.srcUpper > 1 && ab.tgtUpper > 1 }
+        }
+    }
+
+    layer FlattenInheritance {
+
+        // Reuses the child table created for the concrete class and adds the inherited column to it.
+        rule InheritedAttribute2Column {
+            match {
+                any gen : Generalization
+                any parentCls : Class
+                any childCls : Class
+                any attr : Attribute
+                direct genParent : general -- gen.parentCls
+                direct genChild : specific -- gen.childCls
+                direct parentAttr : ownedAttribute -- parentCls.attr
+            }
+            apply {
+                childTbl : Table { name = childCls.name }
+                inheritedCol : Column { name = attr.name, type = "varchar" }
+                colLink : columns -- childTbl.inheritedCol
+            }
+            backward {
+                childTbl <--trace-- childCls
+            }
+        }
+
+        rule AddDiscriminatorColumn {
+            match {
+                any gen : Generalization
+                any parentCls : Class
+                any childCls : Class
+                direct genParent : general -- gen.parentCls
+                direct genChild : specific -- gen.childCls
+            }
+            apply {
+                parentTbl : Table { name = parentCls.name }
+                discrimCol : Column { name = "discrim", type = "discrim" }
+                colLink : columns -- parentTbl.discrimCol
+            }
+            backward {
+                parentTbl <--trace-- parentCls
+            }
+        }
+
+    }
+}
+
+// =============================================================================
+// Properties: correctness of the canonical transformation
+// =============================================================================
+// Extended with attribute-aware preconditions (where clauses) where applicable.
+// New properties added to prove association rules, diagnostics, and structural integrity.
+// (Attribute equality in postcondition, e.g. schema.name = pkg.name, would require
+//  postcondition constraint support in the parser.)
+
+// ---------------------------------------------------------------------------
+// Core mapping properties
+// ---------------------------------------------------------------------------
+
+property PackageBecomesSchema "A package under the root model is transformed into a traced schema." {
+    precondition {
+        any modelIn : Model
+        any pkg : Package
+        direct rootLink : root -- modelIn.pkg
+    }
+    postcondition {
+        schema : Schema
+        schema <--trace-- pkg
+    }
+}
+
+property ClassMapsToTable "Every concrete class is transformed into a traced table." {
+    precondition { any cls : Class where cls.isAbstract == false }
+    postcondition {
+        tbl : Table
+        tbl <--trace-- cls
+    }
+}
+
+property TableHasPrimaryKey "Each concrete-class table has a primary key produced by Class2Table." {
+    precondition { any cls : Class where cls.isAbstract == false }
+    postcondition {
+        tbl : Table
+        pk : PrimaryKey
+        pkLink : primaryKey -- tbl.pk
+        tbl <--trace-- cls
+    }
+}
+
+property AttributeBecomesColumn "A class-owned attribute yields a column in the owning class table." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute
+        direct owns : ownedAttribute -- cls.attr
+    }
+    postcondition {
+        tbl : Table
+        col : Column
+        colLink : columns -- tbl.col
+        tbl <--trace-- cls
+    }
+}
+
+// Attribute-aware: single-valued attribute with DataType becomes a column in owner table
+property SingleValuedAttributeWithDataTypeBecomesColumn "A single-valued attribute typed by a data type becomes a regular column." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute where attr.isMultivalued == false
+        any dt : DataType
+        direct owns : ownedAttribute -- cls.attr
+        direct attrType : type -- attr.dt
+    }
+    postcondition {
+        tbl : Table
+        col : Column
+        colLink : columns -- tbl.col
+        tbl <--trace-- cls
+    }
+}
+
+// Attribute-aware: single-valued attribute with Class type becomes FK column
+property ClassTypedAttributeBecomesFKColumn "A single-valued class-typed attribute becomes a foreign-key column." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute where attr.isMultivalued == false
+        any targetCls : Class
+        direct owns : ownedAttribute -- cls.attr
+        direct attrType : type -- attr.targetCls
+    }
+    postcondition {
+        tbl : Table
+        fkCol : Column
+        fk : ForeignKey
+        fkLink : foreignKeys -- tbl.fk
+        tbl <--trace-- cls
+    }
+}
+
+property MultiValuedAttributeCreatesTable "A multivalued attribute creates an auxiliary table linked to its owner." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute where attr.isMultivalued == true
+        direct owns : ownedAttribute -- cls.attr
+    }
+    postcondition {
+        ownerTbl : Table
+        auxTbl : Table
+        ownerTbl <--trace-- cls
+    }
+}
+
+property InheritanceFlattened "Attributes from a generalized parent are flattened into the child table." {
+    precondition {
+        any gen : Generalization
+        any parentCls : Class
+        any childCls : Class where childCls.isAbstract == false
+        any attr : Attribute
+        direct genParent : general -- gen.parentCls
+        direct genChild : specific -- gen.childCls
+        direct parentAttr : ownedAttribute -- parentCls.attr
+    }
+    postcondition {
+        childTbl : Table
+        col : Column
+        colLink : columns -- childTbl.col
+        childTbl <--trace-- childCls
+    }
+}
+
+property InheritanceHasDiscriminator "Generalization introduces at least one discriminator-bearing table." {
+    precondition {
+        any gen : Generalization
+        any parentCls : Class where parentCls.isAbstract == false
+        direct genParent : general -- gen.parentCls
+    }
+    postcondition {
+        parentTbl : Table
+        discrimCol : Column
+        colLink : columns -- parentTbl.discrimCol
+        parentTbl <--trace-- parentCls
+    }
+}
+
+property AbstractClassHasDiscriminatorTable "An abstract class packaged in the source has a discriminator-bearing output table." {
+    precondition {
+        any pkg : Package
+        any cls : Class where cls.isAbstract == true
+        direct pe : packagedElement -- pkg.cls
+    }
+    postcondition {
+        tbl : Table
+        discrimCol : Column
+        colLink : columns -- tbl.discrimCol
+    }
+}
+
+property SchemaHasTable "A rooted package containing a concrete class has a schema-table containment link." {
+    precondition {
+        any modelIn : Model
+        any pkg : Package
+        any cls : Class where cls.isAbstract == false
+        direct rootLink : root -- modelIn.pkg
+        direct pe : packagedElement -- pkg.cls
+    }
+    postcondition {
+        schema : Schema
+        tbl : Table
+        schemaTbl : tables -- schema.tbl
+        schema <--trace-- pkg
+    }
+}
+
+property SourceOneTargetManyCreatesFKOnTargetTable "A 1:N association creates an FK on the target-side table." {
+    precondition {
+        any ab : AssocBetween where ab.srcUpper <= 1 && ab.tgtUpper > 1
+        any assn : Association
+        any srcCls : Class where srcCls.isAbstract == false
+        any tgtCls : Class where tgtCls.isAbstract == false
+        direct assocRef : association -- ab.assn
+        direct srcRef : sourceClass -- ab.srcCls
+        direct tgtRef : targetClass -- ab.tgtCls
+    }
+    postcondition {
+        fk : ForeignKey
+        fk <--trace-- assn
+    }
+}
+
+// N:1 association yields FK on the source-side table.
+property SourceManyTargetOneCreatesFKOnSourceTable "An N:1 association creates an FK on the source-side table." {
+    precondition {
+        any ab : AssocBetween where ab.srcUpper > 1 && ab.tgtUpper <= 1
+        any assn : Association
+        any srcCls : Class where srcCls.isAbstract == false
+        any tgtCls : Class where tgtCls.isAbstract == false
+        direct assocRef : association -- ab.assn
+        direct srcRef : sourceClass -- ab.srcCls
+        direct tgtRef : targetClass -- ab.tgtCls
+    }
+    postcondition {
+        fk : ForeignKey
+        fk <--trace-- assn
+    }
+}
+
+// N:M association (both ends upper > 1) creates junction table with two FKs
+property ManyToManyCreatesJunctionTable "An N:M association creates a traced junction table with two foreign keys." {
+    precondition {
+        any ab : AssocBetween where ab.srcUpper > 1 && ab.tgtUpper > 1
+        any assn : Association
+        any srcCls : Class
+        any tgtCls : Class
+        direct assocRef : association -- ab.assn
+        direct srcRef : sourceClass -- ab.srcCls
+        direct tgtRef : targetClass -- ab.tgtCls
+    }
+    postcondition {
+        jTbl : Table
+        fk1 : ForeignKey
+        fk2 : ForeignKey
+        fkLink1 : foreignKeys -- jTbl.fk1
+        fkLink2 : foreignKeys -- jTbl.fk2
+        jTbl <--trace-- assn
+    }
+}
+
+// 1:1 association (both ends upper <= 1) creates FK with unique constraint
+property OneToOneCreatesFKWithUnique "A 1:1 association creates an FK plus unique constraint on the source table." {
+    precondition {
+        any ab : AssocBetween where ab.srcUpper <= 1 && ab.tgtUpper <= 1
+        any assn : Association
+        any srcCls : Class where srcCls.isAbstract == false
+        any tgtCls : Class where tgtCls.isAbstract == false
+        direct assocRef : association -- ab.assn
+        direct srcRef : sourceClass -- ab.srcCls
+        direct tgtRef : targetClass -- ab.tgtCls
+    }
+    postcondition {
+        fk : ForeignKey
+        uniq : UniqueConstraint
+        fk <--trace-- assn
+        uniq <--trace-- assn
+    }
+}
+
+// Structural integrity: when there is at least one concrete class, some table exists
+property TablesExist "If a concrete class exists, at least one relational table exists." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+    }
+    postcondition {
+        tbl : Table
+    }
+}
+
+property Diag_ConcreteClassGetsTable "Diagnostic hold: concrete classes are traced to relational tables." {
+    precondition { any cls : Class where cls.isAbstract == false }
+    postcondition {
+        tbl : Table
+        tbl <--trace-- cls
+    }
+}
+
+property Diag_AbstractGeneralizedClassGetsTable_ShouldFail "Diagnostic fail: generalized abstract classes should not satisfy concrete-table primary-key tracing." {
+    precondition {
+        any cls : Class where cls.isAbstract == true
+        any gen : Generalization
+        direct genParent : general -- gen.cls
+    }
+    postcondition {
+        tbl : Table
+        pk : PrimaryKey
+        pkLink : primaryKey -- tbl.pk
+        tbl <--trace-- cls
+    }
+}
+
+property Diag_DataTypeBecomesTable_ShouldFail "Diagnostic fail: data types are not traced to tables." {
+    precondition { any dt : DataType }
+    postcondition {
+        tbl : Table
+        tbl <--trace-- dt
+    }
+}
+
+property Diag_DataTypeExistsSchemaExists_ShouldFail "Diagnostic fail: this schema-existence statement is intentionally too strong." {
+    precondition {
+        any modelIn : Model
+        any dt : DataType
+        any pkg : Package
+        any cls : Class where cls.isAbstract == false
+        direct rootLink : root -- modelIn.pkg
+        direct pe : packagedElement -- pkg.dt
+        direct peClass : packagedElement -- pkg.cls
+    }
+    postcondition {
+        schema : Schema
+    }
+}
+
+property Diag_SingleAttrWithDataType "Diagnostic hold: single-valued data-typed attributes map to owner-table columns." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute where attr.isMultivalued == false
+        any dt : DataType
+        direct owns : ownedAttribute -- cls.attr
+        direct attrType : type -- attr.dt
+    }
+    postcondition {
+        tbl : Table
+        col : Column
+        tbl <--trace-- cls
+    }
+}
+
+property Diag_MultiValuedAttrCreatesSeparateTable "Diagnostic hold: multivalued attributes create separate auxiliary tables." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute where attr.isMultivalued == true
+        direct owns : ownedAttribute -- cls.attr
+    }
+    postcondition {
+        ownerTbl : Table
+        attrTbl : Table
+        ownerTbl <--trace-- cls
+    }
+}
+
+property Diag_ConcreteClassTableHasPK "Diagnostic hold: concrete-class tables include a primary key link." {
+    precondition { any cls : Class where cls.isAbstract == false }
+    postcondition {
+        tbl : Table
+        pk : PrimaryKey
+        pkLink : primaryKey -- tbl.pk
+        tbl <--trace-- cls
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Diagnostic negative coverage (expected VIOLATED)
+// ---------------------------------------------------------------------------
+
+property Diag_MultiValuedAttributeTracedToAuxTable "Diagnostic hold: multivalued attributes are traced to their auxiliary tables." {
+    precondition {
+        any cls : Class where cls.isAbstract == false
+        any attr : Attribute where attr.isMultivalued == true
+        direct owns : ownedAttribute -- cls.attr
+    }
+    postcondition {
+        ownerTbl : Table
+        tbl : Table
+        ownerTbl <--trace-- cls
+        tbl <--trace-- attr
+    }
+}
+
+// PrimaryKey is created by Class2Table and receives trace from the matched Class (should HOLD)
+property PKTracedFromClass "Primary keys created for concrete classes are traced from those classes." {
+    precondition { any cls : Class where cls.isAbstract == false }
+    postcondition {
+        pk : PrimaryKey
+        pk <--trace-- cls
+    }
+}
+
+property Diag_AssociationTracedToTable_ShouldFail "Diagnostic fail: associations are not directly traced to tables." {
+    precondition { any assn : Association }
+    postcondition {
+        tbl : Table
+        tbl <--trace-- assn
+    }
+}
+
+property Diag_AssocBetweenTracedToTable_ShouldFail "Diagnostic fail: AssocBetween helper nodes are not traced to tables." {
+    precondition { any ab : AssocBetween }
+    postcondition {
+        tbl : Table
+        tbl <--trace-- ab
+    }
+}
+
+property Diag_PackageTracedToTable_ShouldFail "Diagnostic fail: packages are traced to schemas, not tables." {
+    precondition { any pkg : Package }
+    postcondition {
+        tbl : Table
+        tbl <--trace-- pkg
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Diagnostic: N:M yields junction table (expected HOLDS when ab is N:M)
+// ---------------------------------------------------------------------------
+
+property Diag_ManyToManyHasJunctionTable "Diagnostic hold: an N:M AssocBetween creates a traced junction table with two FKs." {
+    precondition {
+        any ab : AssocBetween where ab.srcUpper > 1 && ab.tgtUpper > 1
+        any assn : Association
+        any srcCls : Class
+        any tgtCls : Class
+        direct assocRef : association -- ab.assn
+        direct srcRef : sourceClass -- ab.srcCls
+        direct tgtRef : targetClass -- ab.tgtCls
+    }
+    postcondition {
+        jTbl : Table
+        fk1 : ForeignKey
+        fk2 : ForeignKey
+        fkLink1 : foreignKeys -- jTbl.fk1
+        fkLink2 : foreignKeys -- jTbl.fk2
+        jTbl <--trace-- assn
+    }
+}

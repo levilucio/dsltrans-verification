@@ -1,0 +1,196 @@
+﻿// File: Order.java
+package domain;
+
+import OrderItem;
+import OrderStatus;
+
+public class Order extends EntityBase {
+    private OrderItem[] items;
+
+    private OrderItem items;
+
+    private OrderStatus status;
+
+    public Order(OrderItem items, OrderStatus status) {
+    }
+
+    private void add(OrderItem items) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    private OrderItem items() {
+    }
+
+    private void items(OrderItem items) {
+    }
+
+    private void remove(OrderItem items) {
+    }
+
+    private OrderStatus status() {
+    }
+
+    private void status(OrderStatus status) {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: OrderItem.java
+package domain;
+
+public class OrderItem {
+    public OrderItem() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: CustomerService.java
+package service;
+
+import CustomerRepository;
+import Order;
+
+public class CustomerService implements CustomerRepository {
+    private static final Integer total;
+
+    /**
+     * Service entry point.
+     */
+    public CustomerService(Integer total) {
+    }
+
+    public Integer calculateTotal(Order order) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public Customer findById(Integer id) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+
+    private static Integer total() {
+    }
+}
+
+// File: Address.java
+package domain;
+
+public class Address {
+    public Address() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: Customer.java
+package domain;
+
+import Address;
+
+public class Customer extends EntityBase {
+    private Address[] addresses;
+
+    private Address addresses;
+
+    private final Integer id;
+
+    private String name;
+
+    /**
+     * Aggregate root for customer data.
+     */
+    public Customer(Address addresses, Integer id, String name) {
+    }
+
+    private void add(Address addresses) {
+    }
+
+    private Address addresses() {
+    }
+
+    private void addresses(Address addresses) {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    private Integer id() {
+    }
+
+    private String name() {
+    }
+
+    private void name(String name) {
+    }
+
+    private void remove(Address addresses) {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: EntityBase.java
+package domain;
+
+public abstract class EntityBase {
+    public EntityBase() {
+    }
+
+    public boolean equals(Object obj) {
+    }
+
+    public int hashCode() {
+    }
+
+    public String toString() {
+    }
+}
+
+// File: OrderStatus.java
+package domain;
+
+public enum OrderStatus {
+    COMPLETE, FAILED, NEW, PROCESSING;
+}
+
+// File: CustomerRepository.java
+package infra;
+
+public interface CustomerRepository {
+    Customer findById(Integer id);
+
+    Customer save(Customer customer);
+}
+

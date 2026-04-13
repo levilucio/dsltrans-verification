@@ -1,0 +1,40 @@
+OCL AST model: dsltrans-prover/examples/models/oclcompiler/oclcompiler_large_input.xmi
+Objects: 20 | Links: 31
+Models: 1 | Modules: 1 | Operations: 2 | Exprs: 11
+- root: model1 -> module1
+
+Modules:
+- Module(module1) name='MainModule'
+  fields:
+    - Field(field_status) isStatic='false', name='status'
+    - Field(field_name) isStatic='false', name='name'
+  operations:
+    - Operation(op_collectNames) isStatic='false', name='collectNames'
+      iterators:
+        - Iterator(iter_item) varName='item'
+      expr_count: 5
+      body:
+        - IteratorExp(iter_exp) iterName='item'
+          iter_var: Iterator(iter_item) varName='item'
+          iter_source:
+            - SequenceExp(seq_names)
+              seq_elem: CollectionElement(elem1)
+                - StringExp(str_adult) val='adult'
+              seq_elem: CollectionElement(elem2)
+                - StringExp(str_minor) val='minor'
+          iter_body:
+            - VariableExp(var_item) varName='item'
+    - Operation(op_checkStatus) isStatic='false', name='checkStatus'
+      expr_count: 6
+      body:
+        - IfExp(if_status)
+          if_cond:
+            - BuiltInCall(undef_check) opName='oclIsUndefined'
+              bi_left:
+                - NavigationCall(nav_status) isStatic='false', isSuper='false', propName='status'
+                  nav_src:
+                    - SelfExp(self1)
+          if_then:
+            - StringExp(str_guest) val='guest'
+          if_else:
+            - StringExp(str_active) val='active'

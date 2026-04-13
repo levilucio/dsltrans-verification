@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="sm" xsi:type="UseCaseConcrete:UseCaseModel" systemName="RetailCheckout" domain="Retail" release="4" />
+  <objects xmi:id="n0" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep0" actor="System" goal="Execute checkout step 0" priority="3" complexity="1" />
+  <objects xmi:id="n1" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep1" actor="Customer" goal="Execute checkout step 1" priority="4" complexity="2" />
+  <objects xmi:id="n2" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep2" actor="Customer" goal="Execute checkout step 2" priority="5" complexity="3" />
+  <objects xmi:id="n3" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep3" actor="System" goal="Execute checkout step 3" priority="6" complexity="4" />
+  <objects xmi:id="n4" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep4" actor="Customer" goal="Execute checkout step 4" priority="7" complexity="5" />
+  <objects xmi:id="n5" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep5" actor="Customer" goal="Execute checkout step 5" priority="8" complexity="1" />
+  <objects xmi:id="n6" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep6" actor="System" goal="Execute checkout step 6" priority="9" complexity="2" />
+  <objects xmi:id="n7" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep7" actor="Customer" goal="Execute checkout step 7" priority="10" complexity="3" />
+  <objects xmi:id="n8" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep8" actor="Customer" goal="Execute checkout step 8" priority="3" complexity="4" />
+  <objects xmi:id="n9" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep9" actor="System" goal="Execute checkout step 9" priority="4" complexity="5" />
+  <objects xmi:id="n10" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep10" actor="Customer" goal="Execute checkout step 10" priority="5" complexity="1" />
+  <objects xmi:id="n11" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep11" actor="Customer" goal="Execute checkout step 11" priority="6" complexity="2" />
+  <objects xmi:id="n12" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep12" actor="System" goal="Execute checkout step 12" priority="7" complexity="3" />
+  <objects xmi:id="n13" xsi:type="UseCaseConcrete:UseCaseNode" name="CheckoutStep13" actor="Customer" goal="Execute checkout step 13" priority="8" complexity="4" />
+  <objects xmi:id="e0" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 0 enables step 1" priority="3" />
+  <objects xmi:id="e1" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 1 enables step 2" priority="4" />
+  <objects xmi:id="e2" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 2 enables step 3" priority="5" />
+  <objects xmi:id="e3" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 3 enables step 4" priority="6" />
+  <objects xmi:id="e4" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 4 enables step 5" priority="7" />
+  <objects xmi:id="e5" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 5 enables step 6" priority="8" />
+  <objects xmi:id="e6" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 6 enables step 7" priority="9" />
+  <objects xmi:id="e7" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 7 enables step 8" priority="10" />
+  <objects xmi:id="e8" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 8 enables step 9" priority="3" />
+  <objects xmi:id="e9" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 9 enables step 10" priority="4" />
+  <objects xmi:id="e10" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 10 enables step 11" priority="5" />
+  <objects xmi:id="e11" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 11 enables step 12" priority="6" />
+  <objects xmi:id="e12" xsi:type="UseCaseConcrete:Include" relationKind="include" rationale="Step 12 enables step 13" priority="7" />
+  <objects xmi:id="e13" xsi:type="UseCaseConcrete:Include" relationKind="precedes" rationale="Fast path from step 0 to 2" priority="5" />
+  <objects xmi:id="e14" xsi:type="UseCaseConcrete:Include" relationKind="precedes" rationale="Fast path from step 2 to 4" priority="7" />
+  <objects xmi:id="e15" xsi:type="UseCaseConcrete:Include" relationKind="precedes" rationale="Fast path from step 4 to 6" priority="5" />
+  <objects xmi:id="e16" xsi:type="UseCaseConcrete:Include" relationKind="precedes" rationale="Fast path from step 6 to 8" priority="7" />
+  <objects xmi:id="e17" xsi:type="UseCaseConcrete:Include" relationKind="precedes" rationale="Fast path from step 8 to 10" priority="5" />
+
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n0" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n1" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n2" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n3" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n4" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n5" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n6" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n7" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n8" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n9" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n10" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n11" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n12" />
+  <links xsi:type="UseCaseConcrete:nodes" source="sm" target="n13" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e0" />
+  <links xsi:type="UseCaseConcrete:src" source="e0" target="n0" />
+  <links xsi:type="UseCaseConcrete:dst" source="e0" target="n1" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e1" />
+  <links xsi:type="UseCaseConcrete:src" source="e1" target="n1" />
+  <links xsi:type="UseCaseConcrete:dst" source="e1" target="n2" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e2" />
+  <links xsi:type="UseCaseConcrete:src" source="e2" target="n2" />
+  <links xsi:type="UseCaseConcrete:dst" source="e2" target="n3" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e3" />
+  <links xsi:type="UseCaseConcrete:src" source="e3" target="n3" />
+  <links xsi:type="UseCaseConcrete:dst" source="e3" target="n4" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e4" />
+  <links xsi:type="UseCaseConcrete:src" source="e4" target="n4" />
+  <links xsi:type="UseCaseConcrete:dst" source="e4" target="n5" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e5" />
+  <links xsi:type="UseCaseConcrete:src" source="e5" target="n5" />
+  <links xsi:type="UseCaseConcrete:dst" source="e5" target="n6" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e6" />
+  <links xsi:type="UseCaseConcrete:src" source="e6" target="n6" />
+  <links xsi:type="UseCaseConcrete:dst" source="e6" target="n7" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e7" />
+  <links xsi:type="UseCaseConcrete:src" source="e7" target="n7" />
+  <links xsi:type="UseCaseConcrete:dst" source="e7" target="n8" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e8" />
+  <links xsi:type="UseCaseConcrete:src" source="e8" target="n8" />
+  <links xsi:type="UseCaseConcrete:dst" source="e8" target="n9" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e9" />
+  <links xsi:type="UseCaseConcrete:src" source="e9" target="n9" />
+  <links xsi:type="UseCaseConcrete:dst" source="e9" target="n10" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e10" />
+  <links xsi:type="UseCaseConcrete:src" source="e10" target="n10" />
+  <links xsi:type="UseCaseConcrete:dst" source="e10" target="n11" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e11" />
+  <links xsi:type="UseCaseConcrete:src" source="e11" target="n11" />
+  <links xsi:type="UseCaseConcrete:dst" source="e11" target="n12" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e12" />
+  <links xsi:type="UseCaseConcrete:src" source="e12" target="n12" />
+  <links xsi:type="UseCaseConcrete:dst" source="e12" target="n13" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e13" />
+  <links xsi:type="UseCaseConcrete:src" source="e13" target="n0" />
+  <links xsi:type="UseCaseConcrete:dst" source="e13" target="n2" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e14" />
+  <links xsi:type="UseCaseConcrete:src" source="e14" target="n2" />
+  <links xsi:type="UseCaseConcrete:dst" source="e14" target="n4" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e15" />
+  <links xsi:type="UseCaseConcrete:src" source="e15" target="n4" />
+  <links xsi:type="UseCaseConcrete:dst" source="e15" target="n6" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e16" />
+  <links xsi:type="UseCaseConcrete:src" source="e16" target="n6" />
+  <links xsi:type="UseCaseConcrete:dst" source="e16" target="n8" />
+  <links xsi:type="UseCaseConcrete:edges" source="sm" target="e17" />
+  <links xsi:type="UseCaseConcrete:src" source="e17" target="n8" />
+  <links xsi:type="UseCaseConcrete:dst" source="e17" target="n10" />
+</model>

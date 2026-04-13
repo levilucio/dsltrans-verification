@@ -1,0 +1,15 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity/usecase2activity_medium_out.xmi
+Objects: 10 | Links: 17 | Traces: 27
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1)
+    action: Action(Node2Node_tn_2)
+    action: Action(Node2Node_tn_3)
+    action: Action(Node2Node_tn_4)
+    action: Action(Node2Node_tn_5)
+    action: Action(Node2Node_tn_6)
+    flow: Flow(Edge2Edge_te_10) Node2Node_tn_4 --> Node2Node_tn_6
+    flow: Flow(Edge2Edge_te_7) Node2Node_tn_2 --> Node2Node_tn_3
+    flow: Flow(Edge2Edge_te_8) Node2Node_tn_3 --> Node2Node_tn_4
+    flow: Flow(Edge2Edge_te_9) Node2Node_tn_4 --> Node2Node_tn_5
+

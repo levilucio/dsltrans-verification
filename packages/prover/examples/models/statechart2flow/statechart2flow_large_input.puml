@@ -1,0 +1,36 @@
+@startuml
+title statechart2flow_large_input.xmi
+state "s0" as s_s0
+state "s1" as s_s1
+state "s2" as s_s2
+state "s3" as s_s3
+state "s4" as s_s4
+state "s5" as s_s5
+state "s6" as s_s6
+state "s7" as s_s7
+state "s8" as s_s8
+state "s9" as s_s9
+state "s10" as s_s10
+state "s11" as s_s11
+state "s12" as s_s12
+state "s13" as s_s13
+[*] --> s_s0
+s_s0 --> s_s1 : t0
+s_s1 --> s_s2 : t1
+s_s2 --> s_s3 : t2
+s_s3 --> s_s4 : t3
+s_s4 --> s_s5 : t4
+s_s5 --> s_s6 : t5
+s_s6 --> s_s7 : t6
+s_s7 --> s_s8 : t7
+s_s8 --> s_s9 : t8
+s_s9 --> s_s10 : t9
+s_s10 --> s_s11 : t10
+s_s11 --> s_s12 : t11
+s_s12 --> s_s13 : t12
+s_s0 --> s_s2 : t13
+s_s3 --> s_s5 : t14
+s_s6 --> s_s8 : t15
+s_s9 --> s_s11 : t16
+s_s13 --> [*]
+@enduml

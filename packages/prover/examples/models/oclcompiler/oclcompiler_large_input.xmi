@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <objects xmi:id="model1" xsi:type="OCLASTConcrete:Model"/>
+  <objects xmi:id="module1" xsi:type="OCLASTConcrete:Module" name="MainModule"/>
+  <objects xmi:id="field_status" xsi:type="OCLASTConcrete:Field" name="status" isStatic="false"/>
+  <objects xmi:id="field_name" xsi:type="OCLASTConcrete:Field" name="name" isStatic="false"/>
+
+  <objects xmi:id="op_collectNames" xsi:type="OCLASTConcrete:Operation" name="collectNames" isStatic="false"/>
+  <objects xmi:id="iter_item" xsi:type="OCLASTConcrete:Iterator" varName="item"/>
+  <objects xmi:id="seq_names" xsi:type="OCLASTConcrete:SequenceExp"/>
+  <objects xmi:id="elem1" xsi:type="OCLASTConcrete:CollectionElement"/>
+  <objects xmi:id="elem2" xsi:type="OCLASTConcrete:CollectionElement"/>
+  <objects xmi:id="str_adult" xsi:type="OCLASTConcrete:StringExp" val="adult"/>
+  <objects xmi:id="str_minor" xsi:type="OCLASTConcrete:StringExp" val="minor"/>
+  <objects xmi:id="var_item" xsi:type="OCLASTConcrete:VariableExp" varName="item"/>
+  <objects xmi:id="iter_exp" xsi:type="OCLASTConcrete:IteratorExp" iterName="item"/>
+
+  <objects xmi:id="op_checkStatus" xsi:type="OCLASTConcrete:Operation" name="checkStatus" isStatic="false"/>
+  <objects xmi:id="self1" xsi:type="OCLASTConcrete:SelfExp"/>
+  <objects xmi:id="nav_status" xsi:type="OCLASTConcrete:NavigationCall" propName="status" isStatic="false" isSuper="false"/>
+  <objects xmi:id="undef_check" xsi:type="OCLASTConcrete:BuiltInCall" opName="oclIsUndefined"/>
+  <objects xmi:id="if_status" xsi:type="OCLASTConcrete:IfExp"/>
+  <objects xmi:id="str_guest" xsi:type="OCLASTConcrete:StringExp" val="guest"/>
+  <objects xmi:id="str_active" xsi:type="OCLASTConcrete:StringExp" val="active"/>
+
+  <links xsi:type="OCLASTConcrete:root" source="model1" target="module1"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_status"/>
+  <links xsi:type="OCLASTConcrete:fields" source="module1" target="field_name"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_collectNames"/>
+  <links xsi:type="OCLASTConcrete:ops" source="module1" target="op_checkStatus"/>
+
+  <links xsi:type="OCLASTConcrete:iters" source="op_collectNames" target="iter_item"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="seq_names"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="str_adult"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="str_minor"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="var_item"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_collectNames" target="iter_exp"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_collectNames" target="iter_exp"/>
+  <links xsi:type="OCLASTConcrete:seq_elems" source="seq_names" target="elem1"/>
+  <links xsi:type="OCLASTConcrete:seq_elems" source="seq_names" target="elem2"/>
+  <links xsi:type="OCLASTConcrete:elem_expr" source="elem1" target="str_adult"/>
+  <links xsi:type="OCLASTConcrete:elem_expr" source="elem2" target="str_minor"/>
+  <links xsi:type="OCLASTConcrete:iter_var" source="iter_exp" target="iter_item"/>
+  <links xsi:type="OCLASTConcrete:iter_source" source="iter_exp" target="seq_names"/>
+  <links xsi:type="OCLASTConcrete:iter_body" source="iter_exp" target="var_item"/>
+
+  <links xsi:type="OCLASTConcrete:exprs" source="op_checkStatus" target="self1"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_checkStatus" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_checkStatus" target="undef_check"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_checkStatus" target="if_status"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_checkStatus" target="str_guest"/>
+  <links xsi:type="OCLASTConcrete:exprs" source="op_checkStatus" target="str_active"/>
+  <links xsi:type="OCLASTConcrete:body" source="op_checkStatus" target="if_status"/>
+  <links xsi:type="OCLASTConcrete:nav_src" source="nav_status" target="self1"/>
+  <links xsi:type="OCLASTConcrete:bi_left" source="undef_check" target="nav_status"/>
+  <links xsi:type="OCLASTConcrete:if_cond" source="if_status" target="undef_check"/>
+  <links xsi:type="OCLASTConcrete:if_then" source="if_status" target="str_guest"/>
+  <links xsi:type="OCLASTConcrete:if_else" source="if_status" target="str_active"/>
+</model>

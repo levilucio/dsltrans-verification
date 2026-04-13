@@ -1,0 +1,104 @@
+// =============================================================================
+// PNML2NUPN Fragment (ATL-Zoo inspired)
+// Rules: 5
+// =============================================================================
+
+metamodel PNML {
+    class Model { }
+    class Net { }
+    class Place { tokens: Int }
+    class Transition { }
+    class Arc { weight: Int }
+    containment assoc root: Model[1] -- Net[1]
+    containment assoc places: Net[1] -- Place[0..*]
+    containment assoc trans: Net[1] -- Transition[0..*]
+    containment assoc arcs: Net[1] -- Arc[0..*]
+    assoc srcPlace: Arc[0..*] -- Place[0..1]
+    assoc srcTrans: Arc[0..*] -- Transition[0..1]
+    assoc dstPlace: Arc[0..*] -- Place[0..1]
+    assoc dstTrans: Arc[0..*] -- Transition[0..1]
+}
+
+metamodel NUPN {
+    class NModel { }
+    class Unit { }
+    class NPlace { tokens: Int }
+    class NTransition { }
+    class NArc { weight: Int }
+    class NUnused { }
+    containment assoc root: NModel[1] -- Unit[1]
+    containment assoc places: Unit[1] -- NPlace[0..*]
+    containment assoc trans: Unit[1] -- NTransition[0..*]
+    containment assoc arcs: Unit[1] -- NArc[0..*]
+}
+
+transformation PNML2NUPN_concrete : PNML -> NUPN {
+    layer L1 {
+        rule ModelNet2NModelUnit {
+            match {
+                any m : Model
+                any n : Net
+                direct r : root -- m.n
+            }
+            apply {
+                nm : NModel
+                u : Unit
+                ru : root -- nm.u
+            }
+        }
+    }
+    layer L2 {
+        rule Place2NPlace {
+            match { any p : Place }
+            apply { np : NPlace { tokens = p.tokens } }
+        }
+        rule Transition2NTransition {
+            match { any t : Transition }
+            apply { nt : NTransition }
+        }
+    }
+    layer L3 {
+        rule Arc2NArc {
+            match { any a : Arc }
+            apply { na : NArc { weight = a.weight } }
+        }
+        rule PlaceToTransitionArcWitness {
+            match {
+                any a : Arc
+                any p : Place
+                any t : Transition
+                direct sp : srcPlace -- a.p
+                direct dt : dstTrans -- a.t
+            }
+            apply {
+                na : NArc { weight = a.weight }
+                np : NPlace { tokens = p.tokens }
+                nt : NTransition
+            }
+        }
+    }
+}
+
+// 15 expected HOLDS
+property ModelHasNModel { precondition { any m : Model } postcondition { nm : NModel nm <--trace-- m } }
+property NetHasUnit { precondition { any n : Net } postcondition { u : Unit u <--trace-- n } }
+property PlaceHasNPlace { precondition { any p : Place } postcondition { np : NPlace np <--trace-- p } }
+property TransitionHasNTransition { precondition { any t : Transition } postcondition { nt : NTransition nt <--trace-- t } }
+property ArcHasNArc { precondition { any a : Arc } postcondition { na : NArc na <--trace-- a } }
+property NonEmptyPlaceMapped { precondition { any p : Place where p.tokens >= 1 } postcondition { np : NPlace np <--trace-- p } }
+property EmptyPlaceMapped { precondition { any p : Place where p.tokens == 0 } postcondition { np : NPlace np <--trace-- p } }
+property HeavyArcMapped { precondition { any a : Arc where a.weight >= 2 } postcondition { na : NArc na <--trace-- a } }
+property LightArcMapped { precondition { any a : Arc where a.weight == 1 } postcondition { na : NArc na <--trace-- a } }
+property PlaceToTransitionArcKeepsPlaceTrace { precondition { any a : Arc any p : Place any t : Transition direct sp : srcPlace -- a.p direct dt : dstTrans -- a.t } postcondition { np : NPlace np <--trace-- p } }
+property PlaceToTransitionArcKeepsTransitionTrace { precondition { any a : Arc any p : Place any t : Transition direct sp : srcPlace -- a.p direct dt : dstTrans -- a.t } postcondition { nt : NTransition nt <--trace-- t } }
+property PlaceToTransitionArcKeepsArcTrace { precondition { any a : Arc any p : Place any t : Transition direct sp : srcPlace -- a.p direct dt : dstTrans -- a.t } postcondition { na : NArc na <--trace-- a } }
+property NetWithPlaceHasUnit { precondition { any n : Net any p : Place direct op : places -- n.p } postcondition { u : Unit u <--trace-- n } }
+property NetWithTransitionHasUnit { precondition { any n : Net any t : Transition direct ot : trans -- n.t } postcondition { u : Unit u <--trace-- n } }
+property NetWithArcHasUnit { precondition { any n : Net any a : Arc direct oa : arcs -- n.a } postcondition { u : Unit u <--trace-- n } }
+
+// 5 expected VIOLATED
+property PlaceHasNTransition_ShouldFail { precondition { any p : Place } postcondition { nt : NTransition nt <--trace-- p } }
+property TransitionHasNPlace_ShouldFail { precondition { any t : Transition } postcondition { np : NPlace np <--trace-- t } }
+property ArcHasUnit_ShouldFail { precondition { any a : Arc } postcondition { u : Unit u <--trace-- a } }
+property NetHasUnused_ShouldFail { precondition { any n : Net } postcondition { u : NUnused u <--trace-- n } }
+property PlaceHasUnused_ShouldFail { precondition { any p : Place } postcondition { u : NUnused u <--trace-- p } }

@@ -1,0 +1,233 @@
+[
+  {
+    "id": "ModelHasDocument",
+    "name": "ModelHasDocument",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BibFileHasBibliography",
+    "name": "BibFileHasBibliography",
+    "status": "holds",
+    "checked_pre_matches": 1,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleBecomesDBArticle",
+    "name": "ArticleBecomesDBArticle",
+    "status": "holds",
+    "checked_pre_matches": 17,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookBecomesDBBook",
+    "name": "BookBecomesDBBook",
+    "status": "holds",
+    "checked_pre_matches": 17,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcBecomesDBInProc",
+    "name": "InProcBecomesDBInProc",
+    "status": "holds",
+    "checked_pre_matches": 16,
+    "violating_pre_match": null
+  },
+  {
+    "id": "AuthorBecomesPersonName",
+    "name": "AuthorBecomesPersonName",
+    "status": "holds",
+    "checked_pre_matches": 83,
+    "violating_pre_match": null
+  },
+  {
+    "id": "KeywordBecomesSubjectTerm",
+    "name": "KeywordBecomesSubjectTerm",
+    "status": "holds",
+    "checked_pre_matches": 71,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleHasCitationElement",
+    "name": "ArticleHasCitationElement",
+    "status": "holds",
+    "checked_pre_matches": 32,
+    "violating_pre_match": null
+  },
+  {
+    "id": "RecentArticleMapped",
+    "name": "RecentArticleMapped",
+    "status": "holds",
+    "checked_pre_matches": 8,
+    "violating_pre_match": null
+  },
+  {
+    "id": "OldBookMapped",
+    "name": "OldBookMapped",
+    "status": "holds",
+    "checked_pre_matches": 16,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleInBibFileAppearsInBibliography",
+    "name": "ArticleInBibFileAppearsInBibliography",
+    "status": "holds",
+    "checked_pre_matches": 17,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookInBibFileAppearsInBibliography",
+    "name": "BookInBibFileAppearsInBibliography",
+    "status": "holds",
+    "checked_pre_matches": 17,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcInBibFileAppearsInBibliography",
+    "name": "InProcInBibFileAppearsInBibliography",
+    "status": "holds",
+    "checked_pre_matches": 16,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleWithAuthorHasMappedEntry",
+    "name": "ArticleWithAuthorHasMappedEntry",
+    "status": "holds",
+    "checked_pre_matches": 33,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookWithAuthorHasMappedEntry",
+    "name": "BookWithAuthorHasMappedEntry",
+    "status": "holds",
+    "checked_pre_matches": 25,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcWithAuthorHasMappedEntry",
+    "name": "InProcWithAuthorHasMappedEntry",
+    "status": "holds",
+    "checked_pre_matches": 25,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleWithKeywordHasMappedEntry",
+    "name": "ArticleWithKeywordHasMappedEntry",
+    "status": "holds",
+    "checked_pre_matches": 26,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookWithKeywordHasMappedEntry",
+    "name": "BookWithKeywordHasMappedEntry",
+    "status": "holds",
+    "checked_pre_matches": 23,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcWithKeywordHasMappedEntry",
+    "name": "InProcWithKeywordHasMappedEntry",
+    "status": "holds",
+    "checked_pre_matches": 22,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleCitationKeepsArticleTrace",
+    "name": "ArticleCitationKeepsArticleTrace",
+    "status": "holds",
+    "checked_pre_matches": 32,
+    "violating_pre_match": null
+  },
+  {
+    "id": "CitationAttachedToMappedArticle",
+    "name": "CitationAttachedToMappedArticle",
+    "status": "holds",
+    "checked_pre_matches": 32,
+    "violating_pre_match": null
+  },
+  {
+    "id": "CitationAlsoTracesToCitedEntry",
+    "name": "CitationAlsoTracesToCitedEntry",
+    "status": "holds",
+    "checked_pre_matches": 32,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleAuthorLinkProducesAuthorRelation",
+    "name": "ArticleAuthorLinkProducesAuthorRelation",
+    "status": "holds",
+    "checked_pre_matches": 33,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookAuthorLinkProducesAuthorRelation",
+    "name": "BookAuthorLinkProducesAuthorRelation",
+    "status": "holds",
+    "checked_pre_matches": 25,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcAuthorLinkProducesAuthorRelation",
+    "name": "InProcAuthorLinkProducesAuthorRelation",
+    "status": "holds",
+    "checked_pre_matches": 25,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleKeywordLinkProducesSubjectRelation",
+    "name": "ArticleKeywordLinkProducesSubjectRelation",
+    "status": "holds",
+    "checked_pre_matches": 26,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookKeywordLinkProducesSubjectRelation",
+    "name": "BookKeywordLinkProducesSubjectRelation",
+    "status": "holds",
+    "checked_pre_matches": 23,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcKeywordLinkProducesSubjectRelation",
+    "name": "InProcKeywordLinkProducesSubjectRelation",
+    "status": "holds",
+    "checked_pre_matches": 22,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleBecomesDBBook_ShouldFail",
+    "name": "ArticleBecomesDBBook_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 17,
+    "violating_pre_match": null
+  },
+  {
+    "id": "BookBecomesDBArticle_ShouldFail",
+    "name": "BookBecomesDBArticle_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 17,
+    "violating_pre_match": null
+  },
+  {
+    "id": "InProcBecomesDBBook_ShouldFail",
+    "name": "InProcBecomesDBBook_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 16,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleAuthorBecomesSubject_ShouldFail",
+    "name": "ArticleAuthorBecomesSubject_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 33,
+    "violating_pre_match": null
+  },
+  {
+    "id": "ArticleKeywordBecomesAuthor_ShouldFail",
+    "name": "ArticleKeywordBecomesAuthor_ShouldFail",
+    "status": "violated",
+    "checked_pre_matches": 26,
+    "violating_pre_match": null
+  }
+]

@@ -1,0 +1,15 @@
+Activity model: dsltrans-prover/examples/models/usecase2activity_concrete/usecase2activity_concrete_medium_out.xmi
+Objects: 10 | Links: 17 | Traces: 27
+
+ActivityModel roots:
+- ActivityModel(Model2Model_tm_1) domain='Retail', release='4', workflowName='RetailCheckout'
+    action: Action(Node2Node_tn_2) actor='Customer', complexity='2', name='BrowseCatalog', priority='4', summary='Find relevant items quickly'
+    action: Action(Node2Node_tn_3) actor='Customer', complexity='4', name='CreateOrder', priority='8', summary='Create a persistent order record'
+    action: Action(Node2Node_tn_4) actor='System', complexity='2', name='AuthenticateUser', priority='8', summary='Authenticate the user before checkout'
+    action: Action(Node2Node_tn_5) actor='Customer', complexity='3', name='SubmitPayment', priority='9', summary='Collect payment securely'
+    action: Action(Node2Node_tn_6) actor='System', complexity='2', name='NotifyCustomer', priority='6', summary='Send customer notification'
+    flow: Flow(Edge2Edge_te_10) Node2Node_tn_5 --> Node2Node_tn_4 priority='7', rationale='Audit trail requires persistent record', relationKind='dependsOn'
+    flow: Flow(Edge2Edge_te_7) Node2Node_tn_3 --> Node2Node_tn_4 priority='8', rationale='Shared authentication requirement', relationKind='include'
+    flow: Flow(Edge2Edge_te_8) Node2Node_tn_3 --> Node2Node_tn_5 priority='9', rationale='Payment requires prior validation', relationKind='include'
+    flow: Flow(Edge2Edge_te_9) Node2Node_tn_3 --> Node2Node_tn_6 priority='6', rationale='Notification follows order submission', relationKind='extend'
+

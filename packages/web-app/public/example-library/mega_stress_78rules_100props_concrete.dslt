@@ -1,0 +1,2575 @@
+metamodel MegaSource {
+    enum Kind { K0, K1, K2 }
+    class MegaModel { }
+    class A { flag: Bool level: Int kind: Kind }
+    class B { flag: Bool level: Int kind: Kind }
+    class C { flag: Bool level: Int kind: Kind }
+    class Group { flag: Bool level: Int }
+    class RelAB { weight: Int }
+    class RelBC { weight: Int }
+    class RelCA { weight: Int }
+    class Membership { strength: Int }
+
+    containment assoc aNodes : MegaModel[1] -- A[0..*]
+    containment assoc bs : MegaModel[1] -- B[0..*]
+    containment assoc cs : MegaModel[1] -- C[0..*]
+    containment assoc groups : MegaModel[1] -- Group[0..*]
+    containment assoc relabs : MegaModel[1] -- RelAB[0..*]
+    containment assoc relbcs : MegaModel[1] -- RelBC[0..*]
+    containment assoc relcas : MegaModel[1] -- RelCA[0..*]
+    containment assoc memberships : MegaModel[1] -- Membership[0..*]
+
+    assoc abSrc : RelAB[0..*] -- A[1]
+    assoc abDst : RelAB[0..*] -- B[1]
+    assoc bcSrc : RelBC[0..*] -- B[1]
+    assoc bcDst : RelBC[0..*] -- C[1]
+    assoc caSrc : RelCA[0..*] -- C[1]
+    assoc caDst : RelCA[0..*] -- A[1]
+
+    assoc memberGroup : Membership[0..*] -- Group[1]
+    assoc memberA : Membership[0..*] -- A[0..1]
+    assoc memberB : Membership[0..*] -- B[0..1]
+    assoc memberC : Membership[0..*] -- C[0..1]
+}
+
+metamodel MegaTarget {
+    class TMegaModel { }
+    class TA { }
+    class TB { }
+    class TC { }
+    class TGroup { }
+    class TLinkAB { }
+    class TLinkBC { }
+    class TLinkCA { }
+    abstract class Marker { }
+    class Marker01 extends Marker { }
+    class Marker02 extends Marker { }
+    class Marker03 extends Marker { }
+    class Marker04 extends Marker { }
+    class Marker05 extends Marker { }
+    class Marker06 extends Marker { }
+    class Marker07 extends Marker { }
+    class Marker08 extends Marker { }
+    class Marker09 extends Marker { }
+    class Marker10 extends Marker { }
+    class Marker11 extends Marker { }
+    class Marker12 extends Marker { }
+    class Marker13 extends Marker { }
+    class Marker14 extends Marker { }
+    class Marker15 extends Marker { }
+    class Marker16 extends Marker { }
+    class Marker17 extends Marker { }
+    class Marker18 extends Marker { }
+    class Marker19 extends Marker { }
+    class Marker20 extends Marker { }
+    class Marker21 extends Marker { }
+    class Marker22 extends Marker { }
+    class Marker23 extends Marker { }
+    class Marker24 extends Marker { }
+    class Marker25 extends Marker { }
+    class Marker26 extends Marker { }
+    class Marker27 extends Marker { }
+    class Marker28 extends Marker { }
+    class Marker29 extends Marker { }
+    class Marker30 extends Marker { }
+    class Marker31 extends Marker { }
+    class Marker32 extends Marker { }
+    class Marker33 extends Marker { }
+    class Marker34 extends Marker { }
+    class Marker35 extends Marker { }
+    class Marker36 extends Marker { }
+    class Marker37 extends Marker { }
+    class Marker38 extends Marker { }
+    class Marker39 extends Marker { }
+    class Marker40 extends Marker { }
+    class Marker41 extends Marker { }
+    class Marker42 extends Marker { }
+    class Marker43 extends Marker { }
+    class Marker44 extends Marker { }
+    class Marker45 extends Marker { }
+    class Marker46 extends Marker { }
+    class Marker47 extends Marker { }
+    class Marker48 extends Marker { }
+    class Marker49 extends Marker { }
+    class Marker50 extends Marker { }
+    class Marker51 extends Marker { }
+    class Marker52 extends Marker { }
+    class Marker53 extends Marker { }
+    class Marker54 extends Marker { }
+    class Marker55 extends Marker { }
+    class Marker56 extends Marker { }
+    class Marker57 extends Marker { }
+    class Marker58 extends Marker { }
+    class Marker59 extends Marker { }
+    class Marker60 extends Marker { }
+
+    containment assoc tas : TMegaModel[1] -- TA[0..*]
+    containment assoc tbs : TMegaModel[1] -- TB[0..*]
+    containment assoc tcs : TMegaModel[1] -- TC[0..*]
+    containment assoc tgroups : TMegaModel[1] -- TGroup[0..*]
+    containment assoc tabLinks : TMegaModel[1] -- TLinkAB[0..*]
+    containment assoc tbcLinks : TMegaModel[1] -- TLinkBC[0..*]
+    containment assoc tcaLinks : TMegaModel[1] -- TLinkCA[0..*]
+    containment assoc markers : TMegaModel[1] -- Marker[0..*]
+
+    assoc tabSrc : TLinkAB[0..*] -- TA[1]
+    assoc tabDst : TLinkAB[0..*] -- TB[1]
+    assoc tbcSrc : TLinkBC[0..*] -- TB[1]
+    assoc tbcDst : TLinkBC[0..*] -- TC[1]
+    assoc tcaSrc : TLinkCA[0..*] -- TC[1]
+    assoc tcaDst : TLinkCA[0..*] -- TA[1]
+
+    assoc groupA : TGroup[0..*] -- TA[0..*]
+    assoc groupB : TGroup[0..*] -- TB[0..*]
+    assoc groupC : TGroup[0..*] -- TC[0..*]
+
+    assoc markerA : Marker[0..*] -- TA[0..1]
+    assoc markerB : Marker[0..*] -- TB[0..1]
+    assoc markerC : Marker[0..*] -- TC[0..1]
+}
+
+transformation MegaStressTransform : MegaSource -> MegaTarget {
+    layer L1_CreateBase {
+        rule Model2TMegaModel {
+            match {
+                any m : MegaModel
+            }
+            apply {
+                tm : TMegaModel
+            }
+        }
+        rule A2TA {
+            match {
+                any a : A
+            }
+            apply {
+                ta : TA
+            }
+        }
+        rule B2TB {
+            match {
+                any b : B
+            }
+            apply {
+                tb : TB
+            }
+        }
+        rule C2TC {
+            match {
+                any c : C
+            }
+            apply {
+                tc : TC
+            }
+        }
+        rule Group2TGroup {
+            match {
+                any g : Group
+            }
+            apply {
+                tg : TGroup
+            }
+        }
+        rule RelAB2TLinkAB {
+            match {
+                any r : RelAB
+            }
+            apply {
+                tr : TLinkAB
+            }
+        }
+        rule RelBC2TLinkBC {
+            match {
+                any r : RelBC
+            }
+            apply {
+                tr : TLinkBC
+            }
+        }
+        rule RelCA2TLinkCA {
+            match {
+                any r : RelCA
+            }
+            apply {
+                tr : TLinkCA
+            }
+        }
+    }
+
+    layer L2_ConnectBase {
+        rule ConnectTAInModel {
+            match {
+                any m : MegaModel
+                any a : A
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                o : tas -- tm.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule ConnectTBInModel {
+            match {
+                any m : MegaModel
+                any b : B
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                o : tbs -- tm.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule ConnectTCInModel {
+            match {
+                any m : MegaModel
+                any c : C
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                o : tcs -- tm.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule ConnectTGroupInModel {
+            match {
+                any m : MegaModel
+                any g : Group
+                direct l : groups -- m.g
+            }
+            apply {
+                tm : TMegaModel
+                tg : TGroup
+                o : tgroups -- tm.tg
+            }
+            backward {
+                tm <--trace-- m
+                tg <--trace-- g
+            }
+        }
+        rule ConnectAB {
+            match {
+                any m : MegaModel
+                any r : RelAB
+                any a : A
+                any b : B
+                direct rl : relabs -- m.r
+                direct s : abSrc -- r.a
+                direct d : abDst -- r.b
+            }
+            apply {
+                tm : TMegaModel
+                tr : TLinkAB
+                ta : TA
+                tb : TB
+                o1 : tabLinks -- tm.tr
+                o2 : tabSrc -- tr.ta
+                o3 : tabDst -- tr.tb
+            }
+            backward {
+                tm <--trace-- m
+                tr <--trace-- r
+                ta <--trace-- a
+                tb <--trace-- b
+            }
+        }
+        rule ConnectBC {
+            match {
+                any m : MegaModel
+                any r : RelBC
+                any b : B
+                any c : C
+                direct rl : relbcs -- m.r
+                direct s : bcSrc -- r.b
+                direct d : bcDst -- r.c
+            }
+            apply {
+                tm : TMegaModel
+                tr : TLinkBC
+                tb : TB
+                tc : TC
+                o1 : tbcLinks -- tm.tr
+                o2 : tbcSrc -- tr.tb
+                o3 : tbcDst -- tr.tc
+            }
+            backward {
+                tm <--trace-- m
+                tr <--trace-- r
+                tb <--trace-- b
+                tc <--trace-- c
+            }
+        }
+        rule ConnectCA {
+            match {
+                any m : MegaModel
+                any r : RelCA
+                any c : C
+                any a : A
+                direct rl : relcas -- m.r
+                direct s : caSrc -- r.c
+                direct d : caDst -- r.a
+            }
+            apply {
+                tm : TMegaModel
+                tr : TLinkCA
+                tc : TC
+                ta : TA
+                o1 : tcaLinks -- tm.tr
+                o2 : tcaSrc -- tr.tc
+                o3 : tcaDst -- tr.ta
+            }
+            backward {
+                tm <--trace-- m
+                tr <--trace-- r
+                tc <--trace-- c
+                ta <--trace-- a
+            }
+        }
+        rule ConnectGroupA {
+            match {
+                any ms : Membership
+                any g : Group
+                any a : A
+                direct gL : memberGroup -- ms.g
+                direct aL : memberA -- ms.a
+            }
+            apply {
+                tg : TGroup
+                ta : TA
+                l : groupA -- tg.ta
+            }
+            backward {
+                tg <--trace-- g
+                ta <--trace-- a
+            }
+        }
+        rule ConnectGroupB {
+            match {
+                any ms : Membership
+                any g : Group
+                any b : B
+                direct gL : memberGroup -- ms.g
+                direct bL : memberB -- ms.b
+            }
+            apply {
+                tg : TGroup
+                tb : TB
+                l : groupB -- tg.tb
+            }
+            backward {
+                tg <--trace-- g
+                tb <--trace-- b
+            }
+        }
+        rule ConnectGroupC {
+            match {
+                any ms : Membership
+                any g : Group
+                any c : C
+                direct gL : memberGroup -- ms.g
+                direct cL : memberC -- ms.c
+            }
+            apply {
+                tg : TGroup
+                tc : TC
+                l : groupC -- tg.tc
+            }
+            backward {
+                tg <--trace-- g
+                tc <--trace-- c
+            }
+        }
+    }
+
+    layer L3_Markers {
+        rule Mk01_A {
+            match {
+                any m : MegaModel
+                any a : A where a.flag == true
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker01
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk02_A {
+            match {
+                any m : MegaModel
+                any a : A where a.level >= 1
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker02
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk03_A {
+            match {
+                any m : MegaModel
+                any a : A where a.kind == "K1"
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker03
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk04_A {
+            match {
+                any m : MegaModel
+                any a : A
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker04
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk05_A {
+            match {
+                any m : MegaModel
+                any a : A where a.flag == true
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker05
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk06_A {
+            match {
+                any m : MegaModel
+                any a : A where a.level >= 1
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker06
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk07_A {
+            match {
+                any m : MegaModel
+                any a : A where a.kind == "K1"
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker07
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk08_A {
+            match {
+                any m : MegaModel
+                any a : A
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker08
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk09_A {
+            match {
+                any m : MegaModel
+                any a : A where a.flag == true
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker09
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk10_A {
+            match {
+                any m : MegaModel
+                any a : A where a.level >= 1
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker10
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk11_A {
+            match {
+                any m : MegaModel
+                any a : A where a.kind == "K1"
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker11
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk12_A {
+            match {
+                any m : MegaModel
+                any a : A
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker12
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk13_A {
+            match {
+                any m : MegaModel
+                any a : A where a.flag == true
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker13
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk14_A {
+            match {
+                any m : MegaModel
+                any a : A where a.level >= 1
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker14
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk15_A {
+            match {
+                any m : MegaModel
+                any a : A where a.kind == "K1"
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker15
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk16_A {
+            match {
+                any m : MegaModel
+                any a : A
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker16
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk17_A {
+            match {
+                any m : MegaModel
+                any a : A where a.flag == true
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker17
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk18_A {
+            match {
+                any m : MegaModel
+                any a : A where a.level >= 1
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker18
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk19_A {
+            match {
+                any m : MegaModel
+                any a : A where a.kind == "K1"
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker19
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk20_A {
+            match {
+                any m : MegaModel
+                any a : A
+                direct l : aNodes -- m.a
+            }
+            apply {
+                tm : TMegaModel
+                ta : TA
+                mk : Marker20
+                l1 : markers -- tm.mk
+                l2 : markerA -- mk.ta
+            }
+            backward {
+                tm <--trace-- m
+                ta <--trace-- a
+            }
+        }
+        rule Mk21_B {
+            match {
+                any m : MegaModel
+                any b : B where b.flag == true
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker21
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk22_B {
+            match {
+                any m : MegaModel
+                any b : B where b.level >= 1
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker22
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk23_B {
+            match {
+                any m : MegaModel
+                any b : B where b.kind == "K1"
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker23
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk24_B {
+            match {
+                any m : MegaModel
+                any b : B
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker24
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk25_B {
+            match {
+                any m : MegaModel
+                any b : B where b.flag == true
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker25
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk26_B {
+            match {
+                any m : MegaModel
+                any b : B where b.level >= 1
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker26
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk27_B {
+            match {
+                any m : MegaModel
+                any b : B where b.kind == "K1"
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker27
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk28_B {
+            match {
+                any m : MegaModel
+                any b : B
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker28
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk29_B {
+            match {
+                any m : MegaModel
+                any b : B where b.flag == true
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker29
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk30_B {
+            match {
+                any m : MegaModel
+                any b : B where b.level >= 1
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker30
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk31_B {
+            match {
+                any m : MegaModel
+                any b : B where b.kind == "K1"
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker31
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk32_B {
+            match {
+                any m : MegaModel
+                any b : B
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker32
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk33_B {
+            match {
+                any m : MegaModel
+                any b : B where b.flag == true
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker33
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk34_B {
+            match {
+                any m : MegaModel
+                any b : B where b.level >= 1
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker34
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk35_B {
+            match {
+                any m : MegaModel
+                any b : B where b.kind == "K1"
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker35
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk36_B {
+            match {
+                any m : MegaModel
+                any b : B
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker36
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk37_B {
+            match {
+                any m : MegaModel
+                any b : B where b.flag == true
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker37
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk38_B {
+            match {
+                any m : MegaModel
+                any b : B where b.level >= 1
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker38
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk39_B {
+            match {
+                any m : MegaModel
+                any b : B where b.kind == "K1"
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker39
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk40_B {
+            match {
+                any m : MegaModel
+                any b : B
+                direct l : bs -- m.b
+            }
+            apply {
+                tm : TMegaModel
+                tb : TB
+                mk : Marker40
+                l1 : markers -- tm.mk
+                l2 : markerB -- mk.tb
+            }
+            backward {
+                tm <--trace-- m
+                tb <--trace-- b
+            }
+        }
+        rule Mk41_C {
+            match {
+                any m : MegaModel
+                any c : C where c.flag == true
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker41
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk42_C {
+            match {
+                any m : MegaModel
+                any c : C where c.level >= 1
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker42
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk43_C {
+            match {
+                any m : MegaModel
+                any c : C where c.kind == "K1"
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker43
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk44_C {
+            match {
+                any m : MegaModel
+                any c : C
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker44
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk45_C {
+            match {
+                any m : MegaModel
+                any c : C where c.flag == true
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker45
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk46_C {
+            match {
+                any m : MegaModel
+                any c : C where c.level >= 1
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker46
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk47_C {
+            match {
+                any m : MegaModel
+                any c : C where c.kind == "K1"
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker47
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk48_C {
+            match {
+                any m : MegaModel
+                any c : C
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker48
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk49_C {
+            match {
+                any m : MegaModel
+                any c : C where c.flag == true
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker49
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk50_C {
+            match {
+                any m : MegaModel
+                any c : C where c.level >= 1
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker50
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk51_C {
+            match {
+                any m : MegaModel
+                any c : C where c.kind == "K1"
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker51
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk52_C {
+            match {
+                any m : MegaModel
+                any c : C
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker52
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk53_C {
+            match {
+                any m : MegaModel
+                any c : C where c.flag == true
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker53
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk54_C {
+            match {
+                any m : MegaModel
+                any c : C where c.level >= 1
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker54
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk55_C {
+            match {
+                any m : MegaModel
+                any c : C where c.kind == "K1"
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker55
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk56_C {
+            match {
+                any m : MegaModel
+                any c : C
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker56
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk57_C {
+            match {
+                any m : MegaModel
+                any c : C where c.flag == true
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker57
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk58_C {
+            match {
+                any m : MegaModel
+                any c : C where c.level >= 1
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker58
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk59_C {
+            match {
+                any m : MegaModel
+                any c : C where c.kind == "K1"
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker59
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+        rule Mk60_C {
+            match {
+                any m : MegaModel
+                any c : C
+                direct l : cs -- m.c
+            }
+            apply {
+                tm : TMegaModel
+                tc : TC
+                mk : Marker60
+                l1 : markers -- tm.mk
+                l2 : markerC -- mk.tc
+            }
+            backward {
+                tm <--trace-- m
+                tc <--trace-- c
+            }
+        }
+    }
+}
+
+// Expected to HOLD
+property ModelMaps {
+    precondition { any m : MegaModel }
+    postcondition { tm : TMegaModel tm <--trace-- m }
+}
+property AMaps {
+    precondition { any a : A }
+    postcondition { ta : TA ta <--trace-- a }
+}
+property BMaps {
+    precondition { any b : B }
+    postcondition { tb : TB tb <--trace-- b }
+}
+property CMaps {
+    precondition { any c : C }
+    postcondition { tc : TC tc <--trace-- c }
+}
+property GroupMaps {
+    precondition { any g : Group }
+    postcondition { tg : TGroup tg <--trace-- g }
+}
+property RelABMaps {
+    precondition { any r : RelAB }
+    postcondition { tr : TLinkAB tr <--trace-- r }
+}
+property RelBCMaps {
+    precondition { any r : RelBC }
+    postcondition { tr : TLinkBC tr <--trace-- r }
+}
+property RelCAMaps {
+    precondition { any r : RelCA }
+    postcondition { tr : TLinkCA tr <--trace-- r }
+}
+property GroupAConnectionPreserved {
+    precondition {
+        any ms : Membership
+        any g : Group
+        any a : A
+        direct gL : memberGroup -- ms.g
+        direct aL : memberA -- ms.a
+    }
+    postcondition {
+        tg : TGroup
+        ta : TA
+        l : groupA -- tg.ta
+        tg <--trace-- g
+        ta <--trace-- a
+    }
+}
+property ABConnectionPreserved {
+    precondition {
+        any m : MegaModel
+        any r : RelAB
+        any a : A
+        any b : B
+        direct rl : relabs -- m.r
+        direct s : abSrc -- r.a
+        direct d : abDst -- r.b
+    }
+    postcondition {
+        tr : TLinkAB
+        ta : TA
+        tb : TB
+        l1 : tabSrc -- tr.ta
+        l2 : tabDst -- tr.tb
+        tr <--trace-- r
+        ta <--trace-- a
+        tb <--trace-- b
+    }
+}
+property Marker01FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker01
+        mk <--trace-- a
+    }
+}
+property Marker02FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker02
+        mk <--trace-- a
+    }
+}
+property Marker03FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker03
+        mk <--trace-- a
+    }
+}
+property Marker04FromA {
+    precondition {
+        any m : MegaModel
+        any a : A
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker04
+        mk <--trace-- a
+    }
+}
+property Marker05FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker05
+        mk <--trace-- a
+    }
+}
+property Marker06FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker06
+        mk <--trace-- a
+    }
+}
+property Marker07FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker07
+        mk <--trace-- a
+    }
+}
+property Marker08FromA {
+    precondition {
+        any m : MegaModel
+        any a : A
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker08
+        mk <--trace-- a
+    }
+}
+property Marker09FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker09
+        mk <--trace-- a
+    }
+}
+property Marker10FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker10
+        mk <--trace-- a
+    }
+}
+property Marker11FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker11
+        mk <--trace-- a
+    }
+}
+property Marker12FromA {
+    precondition {
+        any m : MegaModel
+        any a : A
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker12
+        mk <--trace-- a
+    }
+}
+property Marker13FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker13
+        mk <--trace-- a
+    }
+}
+property Marker14FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker14
+        mk <--trace-- a
+    }
+}
+property Marker15FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker15
+        mk <--trace-- a
+    }
+}
+property Marker16FromA {
+    precondition {
+        any m : MegaModel
+        any a : A
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker16
+        mk <--trace-- a
+    }
+}
+property Marker17FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker17
+        mk <--trace-- a
+    }
+}
+property Marker18FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker18
+        mk <--trace-- a
+    }
+}
+property Marker19FromA {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker19
+        mk <--trace-- a
+    }
+}
+property Marker20FromA {
+    precondition {
+        any m : MegaModel
+        any a : A
+        direct l : aNodes -- m.a
+    }
+    postcondition {
+        mk : Marker20
+        mk <--trace-- a
+    }
+}
+property Marker21FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker21
+        mk <--trace-- b
+    }
+}
+property Marker22FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker22
+        mk <--trace-- b
+    }
+}
+property Marker23FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker23
+        mk <--trace-- b
+    }
+}
+property Marker24FromB {
+    precondition {
+        any m : MegaModel
+        any b : B
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker24
+        mk <--trace-- b
+    }
+}
+property Marker25FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker25
+        mk <--trace-- b
+    }
+}
+property Marker26FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker26
+        mk <--trace-- b
+    }
+}
+property Marker27FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker27
+        mk <--trace-- b
+    }
+}
+property Marker28FromB {
+    precondition {
+        any m : MegaModel
+        any b : B
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker28
+        mk <--trace-- b
+    }
+}
+property Marker29FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker29
+        mk <--trace-- b
+    }
+}
+property Marker30FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker30
+        mk <--trace-- b
+    }
+}
+property Marker31FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker31
+        mk <--trace-- b
+    }
+}
+property Marker32FromB {
+    precondition {
+        any m : MegaModel
+        any b : B
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker32
+        mk <--trace-- b
+    }
+}
+property Marker33FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker33
+        mk <--trace-- b
+    }
+}
+property Marker34FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker34
+        mk <--trace-- b
+    }
+}
+property Marker35FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker35
+        mk <--trace-- b
+    }
+}
+property Marker36FromB {
+    precondition {
+        any m : MegaModel
+        any b : B
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker36
+        mk <--trace-- b
+    }
+}
+property Marker37FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker37
+        mk <--trace-- b
+    }
+}
+property Marker38FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker38
+        mk <--trace-- b
+    }
+}
+property Marker39FromB {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker39
+        mk <--trace-- b
+    }
+}
+property Marker40FromB {
+    precondition {
+        any m : MegaModel
+        any b : B
+        direct l : bs -- m.b
+    }
+    postcondition {
+        mk : Marker40
+        mk <--trace-- b
+    }
+}
+
+// Expected to FAIL
+property AMapsToTB_ShouldFail {
+    precondition { any a : A }
+    postcondition { tb : TB tb <--trace-- a }
+}
+property BMapsToTC_ShouldFail {
+    precondition { any b : B }
+    postcondition { tc : TC tc <--trace-- b }
+}
+property CMapsToTA_ShouldFail {
+    precondition { any c : C }
+    postcondition { ta : TA ta <--trace-- c }
+}
+property GroupMapsToTA_ShouldFail {
+    precondition { any g : Group }
+    postcondition { ta : TA ta <--trace-- g }
+}
+property RelABMapsToTB_ShouldFail {
+    precondition { any r : RelAB }
+    postcondition { tb : TB tb <--trace-- r }
+}
+property RelBCMapsToTC_ShouldFail {
+    precondition { any r : RelBC }
+    postcondition { tc : TC tc <--trace-- r }
+}
+property RelCAMapsToTA_ShouldFail {
+    precondition { any r : RelCA }
+    postcondition { ta : TA ta <--trace-- r }
+}
+property ModelMapsToTA_ShouldFail {
+    precondition { any m : MegaModel }
+    postcondition { ta : TA ta <--trace-- m }
+}
+property GroupBWrongTrace_ShouldFail {
+    precondition {
+        any ms : Membership
+        any g : Group
+        any b : B
+        direct gL : memberGroup -- ms.g
+        direct bL : memberB -- ms.b
+    }
+    postcondition {
+        tg : TGroup
+        tb : TB
+        l : groupB -- tg.tb
+        tb <--trace-- g
+    }
+}
+property ABWrongEdgeTrace_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any r : RelAB
+        any a : A
+        any b : B
+        direct rl : relabs -- m.r
+        direct s : abSrc -- r.a
+        direct d : abDst -- r.b
+    }
+    postcondition {
+        tr : TLinkAB
+        tr <--trace-- a
+    }
+}
+property Marker01WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker01
+        mk <--trace-- b
+    }
+}
+property Marker02WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker02
+        mk <--trace-- b
+    }
+}
+property Marker03WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker03
+        mk <--trace-- b
+    }
+}
+property Marker04WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker04
+        mk <--trace-- b
+    }
+}
+property Marker05WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker05
+        mk <--trace-- b
+    }
+}
+property Marker06WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker06
+        mk <--trace-- b
+    }
+}
+property Marker07WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker07
+        mk <--trace-- b
+    }
+}
+property Marker08WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker08
+        mk <--trace-- b
+    }
+}
+property Marker09WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker09
+        mk <--trace-- b
+    }
+}
+property Marker10WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker10
+        mk <--trace-- b
+    }
+}
+property Marker11WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker11
+        mk <--trace-- b
+    }
+}
+property Marker12WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker12
+        mk <--trace-- b
+    }
+}
+property Marker13WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker13
+        mk <--trace-- b
+    }
+}
+property Marker14WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker14
+        mk <--trace-- b
+    }
+}
+property Marker15WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker15
+        mk <--trace-- b
+    }
+}
+property Marker16WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker16
+        mk <--trace-- b
+    }
+}
+property Marker17WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.flag == true
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker17
+        mk <--trace-- b
+    }
+}
+property Marker18WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.level >= 1
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker18
+        mk <--trace-- b
+    }
+}
+property Marker19WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A where a.kind == "K1"
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker19
+        mk <--trace-- b
+    }
+}
+property Marker20WrongTraceFromB_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any a : A
+        any b : B
+        direct l1 : aNodes -- m.a
+        direct l2 : bs -- m.b
+    }
+    postcondition {
+        mk : Marker20
+        mk <--trace-- b
+    }
+}
+property Marker21WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker21
+        mk <--trace-- c
+    }
+}
+property Marker22WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker22
+        mk <--trace-- c
+    }
+}
+property Marker23WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker23
+        mk <--trace-- c
+    }
+}
+property Marker24WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker24
+        mk <--trace-- c
+    }
+}
+property Marker25WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker25
+        mk <--trace-- c
+    }
+}
+property Marker26WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker26
+        mk <--trace-- c
+    }
+}
+property Marker27WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker27
+        mk <--trace-- c
+    }
+}
+property Marker28WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker28
+        mk <--trace-- c
+    }
+}
+property Marker29WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker29
+        mk <--trace-- c
+    }
+}
+property Marker30WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker30
+        mk <--trace-- c
+    }
+}
+property Marker31WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker31
+        mk <--trace-- c
+    }
+}
+property Marker32WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker32
+        mk <--trace-- c
+    }
+}
+property Marker33WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker33
+        mk <--trace-- c
+    }
+}
+property Marker34WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker34
+        mk <--trace-- c
+    }
+}
+property Marker35WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker35
+        mk <--trace-- c
+    }
+}
+property Marker36WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker36
+        mk <--trace-- c
+    }
+}
+property Marker37WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.flag == true
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker37
+        mk <--trace-- c
+    }
+}
+property Marker38WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.level >= 1
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker38
+        mk <--trace-- c
+    }
+}
+property Marker39WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B where b.kind == "K1"
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker39
+        mk <--trace-- c
+    }
+}
+property Marker40WrongTraceFromC_ShouldFail {
+    precondition {
+        any m : MegaModel
+        any b : B
+        any c : C
+        direct l1 : bs -- m.b
+        direct l2 : cs -- m.c
+    }
+    postcondition {
+        mk : Marker40
+        mk <--trace-- c
+    }
+}

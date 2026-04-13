@@ -1,0 +1,728 @@
+// =============================================================================
+// BibTeX2DocBook Concrete Execution Spec
+// =============================================================================
+// Purpose:
+// - Use this spec for concrete execution on realistic BibTeX-like models.
+// - Keep the proof-oriented finite-domain spec in bibtex2docbook_concrete.dslt for
+//   SMT/cutoff verification.
+//
+// Key difference from the proof spec:
+// - This concrete variant uses unrestricted String / Int attributes so real
+//   titles, names, venues, and publishers can be preserved during execution.
+// - It is therefore NOT intended to satisfy the theorem fragment restrictions
+//   required by the cutoff theorem and SMT-direct completeness checks.
+
+metamodel BibTeXConcrete {
+    class Model { }
+    class BibFile { }
+
+    abstract class Entry {
+        key: String
+        title: String
+    }
+
+    class Article extends Entry {
+        year: Int
+        journal: String
+    }
+
+    class Book extends Entry {
+        year: Int
+        publisher: String
+    }
+
+    class InProceedings extends Entry {
+        year: Int
+        booktitle: String
+    }
+
+    class Author { name: String }
+    class Keyword { text: String }
+
+    containment assoc root: Model[1] -- BibFile[1]
+    containment assoc entries: BibFile[1] -- Entry[0..*]
+    containment assoc authors: Entry[1] -- Author[0..*]
+    containment assoc keywords: Entry[1] -- Keyword[0..*]
+    assoc cites: Article[0..*] -- Entry[0..*]
+}
+
+metamodel DocBookConcrete {
+    class Document { }
+    class Bibliography { }
+
+    abstract class DBEntry {
+        key: String
+        title: String
+    }
+
+    class DBArticle extends DBEntry {
+        year: Int
+        journal: String
+    }
+
+    class DBBook extends DBEntry {
+        year: Int
+        publisher: String
+    }
+
+    class DBInProceedings extends DBEntry {
+        year: Int
+        booktitle: String
+    }
+
+    class PersonName { value: String }
+    class SubjectTerm { value: String }
+    class DBCitation { citedKey: String }
+
+    containment assoc root: Document[1] -- Bibliography[1]
+    containment assoc entries: Bibliography[1] -- DBEntry[0..*]
+    containment assoc authors: DBEntry[1] -- PersonName[0..*]
+    containment assoc subjects: DBEntry[1] -- SubjectTerm[0..*]
+    containment assoc citations: DBArticle[1] -- DBCitation[0..*]
+}
+
+transformation BibTeX2DocBook_concrete : BibTeXConcrete -> DocBookConcrete {
+
+    layer CreateContainers {
+        rule ModelBibFile2DocumentBibliography {
+            match {
+                any m : Model
+                any bf : BibFile
+                direct r : root -- m.bf
+            }
+            apply {
+                d : Document
+                b : Bibliography
+                rb : root -- d.b
+            }
+        }
+    }
+
+    layer CreateEntries {
+        rule Article2DBArticle {
+            match {
+                any bf : BibFile
+                any a : Article
+                direct ea : entries -- bf.a
+            }
+            apply {
+                b : Bibliography
+                da : DBArticle {
+                    key = a.key,
+                    title = a.title,
+                    year = a.year,
+                    journal = a.journal
+                }
+                eb : entries -- b.da
+            }
+            backward {
+                b <--trace-- bf
+            }
+        }
+
+        rule Book2DBBook {
+            match {
+                any bf : BibFile
+                any b : Book
+                direct ebf : entries -- bf.b
+            }
+            apply {
+                bib : Bibliography
+                db : DBBook {
+                    key = b.key,
+                    title = b.title,
+                    year = b.year,
+                    publisher = b.publisher
+                }
+                el : entries -- bib.db
+            }
+            backward {
+                bib <--trace-- bf
+            }
+        }
+
+        rule InProc2DBInProc {
+            match {
+                any bf : BibFile
+                any p : InProceedings
+                direct ep : entries -- bf.p
+            }
+            apply {
+                b : Bibliography
+                dp : DBInProceedings {
+                    key = p.key,
+                    title = p.title,
+                    year = p.year,
+                    booktitle = p.booktitle
+                }
+                eb : entries -- b.dp
+            }
+            backward {
+                b <--trace-- bf
+            }
+        }
+    }
+
+    layer CreateEntryDetails {
+        rule ArticleAuthor2PersonName {
+            match {
+                any e : Article
+                any a : Author
+                direct owns : authors -- e.a
+            }
+            apply {
+                de : DBArticle {
+                    key = e.key,
+                    title = e.title,
+                    year = e.year,
+                    journal = e.journal
+                }
+                pn : PersonName { value = a.name }
+                al : authors -- de.pn
+            }
+            backward {
+                de <--trace-- e
+            }
+        }
+
+        rule BookAuthor2PersonName {
+            match {
+                any e : Book
+                any a : Author
+                direct owns : authors -- e.a
+            }
+            apply {
+                de : DBBook {
+                    key = e.key,
+                    title = e.title,
+                    year = e.year,
+                    publisher = e.publisher
+                }
+                pn : PersonName { value = a.name }
+                al : authors -- de.pn
+            }
+            backward {
+                de <--trace-- e
+            }
+        }
+
+        rule InProcAuthor2PersonName {
+            match {
+                any e : InProceedings
+                any a : Author
+                direct owns : authors -- e.a
+            }
+            apply {
+                de : DBInProceedings {
+                    key = e.key,
+                    title = e.title,
+                    year = e.year,
+                    booktitle = e.booktitle
+                }
+                pn : PersonName { value = a.name }
+                al : authors -- de.pn
+            }
+            backward {
+                de <--trace-- e
+            }
+        }
+
+        rule ArticleKeyword2SubjectTerm {
+            match {
+                any e : Article
+                any k : Keyword
+                direct owns : keywords -- e.k
+            }
+            apply {
+                de : DBArticle {
+                    key = e.key,
+                    title = e.title,
+                    year = e.year,
+                    journal = e.journal
+                }
+                st : SubjectTerm { value = k.text }
+                sl : subjects -- de.st
+            }
+            backward {
+                de <--trace-- e
+            }
+        }
+
+        rule BookKeyword2SubjectTerm {
+            match {
+                any e : Book
+                any k : Keyword
+                direct owns : keywords -- e.k
+            }
+            apply {
+                de : DBBook {
+                    key = e.key,
+                    title = e.title,
+                    year = e.year,
+                    publisher = e.publisher
+                }
+                st : SubjectTerm { value = k.text }
+                sl : subjects -- de.st
+            }
+            backward {
+                de <--trace-- e
+            }
+        }
+
+        rule InProcKeyword2SubjectTerm {
+            match {
+                any e : InProceedings
+                any k : Keyword
+                direct owns : keywords -- e.k
+            }
+            apply {
+                de : DBInProceedings {
+                    key = e.key,
+                    title = e.title,
+                    year = e.year,
+                    booktitle = e.booktitle
+                }
+                st : SubjectTerm { value = k.text }
+                sl : subjects -- de.st
+            }
+            backward {
+                de <--trace-- e
+            }
+        }
+
+        rule ArticleCitation2DBCitation {
+            match {
+                any a : Article
+                any e : Entry
+                direct c : cites -- a.e
+            }
+            apply {
+                da : DBArticle {
+                    key = a.key,
+                    title = a.title,
+                    year = a.year,
+                    journal = a.journal
+                }
+                dc : DBCitation { citedKey = e.key }
+                cl : citations -- da.dc
+            }
+            backward {
+                da <--trace-- a
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Concrete source-of-truth property suite.
+// These properties are used both for concrete execution checks and as the input
+// to the concrete-to-proof abstraction pipeline.
+// -----------------------------------------------------------------------------
+
+property ModelHasDocument {
+    precondition {
+        any m : Model
+    }
+    postcondition {
+        d : Document
+        d <--trace-- m
+    }
+}
+
+property BibFileHasBibliography {
+    precondition {
+        any bf : BibFile
+    }
+    postcondition {
+        b : Bibliography
+        b <--trace-- bf
+    }
+}
+
+property ArticleBecomesDBArticle {
+    precondition {
+        any a : Article
+    }
+    postcondition {
+        da : DBArticle
+        da <--trace-- a
+    }
+}
+
+property BookBecomesDBBook {
+    precondition {
+        any b : Book
+    }
+    postcondition {
+        db : DBBook
+        db <--trace-- b
+    }
+}
+
+property InProcBecomesDBInProc {
+    precondition {
+        any p : InProceedings
+    }
+    postcondition {
+        dp : DBInProceedings
+        dp <--trace-- p
+    }
+}
+
+property AuthorBecomesPersonName {
+    precondition {
+        any e : Entry
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        pn : PersonName
+        pn <--trace-- a
+    }
+}
+
+property KeywordBecomesSubjectTerm {
+    precondition {
+        any e : Entry
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        st : SubjectTerm
+        st <--trace-- k
+    }
+}
+
+property ArticleHasCitationElement {
+    precondition {
+        any a : Article
+        any e : Entry
+        direct c : cites -- a.e
+    }
+    postcondition {
+        dc : DBCitation
+        dc <--trace-- a
+    }
+}
+
+property RecentArticleMapped {
+    precondition {
+        any a : Article where a.year >= 2000
+    }
+    postcondition {
+        da : DBArticle
+        da <--trace-- a
+    }
+}
+
+property OldBookMapped {
+    precondition {
+        any b : Book where b.year <= 2005
+    }
+    postcondition {
+        db : DBBook
+        db <--trace-- b
+    }
+}
+
+property ArticleInBibFileAppearsInBibliography {
+    precondition {
+        any bf : BibFile
+        any a : Article
+        direct en : entries -- bf.a
+    }
+    postcondition {
+        b : Bibliography
+        da : DBArticle
+        eb : entries -- b.da
+        b <--trace-- bf
+        da <--trace-- a
+    }
+}
+
+property BookInBibFileAppearsInBibliography {
+    precondition {
+        any bf : BibFile
+        any e : Book
+        direct en : entries -- bf.e
+    }
+    postcondition {
+        b : Bibliography
+        db : DBBook
+        eb : entries -- b.db
+        b <--trace-- bf
+        db <--trace-- e
+    }
+}
+
+property InProcInBibFileAppearsInBibliography {
+    precondition {
+        any bf : BibFile
+        any e : InProceedings
+        direct en : entries -- bf.e
+    }
+    postcondition {
+        b : Bibliography
+        dp : DBInProceedings
+        eb : entries -- b.dp
+        b <--trace-- bf
+        dp <--trace-- e
+    }
+}
+
+property ArticleWithAuthorHasMappedEntry {
+    precondition {
+        any e : Article
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        de : DBArticle
+        de <--trace-- e
+    }
+}
+
+property BookWithAuthorHasMappedEntry {
+    precondition {
+        any e : Book
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        de : DBBook
+        de <--trace-- e
+    }
+}
+
+property InProcWithAuthorHasMappedEntry {
+    precondition {
+        any e : InProceedings
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        de : DBInProceedings
+        de <--trace-- e
+    }
+}
+
+property ArticleWithKeywordHasMappedEntry {
+    precondition {
+        any e : Article
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        de : DBArticle
+        de <--trace-- e
+    }
+}
+
+property BookWithKeywordHasMappedEntry {
+    precondition {
+        any e : Book
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        de : DBBook
+        de <--trace-- e
+    }
+}
+
+property InProcWithKeywordHasMappedEntry {
+    precondition {
+        any e : InProceedings
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        de : DBInProceedings
+        de <--trace-- e
+    }
+}
+
+property ArticleCitationKeepsArticleTrace {
+    precondition {
+        any a : Article
+        any e : Entry
+        direct c : cites -- a.e
+    }
+    postcondition {
+        da : DBArticle
+        da <--trace-- a
+    }
+}
+
+property CitationAttachedToMappedArticle {
+    precondition {
+        any a : Article
+        any e : Entry
+        direct c : cites -- a.e
+    }
+    postcondition {
+        da : DBArticle
+        dc : DBCitation
+        cl : citations -- da.dc
+        da <--trace-- a
+    }
+}
+
+property CitationAlsoTracesToCitedEntry {
+    precondition {
+        any a : Article
+        any e : Entry
+        direct c : cites -- a.e
+    }
+    postcondition {
+        da : DBArticle
+        dc : DBCitation
+        cl : citations -- da.dc
+        da <--trace-- a
+        dc <--trace-- e
+    }
+}
+
+property ArticleAuthorLinkProducesAuthorRelation {
+    precondition {
+        any e : Article
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        de : DBArticle
+        pn : PersonName
+        al : authors -- de.pn
+        de <--trace-- e
+        pn <--trace-- a
+    }
+}
+
+property BookAuthorLinkProducesAuthorRelation {
+    precondition {
+        any e : Book
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        de : DBBook
+        pn : PersonName
+        al : authors -- de.pn
+        de <--trace-- e
+        pn <--trace-- a
+    }
+}
+
+property InProcAuthorLinkProducesAuthorRelation {
+    precondition {
+        any e : InProceedings
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        de : DBInProceedings
+        pn : PersonName
+        al : authors -- de.pn
+        de <--trace-- e
+        pn <--trace-- a
+    }
+}
+
+property ArticleKeywordLinkProducesSubjectRelation {
+    precondition {
+        any e : Article
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        de : DBArticle
+        st : SubjectTerm
+        sl : subjects -- de.st
+        de <--trace-- e
+        st <--trace-- k
+    }
+}
+
+property BookKeywordLinkProducesSubjectRelation {
+    precondition {
+        any e : Book
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        de : DBBook
+        st : SubjectTerm
+        sl : subjects -- de.st
+        de <--trace-- e
+        st <--trace-- k
+    }
+}
+
+property InProcKeywordLinkProducesSubjectRelation {
+    precondition {
+        any e : InProceedings
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        de : DBInProceedings
+        st : SubjectTerm
+        sl : subjects -- de.st
+        de <--trace-- e
+        st <--trace-- k
+    }
+}
+
+property ArticleBecomesDBBook_ShouldFail {
+    precondition {
+        any a : Article
+    }
+    postcondition {
+        db : DBBook
+        db <--trace-- a
+    }
+}
+
+property BookBecomesDBArticle_ShouldFail {
+    precondition {
+        any b : Book
+    }
+    postcondition {
+        da : DBArticle
+        da <--trace-- b
+    }
+}
+
+property InProcBecomesDBBook_ShouldFail {
+    precondition {
+        any p : InProceedings
+    }
+    postcondition {
+        db : DBBook
+        db <--trace-- p
+    }
+}
+
+property ArticleAuthorBecomesSubject_ShouldFail {
+    precondition {
+        any e : Article
+        any a : Author
+        direct owns : authors -- e.a
+    }
+    postcondition {
+        st : SubjectTerm
+        st <--trace-- a
+    }
+}
+
+property ArticleKeywordBecomesAuthor_ShouldFail {
+    precondition {
+        any e : Article
+        any k : Keyword
+        direct owns : keywords -- e.k
+    }
+    postcondition {
+        pn : PersonName
+        pn <--trace-- k
+    }
+}

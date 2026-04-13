@@ -1,0 +1,367 @@
+{
+  "metamodelMapping": {
+    "BibTeXConcrete": "BibTeXProof",
+    "DocBookConcrete": "DocBookProof"
+  },
+  "transformationMapping": {
+    "BibTeX2DocBook_concrete": "BibTeX2DocBook_proof"
+  },
+  "attributeDecisions": [
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Entry",
+      "attributeName": "key",
+      "concreteType": "String",
+      "abstractType": "String{k1, k2, k3, OTHER}",
+      "decision": "override",
+      "reason": "Preserve proof-relevant BibTeX key distinctions"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Entry",
+      "attributeName": "title",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Article",
+      "attributeName": "year",
+      "concreteType": "Int",
+      "abstractType": "Int[1990..2025]",
+      "decision": "override",
+      "reason": "Preserve year thresholds used by current property suite"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Article",
+      "attributeName": "journal",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Book",
+      "attributeName": "year",
+      "concreteType": "Int",
+      "abstractType": "Int[1990..2025]",
+      "decision": "override",
+      "reason": "Preserve year thresholds used by current property suite"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Book",
+      "attributeName": "publisher",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "InProceedings",
+      "attributeName": "year",
+      "concreteType": "Int",
+      "abstractType": "Int[1990..2025]",
+      "decision": "override",
+      "reason": "Preserve year thresholds used by current property suite"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "InProceedings",
+      "attributeName": "booktitle",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Author",
+      "attributeName": "name",
+      "concreteType": "String",
+      "abstractType": "String{a1, a2, a3, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite author-name abstraction"
+    },
+    {
+      "metamodel": "BibTeXProof",
+      "className": "Keyword",
+      "attributeName": "text",
+      "concreteType": "String",
+      "abstractType": "String{kw1, kw2, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite keyword abstraction"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBEntry",
+      "attributeName": "key",
+      "concreteType": "String",
+      "abstractType": "String{k1, k2, k3, OTHER}",
+      "decision": "override",
+      "reason": "Preserve proof-relevant DocBook key distinctions"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBEntry",
+      "attributeName": "title",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBArticle",
+      "attributeName": "year",
+      "concreteType": "Int",
+      "abstractType": "Int[1990..2025]",
+      "decision": "override",
+      "reason": "Preserve target year range corresponding to source article years"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBArticle",
+      "attributeName": "journal",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBBook",
+      "attributeName": "year",
+      "concreteType": "Int",
+      "abstractType": "Int[1990..2025]",
+      "decision": "override",
+      "reason": "Preserve target year range corresponding to source book years"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBBook",
+      "attributeName": "publisher",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBInProceedings",
+      "attributeName": "year",
+      "concreteType": "Int",
+      "abstractType": "Int[1990..2025]",
+      "decision": "override",
+      "reason": "Preserve target year range corresponding to source inproc years"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBInProceedings",
+      "attributeName": "booktitle",
+      "concreteType": "String",
+      "abstractType": "String{V1, V2, OTHER}",
+      "decision": "canonical_vocab",
+      "reason": "attribute is touched by rules/properties; keep alias-supporting finite domain"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "PersonName",
+      "attributeName": "value",
+      "concreteType": "String",
+      "abstractType": "String{a1, a2, a3, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite target author abstraction"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "SubjectTerm",
+      "attributeName": "value",
+      "concreteType": "String",
+      "abstractType": "String{kw1, kw2, OTHER}",
+      "decision": "override",
+      "reason": "Canonical finite target keyword abstraction"
+    },
+    {
+      "metamodel": "DocBookProof",
+      "className": "DBCitation",
+      "attributeName": "citedKey",
+      "concreteType": "String",
+      "abstractType": "String{k1, k2, k3, OTHER}",
+      "decision": "override",
+      "reason": "Keep cited-key abstraction aligned with source entry keys"
+    }
+  ],
+  "propertyDecisions": [
+    {
+      "propertyName": "ModelHasDocument",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BibFileHasBibliography",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleBecomesDBArticle",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookBecomesDBBook",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcBecomesDBInProc",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "AuthorBecomesPersonName",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "KeywordBecomesSubjectTerm",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleHasCitationElement",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "RecentArticleMapped",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "OldBookMapped",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleInBibFileAppearsInBibliography",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookInBibFileAppearsInBibliography",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcInBibFileAppearsInBibliography",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleWithAuthorHasMappedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookWithAuthorHasMappedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcWithAuthorHasMappedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleWithKeywordHasMappedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookWithKeywordHasMappedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcWithKeywordHasMappedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleCitationKeepsArticleTrace",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "CitationAttachedToMappedArticle",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "CitationAlsoTracesToCitedEntry",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleAuthorLinkProducesAuthorRelation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookAuthorLinkProducesAuthorRelation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcAuthorLinkProducesAuthorRelation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleKeywordLinkProducesSubjectRelation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookKeywordLinkProducesSubjectRelation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcKeywordLinkProducesSubjectRelation",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleBecomesDBBook_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "BookBecomesDBArticle_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "InProcBecomesDBBook_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleAuthorBecomesSubject_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    },
+    {
+      "propertyName": "ArticleKeywordBecomesAuthor_ShouldFail",
+      "status": "exact",
+      "reason": "all classes, associations, and referenced attributes are preserved; only domains are finite-ized"
+    }
+  ]
+}
