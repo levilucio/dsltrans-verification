@@ -31,6 +31,12 @@ In practice, this makes the repository useful both as:
 - `screenshots/` — public screenshots used in documentation
 - `docs/` — public-facing supporting documentation
 
+## User manual
+
+For a feature-by-feature walkthrough of the web app, including a running UML2Java example, see:
+
+- [`docs/USER_MANUAL.md`](./docs/USER_MANUAL.md)
+
 ## Quick start
 
 ### Local development
