@@ -59,6 +59,8 @@ Important usability note:
 - **Load .dslt** appears in the transformation panel controls
 - **Load .xmi** appears in the **Input Model** panel on the right, which may require scrolling down before it becomes visible
 
+![DSLTrans public web app home screen](../screenshots/uml_java_home.png)
+
 ## 3. Main features
 
 The public deployment supports the following workflows:
@@ -99,6 +101,10 @@ In the curated/public deployment, this should automatically load:
 - a representative UML input model when one is bundled for that example
 
 If you prefer, you can also load a local `.dslt` file manually using **Load .dslt**.
+
+### UML2Java transformation loaded
+
+![UML2Java transformation loaded in the public web app](../screenshots/uml_java_transformation.png)
 
 ### Step 3: Inspect the transformation
 
@@ -159,6 +165,10 @@ The model panel also provides:
 - **Copy Mermaid**: copy a Mermaid representation for documentation or further inspection
 - **Expand**: open the panel in a larger overlay view
 
+### Input model panel and right-hand workflow
+
+![Input model panel with UML2Java example loaded](../screenshots/uml_java_model_panel.png)
+
 ## 7. Running the transformation
 
 Use the **Runner** panel to execute the loaded transformation.
@@ -195,6 +205,10 @@ During execution the app displays progress, including:
 - completed properties
 - remaining properties
 - last completed property
+
+### Proof-oriented run in progress
+
+![SMT Direct proof result for UML2Java](../screenshots/uml_java_proof_result.png)
 
 ### Cutoff
 
